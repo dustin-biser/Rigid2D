@@ -34,14 +34,14 @@ TEST(Matrix2x2Test, Addition){
 
 TEST(Matrix2x2Test, AssignmentWithInts){
   Matrix2x2 a;
-  Matrix2x2 b(1, 2, 3, 4); // b(1,2,3,4) in floating-point hex
+  Matrix2x2 b(-1, 0, 1, 2);
 
   a = b;
 
-  EXPECT_EQ(1, a(0,0));
-  EXPECT_EQ(2, a(0,1));
-  EXPECT_EQ(3, a(1,0));
-  EXPECT_EQ(4, a(1,1));
+  EXPECT_EQ(-1, a(0,0));
+  EXPECT_EQ(0, a(0,1));
+  EXPECT_EQ(1, a(1,0));
+  EXPECT_EQ(2, a(1,1));
 }
 
 TEST(Matrix2x2Test, AssignmentWithFloats){
@@ -61,10 +61,23 @@ TEST(Matrix2x2Test, AssignmentWithFloats2){
   Matrix2x2 b(-123.0, 99999.9, 0.12345, 0.0000001);
 
   a = b;
-  
+
   // Compare using float equality function feq.
   EXPECT_TRUE(feq(b(0,0), a(0,0)));
   EXPECT_TRUE(feq(b(0,1), a(0,1)));
   EXPECT_TRUE(feq(b(1,0), a(1,0)));
   EXPECT_TRUE(feq(b(1,1), a(1,1)));
+}
+
+TEST(Matrix2x2Test, AdditionAndAssignment1){
+  Matrix2x2 a(22,33,44,55);
+  Matrix2x2 b(-1,-1,-1,-1);
+  Matrix2x2 c;
+
+  c = a + b;
+
+  EXPECT_TRUE(feq(21, c(0,0)));
+  EXPECT_TRUE(feq(32, c(0,1)));
+  EXPECT_TRUE(feq(43, c(1,0)));
+  EXPECT_TRUE(feq(54, c(1,1)));
 }
