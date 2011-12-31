@@ -1,11 +1,12 @@
 // matrix2x2.cpp
 #include "matrix2x2.h"
+#include "r2error.h"
 
 float Matrix2x2::operator () (const unsigned int row, const unsigned int column){
   if ((row < 3) && (column < 3))
     return data[row][column];
   else
-    throw ("MatrixIndexOutOfBoundsError");
+    throw R2Error(MatrixIndexOutOfBoundsError);
 }
 
 Matrix2x2 Matrix2x2::operator + (Matrix2x2 other){

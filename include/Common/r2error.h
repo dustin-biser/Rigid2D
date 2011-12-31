@@ -10,7 +10,7 @@ class R2Error {
   errorType error_id;
   const char *description;
   public:
-  R2Error(const char *str, errorType id){
+  R2Error(errorType id, const char *str = ""){
     description = str;
     error_id = id;
   }
