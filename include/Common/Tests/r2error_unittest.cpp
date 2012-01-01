@@ -1,5 +1,6 @@
 #include "../r2error.h"
 #include "gtest/gtest.h"
+using namespace Rigid2D;
 
 TEST(R2ErrorTest, Basic){
   R2Error index_exception(MatrixIndexOutOfBoundsError);
