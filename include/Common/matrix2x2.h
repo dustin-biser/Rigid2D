@@ -19,9 +19,7 @@ namespace Rigid2D {
         data[1][1] = m22;
       }
 
-      void setZeros();
-
-      float operator () (const unsigned int row, const unsigned int column);
+      float & operator () (const unsigned int row, const unsigned int column);
 
       Matrix2x2 operator + (Matrix2x2 other);
 
@@ -29,7 +27,13 @@ namespace Rigid2D {
 
       Matrix2x2 operator = (Matrix2x2 other);
 
-      //Matrix2x2 operator * (Matrix2x2 other);
+      //bool operator == (Matrix2x2 other);
+
+      Matrix2x2 operator * (Matrix2x2 other);
+
+      void setZeros();
+
+      Matrix2x2 setIdentity();
   };
 }
 

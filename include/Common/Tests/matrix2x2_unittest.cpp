@@ -35,7 +35,21 @@ TEST(Matrix2x2Test, Addition){
   EXPECT_EQ(12.0, (a+b)(1,1));
 }
 
-TEST(Matrix2x2Test, AssignmentWithInts){
+TEST(Matrix2x2Test, ElementAssignment){
+  Matrix2x2 a;
+  
+  a(0,0) = 1.0f;
+  a(0,1) = 2.0f;
+  a(1,0) = 3.0f;
+  a(1,1) = 4.0f;
+
+  EXPECT_TRUE(feq(a(0,0), 1.0f));
+  EXPECT_TRUE(feq(a(0,1), 2.0f));
+  EXPECT_TRUE(feq(a(1,0), 3.0f));
+  EXPECT_TRUE(feq(a(1,1), 4.0f));
+}
+
+TEST(Matrix2x2Test, MatrixToMatrixAssignmentWithInts){
   Matrix2x2 a;
   Matrix2x2 b(-1, 0, 1, 2);
 
@@ -47,7 +61,7 @@ TEST(Matrix2x2Test, AssignmentWithInts){
   EXPECT_EQ(2, a(1,1));
 }
 
-TEST(Matrix2x2Test, AssignmentWithFloats){
+TEST(Matrix2x2Test, MatrixToMatrixAssignmentWithFloats){
   Matrix2x2 a;
   Matrix2x2 b(0x1p+0, 0x1p+1, 0x1.8p+1, 0x1p+2); // b(1,2,3,4) in floating-point hex
 
@@ -59,7 +73,7 @@ TEST(Matrix2x2Test, AssignmentWithFloats){
   EXPECT_EQ(0x1p+2, a(1,1));
 }
 
-TEST(Matrix2x2Test, AssignmentWithFloats2){
+TEST(Matrix2x2Test, MatrixToMatrixAssignmentWithFloats2){
   Matrix2x2 a;
   Matrix2x2 b(-123.0, 99999.9, 0.12345, 0.0000001);
 
@@ -133,3 +147,44 @@ TEST(Matrix2x2Test, MatrixSubtraction2){
   EXPECT_TRUE(feq(-3,c(1,0)));
   EXPECT_TRUE(feq(-4,c(1,1)));
 }
+
+TEST(Matrix2x2Test, SetIdentity){
+  Matrix2x2 a;
+  a.setIdentity();
+
+  EXPECT_TRUE(feq(a(0,0), 1.0f));
+  EXPECT_TRUE(feq(a(0,1), 0.0f));
+  EXPECT_TRUE(feq(a(1,0), 0.0f));
+  EXPECT_TRUE(feq(a(1,1), 1.0f));
+}
+
+TEST(Matrix2x2Test, SetIdentityWithAddition){
+  Matrix2x2 a;
+  Matrix2x2 b(-1, 0, 0, -1);
+  Matrix2x2 c;
+
+  c = a.setIdentity() + b;
+
+  EXPECT_TRUE(feq(c(0,0), 0.0f));
+  EXPECT_TRUE(feq(c(0,1), 0.0f));
+  EXPECT_TRUE(feq(c(1,0), 0.0f));
+  EXPECT_TRUE(feq(c(0,1), 0.0f));
+}
+
+//TEST(Matrix2x2Test, MatrixMultiplicationWithIdentity){
+  //Matrix2x2 I;
+  //Matrix2x2 b(1,-2,-3,4);
+  //Matrix2x2 c;
+
+  //I.setIdentity();
+
+  //c = I * b;
+
+  //EXPECT_EQ(c,b);
+
+  //c.setZeros();
+
+  //c = b * I;
+
+  //EXPECT_EQ(c,b);
+//}
