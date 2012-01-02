@@ -21,15 +21,15 @@ namespace Rigid2D {
 
       float & operator () (const unsigned int row, const unsigned int column);
 
-      Matrix2x2 operator + (Matrix2x2 other);
+      Matrix2x2 operator + (const Matrix2x2 & other) const;
 
-      Matrix2x2 operator - (Matrix2x2 other);
+      Matrix2x2 operator - (const Matrix2x2 & other) const;
 
-      Matrix2x2 operator = (Matrix2x2 other);
+      Matrix2x2 operator = (const Matrix2x2 & other);
 
       //bool operator == (Matrix2x2 other);
 
-      Matrix2x2 operator * (Matrix2x2 other);
+      Matrix2x2 operator * (const Matrix2x2 & other) const;
 
       void setZeros();
 

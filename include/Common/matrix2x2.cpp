@@ -10,7 +10,7 @@ float & Matrix2x2::operator () (const unsigned int row, const unsigned int colum
     throw R2Error(MatrixIndexOutOfBoundsError);
 }
 
-Matrix2x2 Matrix2x2::operator + (Matrix2x2 other){
+Matrix2x2 Matrix2x2::operator + (const Matrix2x2 &other) const {
   Matrix2x2 temp;
   for(int row = 0; row < 2; row++){
     for(int col = 0; col < 2; col++){
@@ -20,7 +20,7 @@ Matrix2x2 Matrix2x2::operator + (Matrix2x2 other){
   return temp;
 }
 
-Matrix2x2 Matrix2x2::operator - (Matrix2x2 other){
+Matrix2x2 Matrix2x2::operator - (const Matrix2x2 &other) const {
   Matrix2x2 temp;
   for(int row = 0; row < 2; row++){
     for(int col = 0; col < 2; col++){
@@ -30,7 +30,7 @@ Matrix2x2 Matrix2x2::operator - (Matrix2x2 other){
   return temp;
 }
 
-Matrix2x2 Matrix2x2::operator = (Matrix2x2 other){
+Matrix2x2 Matrix2x2::operator = (const Matrix2x2 &other){
   for(int row = 0; row < 2; row ++){
     for(int col = 0; col < 2; col ++){
       this->data[row][col] = other.data[row][col];
@@ -47,13 +47,13 @@ void Matrix2x2::setZeros(){
   }
 }
 
-Matrix2x2 Matrix2x2::operator * (Matrix2x2 other){
+Matrix2x2 Matrix2x2::operator * (const Matrix2x2 &other) const {
   Matrix2x2 temp;
 
-  temp(0,0) = (data[0][0] * other(0,0)) + (data[0][1] * other(1,0));
-  temp(0,1) = (data[0][0] * other(0,1)) + (data[0][1] * other(1,1));
-  temp(1,0) = (data[1][0] * other(0,0)) + (data[1][1] * other(1,0));
-  temp(1,1) = (data[1][0] * other(0,1)) + (data[1][1] * other(1,1));
+  temp(0,0) = (data[0][0] * other.data[0][0]) + (data[0][1] * other.data[1][0]);
+  temp(0,1) = (data[0][0] * other.data[0][1]) + (data[0][1] * other.data[1][1]);
+  temp(1,0) = (data[1][0] * other.data[0][0]) + (data[1][1] * other.data[1][0]);
+  temp(1,1) = (data[1][0] * other.data[0][1]) + (data[1][1] * other.data[1][1]);
 
   return temp;
 }
