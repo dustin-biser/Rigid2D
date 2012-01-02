@@ -171,20 +171,36 @@ TEST(Matrix2x2Test, SetIdentityWithAddition){
   EXPECT_TRUE(feq(c(0,1), 0.0f));
 }
 
-//TEST(Matrix2x2Test, MatrixMultiplicationWithIdentity){
-  //Matrix2x2 I;
-  //Matrix2x2 b(1,-2,-3,4);
-  //Matrix2x2 c;
+TEST(Matrix2x2Test, EqualityByAddress){
+  Matrix2x2 a;
+  Matrix2x2 *ptr;
 
-  //I.setIdentity();
+  ptr = &a;
 
-  //c = I * b;
+  EXPECT_TRUE(a == *ptr);
+}
 
-  //EXPECT_EQ(c,b);
+TEST(Matrix2x2Test, EqualityByElements){
+  Matrix2x2 a(-10, 99999.9, 0.1234, 0.000001);
+  Matrix2x2 b(-10, 99999.9, 0.1234, 0.000001);
 
-  //c.setZeros();
+  EXPECT_TRUE(a == b);
+}
 
-  //c = b * I;
+TEST(Matrix2x2Test, MatrixMultiplicationWithIdentity){
+  Matrix2x2 I;
+  Matrix2x2 b(1,-2,-3,4);
+  Matrix2x2 c;
 
-  //EXPECT_EQ(c,b);
-//}
+  I.setIdentity();
+
+  c = I * b;
+
+  EXPECT_EQ(c,b);
+
+  c.setZeros();
+
+  c = b * I;
+
+  EXPECT_EQ(c,b);
+}

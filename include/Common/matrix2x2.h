@@ -27,7 +27,7 @@ namespace Rigid2D {
 
       Matrix2x2 operator = (const Matrix2x2 & other);
 
-      //bool operator == (Matrix2x2 other);
+      bool operator == (const Matrix2x2 & other) const;
 
       Matrix2x2 operator * (const Matrix2x2 & other) const;
 
