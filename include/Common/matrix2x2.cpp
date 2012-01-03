@@ -90,4 +90,3 @@ float * Matrix2x2::operator [] (unsigned int row){
   else
     throw R2Error(MatrixIndexOutOfBoundsError);
 }
-

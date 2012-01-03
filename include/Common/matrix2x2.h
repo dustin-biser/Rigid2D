@@ -8,7 +8,6 @@ namespace Rigid2D {
   class Matrix2x2{
     float data_[2][2];
     public:
-
       // Default constructor that does nothing for performance.
       Matrix2x2(){};
 
@@ -19,10 +18,10 @@ namespace Rigid2D {
         data_[1][1] = m22;
       }
 
-      // member access using the construct mat(i,j).
+      // member access/assignment using the construct mat(i,j).
       float & operator () (unsigned int row, unsigned int column);
 
-      // member access using the construct mat[i][j].
+      // member access/assignment using the construct mat[i][j].
       float * operator [] (unsigned int row);
 
       // arithmetic operations
@@ -37,7 +36,14 @@ namespace Rigid2D {
       void setZeros();
 
       Matrix2x2 setIdentity();
-  };
-}
+
+      // returns the determinant of matrix.
+      inline float det() const{
+        return (data_[0][0]*data_[1][1] - data_[0][1]*data_[1][0]);
+      }
+  }; // end class Matrix2x2.
+
+} // end namespace Rigid2D.
 
 #endif
+

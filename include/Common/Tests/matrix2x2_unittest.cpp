@@ -227,3 +227,21 @@ TEST(Matrix2x2Test, MemberAssignmentUsingBrackets){
   EXPECT_TRUE(feq(a[1][0], 3.0f));
   EXPECT_TRUE(feq(a[1][1], 4.0f));
 }
+
+TEST(Matrix2x2Test, DeterminantIsNegative){
+  Matrix2x2 a(1,2,3,4);
+
+  EXPECT_TRUE(feq(a.det(), -2.0f));
+}
+
+TEST(Matrix2x2Test, DeterminantIsPositive){
+  Matrix2x2 a(1,-1,1,1);
+
+  EXPECT_TRUE(feq(a.det(), 2.0f));
+}
+
+TEST(Matrix2x2Test, DeterminantIsZero){
+  Matrix2x2 a(4,1,4,1);
+
+  EXPECT_TRUE(feq(a.det(), 0.0f));
+}
