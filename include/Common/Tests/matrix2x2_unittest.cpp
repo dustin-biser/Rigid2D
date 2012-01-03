@@ -204,3 +204,26 @@ TEST(Matrix2x2Test, MatrixMultiplicationWithIdentity){
 
   EXPECT_EQ(c,b);
 }
+
+TEST(Matrix2x2Test, MemberAccessUsingBrackets){
+  Matrix2x2 a(1,2,3,4);
+
+  EXPECT_TRUE(feq(a[0][0], 1));
+  EXPECT_TRUE(feq(a[0][1], 2));
+  EXPECT_TRUE(feq(a[1][0], 3));
+  EXPECT_TRUE(feq(a[1][1], 4));
+}
+
+TEST(Matrix2x2Test, MemberAssignmentUsingBrackets){
+  Matrix2x2 a;
+
+  a[0][0] = 1.0f;
+  a[0][1] = 2.0f;
+  a[1][0] = 3.0f;
+  a[1][1] = 4.0f;
+
+  EXPECT_TRUE(feq(a[0][0], 1.0f));
+  EXPECT_TRUE(feq(a[0][1], 2.0f));
+  EXPECT_TRUE(feq(a[1][0], 3.0f));
+  EXPECT_TRUE(feq(a[1][1], 4.0f));
+}

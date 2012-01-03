@@ -19,17 +19,20 @@ namespace Rigid2D {
         data_[1][1] = m22;
       }
 
-      float & operator () (const unsigned int row, const unsigned int column);
+      // member access using the construct mat(i,j).
+      float & operator () (unsigned int row, unsigned int column);
 
+      // member access using the construct mat[i][j].
+      float * operator [] (unsigned int row);
+
+      // arithmetic operations
       Matrix2x2 operator + (const Matrix2x2 & other) const;
-
       Matrix2x2 operator - (const Matrix2x2 & other) const;
+      Matrix2x2 operator * (const Matrix2x2 & other) const;
 
       Matrix2x2 operator = (const Matrix2x2 & other);
 
       bool operator == (const Matrix2x2 & other) const;
-
-      Matrix2x2 operator * (const Matrix2x2 & other) const;
 
       void setZeros();
 

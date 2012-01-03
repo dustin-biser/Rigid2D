@@ -3,7 +3,7 @@
 #include "r2error.h"
 using namespace Rigid2D;
 
-float & Matrix2x2::operator () (const unsigned int row, const unsigned int column){
+float & Matrix2x2::operator () (unsigned int row, unsigned int column){
   if ((row < 3) && (column < 3))
     return data_[row][column];
   else
@@ -84,4 +84,10 @@ Matrix2x2 Matrix2x2::setIdentity(){
   return *this;
 }
 
+float * Matrix2x2::operator [] (unsigned int row){
+  if (row < 3)
+    return data_[row];
+  else
+    throw R2Error(MatrixIndexOutOfBoundsError);
+}
 
