@@ -72,14 +72,19 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-matrix2x2.o : $(SRC_DIR)matrix2x2.cpp $(SRC_DIR)matrix2x2.h $(GTEST_HEADERS)
+feq.o : $(SRC_DIR)feq.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)feq.cpp
+
+matrix2x2.o : $(SRC_DIR)matrix2x2.cpp $(SRC_DIR)matrix2x2.h $(SRC_DIR)feq.h \
+							$(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)matrix2x2.cpp
 
-matrix2x2_unittest.o : $(TEST_DIR)matrix2x2_unittest.cpp \
+matrix2x2_unittest.o : $(TEST_DIR)matrix2x2_unittest.cpp $(SRC_DIR)feq.h \
                      $(SRC_DIR)matrix2x2.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)matrix2x2_unittest.cpp
 
-matrix2x2_unittest : matrix2x2.o matrix2x2_unittest.o gtest_main.a
+
+matrix2x2_unittest : matrix2x2.o matrix2x2_unittest.o feq.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 r2error_unittest.o : $(TEST_DIR)r2error_unittest.cpp \

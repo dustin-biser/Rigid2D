@@ -4,6 +4,7 @@
 #include "../r2error.h"
 #include "gtest/gtest.h"
 #include <float.h>
+#include <cstdio>
 using namespace Rigid2D;
 
 TEST(Matrix2x2Test, SetZeros){
@@ -244,4 +245,51 @@ TEST(Matrix2x2Test, DeterminantIsZero){
   Matrix2x2 a(4,1,4,1);
 
   EXPECT_TRUE(feq(a.det(), 0.0f));
+}
+
+TEST(Matrix2x2Test, HasInverseTrue){
+  Matrix2x2 a(1,1,1,2);
+
+  EXPECT_TRUE(a.hasInverse());
+}
+
+TEST(Matrix2x2Test, HasInverseFalse){
+  Matrix2x2 a(1,1,1,1);
+
+  EXPECT_FALSE(a.hasInverse());
+}
+
+TEST(Matrix2x2Test, InverseTrueSimple){
+  Matrix2x2 a(1,2,2,1);
+  Matrix2x2 true_inv(-1.0/3.0, 2.0/3.0, 2.0/3.0, -1.0/3.0);
+  Matrix2x2 result;
+
+  EXPECT_TRUE(a.inv(result));
+  EXPECT_TRUE(feq(result(0,0), true_inv(0,0)));
+  EXPECT_TRUE(feq(result(1,0), true_inv(1,0)));
+  EXPECT_TRUE(feq(result(0,1), true_inv(0,1)));
+  EXPECT_TRUE(feq(result(1,1), true_inv(1,1)));
+}
+
+TEST(Matrix2x2Test, InverseTrueIdentity){
+  Matrix2x2 a(1,0,0,1);
+  Matrix2x2 true_inv(1,0,0,1);
+  Matrix2x2 result;
+
+  EXPECT_TRUE(a.inv(result));
+  EXPECT_TRUE(feq(result(0,0), 1.0f));
+  EXPECT_TRUE(feq(result(1,0), 0.0f));
+  EXPECT_TRUE(feq(result(0,1), 0.0f));
+  EXPECT_TRUE(feq(result(1,1), 1.0f));
+}
+
+TEST(Matrix2x2Test, InverseTrueSmall){
+  Matrix2x2 a(1e-6, 2e-6, 2e-6, 1e-6);
+  Matrix2x2 result;
+
+  EXPECT_TRUE(a.inv(result));
+  EXPECT_TRUE(feq(result(0,0), -(1.0/3.0)*1e+6));
+  EXPECT_TRUE(feq(result(1,0),  (2.0/3.0)*1e+6));
+  EXPECT_TRUE(feq(result(0,1),  (2.0/3.0)*1e+6));
+  EXPECT_TRUE(feq(result(1,1), -(1.0/3.0)*1e+6));
 }
