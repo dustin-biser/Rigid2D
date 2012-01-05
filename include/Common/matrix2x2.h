@@ -32,7 +32,8 @@ namespace Rigid2D {
       Matrix2x2 operator * (const Matrix2x2& other) const;
 
       // If fDivisor is non-zero, function returns a new Matrix2x2 object with elements equal to
-      // calling object's elements divided by fDivisor.
+      // calling object's elements divided by fDivisor.  If fDivisor is zero, function throws a
+      // DivideByZeroError.
       //Matrix2x2 operator / (const float fDivisor) const;
       // Matrix2x2 operator += (const Matrix2x2& other);
       // Matrix2x2 operator -= (const Matrix2x2& other);

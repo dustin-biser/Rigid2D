@@ -17,6 +17,8 @@ namespace Rigid2D {
     const char * describe(){ return description; }
     errorType type(){ return error_id; }
   };
+
+  class DivideByZeroError {};
 }
 
 #endif
