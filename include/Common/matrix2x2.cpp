@@ -50,10 +50,10 @@ namespace Rigid2D {
       return true;
 
     // Check if all matrix elements are equal.
-    else if ((feq(data_[0][0],other.data_[0][0])) &&
-             (feq(data_[0][1],other.data_[0][1])) &&
-             (feq(data_[1][0],other.data_[1][0])) &&
-             (feq(data_[1][1],other.data_[1][1])))
+    else if ((feq(data_[0][0], other.data_[0][0])) &&
+             (feq(data_[0][1], other.data_[0][1])) &&
+             (feq(data_[1][0], other.data_[1][0])) &&
+             (feq(data_[1][1], other.data_[1][1])))
       return true;
     else
       return false;
@@ -99,12 +99,13 @@ namespace Rigid2D {
   }
 
   bool Matrix2x2::inv(Matrix2x2& invMatrix, int maxUlp) const{
-    if (hasInverse(maxUlp) == false){
+    float det = this->det();
+
+    // Check if determinant is within maxUlp-1 floats from zero.
+    if (feq(det, 0.0f, maxUlp)){
       invMatrix.setZeros();
       return false;
     }
-
-    float det = this->det();
 
     invMatrix.data_[0][0] =  data_[1][1] / det;
     invMatrix.data_[0][1] = -data_[0][1] / det;
