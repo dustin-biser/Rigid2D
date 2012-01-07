@@ -99,29 +99,6 @@ TEST(Matrix2x2Test, AdditionAndAssignment1){
   EXPECT_TRUE(feq(54, c(1,1)));
 }
 
-TEST(Matrix2x2Test, ThrowsR2ErrorWhenOutOfBounds){
-  Matrix2x2 a;
-  a.setZeros();
-
-  EXPECT_THROW(a(3,2), R2Error);
-  EXPECT_THROW(a(2,3), R2Error);
-  EXPECT_THROW(a(3,3), R2Error);
-}
-
-TEST(Matrix2x2Test, ThrowsMatrixIndexOutOfBoundsError){
-  Matrix2x2 a;
-  try{
-    a.setZeros();
-    a(3,3);
-  }
-  catch(R2Error e){
-    EXPECT_EQ(e.type(), MatrixIndexOutOfBoundsError);
-  }
-  catch(...){
-    EXPECT_TRUE(false);
-  }
-}
-
 TEST(Matrix2x2Test, MatrixSubtraction1){
   Matrix2x2 a(11,22,33,44);
   Matrix2x2 b(10,20,30,40);
