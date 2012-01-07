@@ -1,7 +1,6 @@
 //matrix2x2_unittest.cpp
 #include "../matrix2x2.h"
 #include "../feq.h"
-#include "../r2error.h"
 #include "gtest/gtest.h"
 #include <float.h>
 #include <cstdio>
@@ -98,29 +97,6 @@ TEST(Matrix2x2Test, AdditionAndAssignment1){
   EXPECT_TRUE(feq(32, c(0,1)));
   EXPECT_TRUE(feq(43, c(1,0)));
   EXPECT_TRUE(feq(54, c(1,1)));
-}
-
-TEST(Matrix2x2Test, ThrowsR2ErrorWhenOutOfBounds){
-  Matrix2x2 a;
-  a.setZeros();
-
-  EXPECT_THROW(a(3,2), R2Error);
-  EXPECT_THROW(a(2,3), R2Error);
-  EXPECT_THROW(a(3,3), R2Error);
-}
-
-TEST(Matrix2x2Test, ThrowsMatrixIndexOutOfBoundsError){
-  Matrix2x2 a;
-  try{
-    a.setZeros();
-    a(3,3);
-  }
-  catch(R2Error e){
-    EXPECT_EQ(e.type(), MatrixIndexOutOfBoundsError);
-  }
-  catch(...){
-    EXPECT_TRUE(false);
-  }
 }
 
 TEST(Matrix2x2Test, MatrixSubtraction1){

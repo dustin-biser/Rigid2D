@@ -1,7 +1,6 @@
 // matrix2x2.h
 #ifndef MATRIX2X2_H
 #define MATRIX2X2_H
-#include "r2error.h"
 #include "feq.h"
 
 namespace Rigid2D {

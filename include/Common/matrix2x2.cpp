@@ -3,11 +3,11 @@
 
 namespace Rigid2D {
 
-  float & Matrix2x2::operator () (unsigned int row, unsigned int column){
-    if ((row < 3) && (column < 3))
-      return data_[row][column];
-    else
-      throw R2Error(MatrixIndexOutOfBoundsError);
+  float & Matrix2x2::operator () (unsigned int row, unsigned int col){
+		if (row > 2) row = 2;
+		if (col > 2) col= 2;
+
+    return data_[row][col];
   }
 
   Matrix2x2 Matrix2x2::operator + (const Matrix2x2 &other) const {
@@ -88,7 +88,7 @@ namespace Rigid2D {
     if (row < 3)
       return data_[row];
     else
-      throw R2Error(MatrixIndexOutOfBoundsError);
+			return data_[2];
   }
 
   bool Matrix2x2::hasInverse(int maxUlp) const{
