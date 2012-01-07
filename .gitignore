@@ -7,3 +7,4 @@
 # Specific files to ignore
 matrix2x2_unittest
 r2error_unittest
+exception_unittest
