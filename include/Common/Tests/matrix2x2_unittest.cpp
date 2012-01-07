@@ -1,7 +1,6 @@
 //matrix2x2_unittest.cpp
 #include "../matrix2x2.h"
 #include "../feq.h"
-#include "../r2error.h"
 #include "gtest/gtest.h"
 #include <float.h>
 #include <cstdio>
