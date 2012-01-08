@@ -1,7 +1,6 @@
 // matrix2x2.h
 #ifndef MATRIX2X2_H
 #define MATRIX2X2_H
-#include "r2error.h"
 #include "feq.h"
 
 namespace Rigid2D {
@@ -20,6 +19,9 @@ namespace Rigid2D {
         data_[1][1] = m22;
       }
 
+      // Perform deep copy of other.
+      Matrix2x2(Matrix2x2& other);
+
       // member access/assignment using the construct mat(i,j).
       float & operator () (unsigned int row, unsigned int column);
 
@@ -31,14 +33,10 @@ namespace Rigid2D {
       Matrix2x2 operator - (const Matrix2x2& other) const;
       Matrix2x2 operator * (const Matrix2x2& other) const;
 
-      // If fDivisor is non-zero, function returns a new Matrix2x2 object with elements equal to
-      // calling object's elements divided by fDivisor.  If fDivisor is zero, function throws a
-      // DivideByZeroError.
-      //Matrix2x2 operator / (const float fDivisor) const;
+      // TODO Implement:
       // Matrix2x2 operator += (const Matrix2x2& other);
       // Matrix2x2 operator -= (const Matrix2x2& other);
       // Matrix2x2 operator *= (const Matrix2x2& other);
-      // Matrix2x2 operator /= (const Matrix2x2& other);
 
       Matrix2x2 operator = (const Matrix2x2& other);
 
@@ -62,6 +60,9 @@ namespace Rigid2D {
       // inv() returns true and assigns to invMatrix the inverse matrix of calling object.  Otherwise,
       // inv() returns false and assigns to invMatrix the 2 by 2 matrix of all zeros.
       bool inv(Matrix2x2& invMatrix, int maxUlp = 5) const;
+
+      // Returns a Matrix2x2 object representing the transpose of calling object.
+      Matrix2x2 transpose() const;
 
   }; // end class Matrix2x2.
 } // end namespace Rigid2D.

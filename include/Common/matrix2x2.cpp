@@ -3,11 +3,18 @@
 
 namespace Rigid2D {
 
-  float & Matrix2x2::operator () (unsigned int row, unsigned int column){
-    if ((row < 3) && (column < 3))
-      return data_[row][column];
-    else
-      throw R2Error(MatrixIndexOutOfBoundsError);
+  Matrix2x2::Matrix2x2(Matrix2x2& other){
+    data_[0][0] = other.data_[0][0];
+    data_[0][1] = other.data_[0][1];
+    data_[1][0] = other.data_[1][0];
+    data_[1][1] = other.data_[1][1];
+  }
+
+  float & Matrix2x2::operator () (unsigned int row, unsigned int col){
+		if (row > 2) row = 2;
+		if (col > 2) col= 2;
+
+    return data_[row][col];
   }
 
   Matrix2x2 Matrix2x2::operator + (const Matrix2x2 &other) const {
@@ -50,10 +57,10 @@ namespace Rigid2D {
       return true;
 
     // Check if all matrix elements are equal.
-    else if ((feq(data_[0][0],other.data_[0][0])) &&
-             (feq(data_[0][1],other.data_[0][1])) &&
-             (feq(data_[1][0],other.data_[1][0])) &&
-             (feq(data_[1][1],other.data_[1][1])))
+    else if ((feq(data_[0][0], other.data_[0][0])) &&
+             (feq(data_[0][1], other.data_[0][1])) &&
+             (feq(data_[1][0], other.data_[1][0])) &&
+             (feq(data_[1][1], other.data_[1][1])))
       return true;
     else
       return false;
@@ -88,7 +95,7 @@ namespace Rigid2D {
     if (row < 3)
       return data_[row];
     else
-      throw R2Error(MatrixIndexOutOfBoundsError);
+			return data_[2];
   }
 
   bool Matrix2x2::hasInverse(int maxUlp) const{
@@ -99,12 +106,13 @@ namespace Rigid2D {
   }
 
   bool Matrix2x2::inv(Matrix2x2& invMatrix, int maxUlp) const{
-    if (hasInverse(maxUlp) == false){
+    float det = this->det();
+
+    // Check if determinant is within maxUlp-1 floats from zero.
+    if (feq(det, 0.0f, maxUlp)){
       invMatrix.setZeros();
       return false;
     }
-
-    float det = this->det();
 
     invMatrix.data_[0][0] =  data_[1][1] / det;
     invMatrix.data_[0][1] = -data_[0][1] / det;
@@ -114,11 +122,15 @@ namespace Rigid2D {
     return true;
   }
   
-  //Matrix2x2 operator / (const float fDivisor) const {
-    //Matrix2x2 result;
-    
-    //result.data_[0][0] = data_[0][0] / fDivisor;
+  Matrix2x2 Matrix2x2::transpose() const {
+    Matrix2x2 result;
 
-  //}
+    result.data_[0][0] = data_[0][0];
+    result.data_[0][1] = data_[1][0];
+    result.data_[1][0] = data_[0][1];
+    result.data_[1][1] = data_[1][1];
+
+    return result;
+  }
 
 } // end namespace Rigid2D.
