@@ -3,6 +3,13 @@
 
 namespace Rigid2D {
 
+  Matrix2x2::Matrix2x2(Matrix2x2& other){
+    data_[0][0] = other.data_[0][0];
+    data_[0][1] = other.data_[0][1];
+    data_[1][0] = other.data_[1][0];
+    data_[1][1] = other.data_[1][1];
+  }
+
   float & Matrix2x2::operator () (unsigned int row, unsigned int col){
 		if (row > 2) row = 2;
 		if (col > 2) col= 2;
@@ -115,11 +122,15 @@ namespace Rigid2D {
     return true;
   }
   
-  //Matrix2x2 operator / (const float fDivisor) const {
-    //Matrix2x2 result;
-    
-    //result.data_[0][0] = data_[0][0] / fDivisor;
+  Matrix2x2 Matrix2x2::transpose() const {
+    Matrix2x2 result;
 
-  //}
+    result.data_[0][0] = data_[0][0];
+    result.data_[0][1] = data_[1][0];
+    result.data_[1][0] = data_[0][1];
+    result.data_[1][1] = data_[1][1];
+
+    return result;
+  }
 
 } // end namespace Rigid2D.
