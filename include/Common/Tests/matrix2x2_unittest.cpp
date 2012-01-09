@@ -3,7 +3,6 @@
 #include "../feq.h"
 #include "gtest/gtest.h"
 #include <float.h>
-#include <cstdio>
 using namespace Rigid2D;
 
 TEST(Matrix2x2Test, ConstructorParameterized){
@@ -18,14 +17,6 @@ TEST(Matrix2x2Test, ConstructorParameterized){
 TEST(Matrix2x2Test, CosntructorDeepCopy){
   Matrix2x2 a(101, 0.0020, -333.333, 4.0f/5.0f);
   Matrix2x2 b(a);
-
-  for(int i = 0; i<2; i++){
-    for(int j=0; j<2; j++){
-      printf("a(%d,%d): %1.15f\n",i,j,a(i,j));
-      printf("b(%d,%d): %1.15f\n",i,j,b(i,j));
-      printf("\n");
-    }
-  }
 
   EXPECT_TRUE(feq(a(0,0), b(0,0)));
   EXPECT_TRUE(feq(a(0,1), b(0,1)));
