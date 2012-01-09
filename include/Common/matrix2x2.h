@@ -33,10 +33,9 @@ namespace Rigid2D {
       Matrix2x2 operator - (const Matrix2x2& other) const;
       Matrix2x2 operator * (const Matrix2x2& other) const;
 
-      // TODO Implement:
-      // Matrix2x2 operator += (const Matrix2x2& other);
-      // Matrix2x2 operator -= (const Matrix2x2& other);
-      // Matrix2x2 operator *= (const Matrix2x2& other);
+			// Returns a Matrix2x2 object representing the state of calling object whos
+			// elements are all multiplied by value.
+			Matrix2x2 operator * (float value) const;
 
       Matrix2x2 operator = (const Matrix2x2& other);
 
