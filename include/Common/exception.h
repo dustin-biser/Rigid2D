@@ -25,6 +25,7 @@ namespace Rigid2D {
           //length += numberOfDigits(line) + strlen(function) + strlen(file);
           //try{
             //description_ = new char [length + 1];
+            ////use sprintf(dest, "%ld", line_) to convert line_ from long int to string
           //}
           //catch (bad_alloc error){
 
