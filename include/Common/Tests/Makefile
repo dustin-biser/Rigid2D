@@ -30,7 +30,7 @@ CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = matrix2x2_unittest r2error_unittest
+TESTS = matrix2x2_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -85,11 +85,4 @@ matrix2x2_unittest.o : $(TEST_DIR)matrix2x2_unittest.cpp $(SRC_DIR)feq.h \
 
 
 matrix2x2_unittest : matrix2x2.o matrix2x2_unittest.o feq.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
-
-r2error_unittest.o : $(TEST_DIR)r2error_unittest.cpp \
-                     $(SRC_DIR)r2error.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)r2error_unittest.cpp
-
-r2error_unittest : r2error_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
