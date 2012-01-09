@@ -343,5 +343,17 @@ TEST(Matrix2x2Operator, MatrixToMatrixMultiplication){
   EXPECT_TRUE(feq(c(1,1), 5.0f));
 }
 
+TEST(Matrix2x2Operator, MatrixToFloatMultiplication){
+	Matrix2x2 a(-1,2,3,-4);
+	Matrix2x2 b;
+
+	b = a * 2.0f;
+
+	EXPECT_TRUE(feq(b(0,0), -2.0f));
+	EXPECT_TRUE(feq(b(0,1),  4.0f));
+	EXPECT_TRUE(feq(b(1,0),  6.0f));
+	EXPECT_TRUE(feq(b(1,1), -8.0f));
+}
+
 // end Test Matrix2x2 Operators
 //==============================================================================
