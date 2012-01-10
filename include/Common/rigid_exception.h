@@ -1,5 +1,5 @@
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
+#ifndef RIGID_EXCEPTION_H
+#define RIGID_EXCEPTION_H
 #include <exception>
 #include <sstream>
 #include <string>

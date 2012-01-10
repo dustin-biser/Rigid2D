@@ -1,4 +1,4 @@
-#include "../exception.h"
+#include "../rigid_exception.h"
 #include "gtest/gtest.h"
 #include <cstdio>
 #include <string>
