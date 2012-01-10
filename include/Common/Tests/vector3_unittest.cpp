@@ -4,7 +4,7 @@
 
 using namespace Rigid2D;
 
-TEST(Vec3Test, ConstructorXYZ){
+TEST(Vector3Test, ConstructorXYZ){
   Vector3 v(1,2,3);
 
   EXPECT_EQ(1.0, v.x);
@@ -12,7 +12,7 @@ TEST(Vec3Test, ConstructorXYZ){
   EXPECT_EQ(3.0, v.z);
 }
 
-TEST(Vec3Test, ConstructorArr3){
+TEST(Vector3Test, ConstructorArr3){
   float arr[] = {1,2,3};
   Vector3 v(arr);
 
@@ -21,7 +21,7 @@ TEST(Vec3Test, ConstructorArr3){
   EXPECT_EQ(3.0, v.z);
 }
 
-TEST(Vec3Test, EqualOp){
+TEST(Vector3Test, EqualOp){
   Vector3 v(1,2,3);
   Vector3 v2 = v;
 
@@ -30,7 +30,7 @@ TEST(Vec3Test, EqualOp){
   EXPECT_EQ(v2.z, v.z);
 }
 
-TEST(Vec3Test, AddEqOp){
+TEST(Vector3Test, AddEqOp){
   Vector3 v(1.0, 2.0, 3.0);
   Vector3 v2(5.0, 6.0, 7.0);
   v2 += v;
@@ -40,7 +40,7 @@ TEST(Vec3Test, AddEqOp){
   EXPECT_EQ(10.0, v2.z);
 }
 
-TEST(Vec3Test, MultEqOp){
+TEST(Vector3Test, MultEqOp){
   Vector3 v(1.0, 2.0, 3.0);
   v *= 5.0;
 
@@ -49,7 +49,7 @@ TEST(Vec3Test, MultEqOp){
   EXPECT_EQ(15.0, v.z);
 }
 
-TEST(Vec3Test, DivEqOp){
+TEST(Vector3Test, DivEqOp){
   Vector3 v(5.0, 10.0, 15.0);
   v /= 5.0;
 
@@ -58,15 +58,16 @@ TEST(Vec3Test, DivEqOp){
   EXPECT_EQ(3.0, v.z);
 }
 
-TEST(Vec3Test, BracketOp){
+TEST(Vector3Test, BracketOp){
   Vector3 v(1.0, 2.0, 3.0);
 
   EXPECT_EQ(1.0, v[0]);
   EXPECT_EQ(2.0, v[1]);
   EXPECT_EQ(3.0, v[2]);
 }
+
 /*
-TEST(Vec3DeathTest, BracketOpInvalidIndex){
+TEST(Vector3DeathTest, BracketOpInvalidIndex){
   Vector3 v(1.0, 2.0, 3.0);
 
   EXPECT_DEATH({v[3];});
