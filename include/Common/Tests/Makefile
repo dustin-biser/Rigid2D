@@ -30,7 +30,8 @@ CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = matrix2x2_unittest
+TESTS = matrix2x2_unittest \
+				rigid_exception_unittest \
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -72,7 +73,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-feq.o : $(SRC_DIR)feq.cpp
+feq.o : $(SRC_DIR)feq.cpp $(SRC_DIR)feq.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)feq.cpp
 
 matrix2x2.o : $(SRC_DIR)matrix2x2.cpp $(SRC_DIR)matrix2x2.h $(SRC_DIR)feq.h \
@@ -85,4 +86,14 @@ matrix2x2_unittest.o : $(TEST_DIR)matrix2x2_unittest.cpp $(SRC_DIR)feq.h \
 
 
 matrix2x2_unittest : matrix2x2.o matrix2x2_unittest.o feq.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+rigid_exception.o : $(SRC_DIR)rigid_exception.cpp $(SRC_DIR)rigid_exception.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)rigid_exception.cpp
+
+rigid_exception_unittest.o : $(TEST_DIR)rigid_exception_unittest.cpp \
+                     $(SRC_DIR)rigid_exception.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)rigid_exception_unittest.cpp
+
+rigid_exception_unittest : rigid_exception_unittest.o rigid_exception.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

@@ -36,67 +36,78 @@ namespace Rigid2D {
     result.data_[1][0] = data_[1][0] - other.data_[1][0];
     result.data_[1][1] = data_[1][1] - other.data_[1][1];
 
-    return result;
-  }
+			return result;
+		}
 
-  Matrix2x2 Matrix2x2::operator = (const Matrix2x2 &other){
-    data_[0][0] = other.data_[0][0];
-    data_[0][1] = other.data_[0][1];
-    data_[1][0] = other.data_[1][0];
-    data_[1][1] = other.data_[1][1];
+		Matrix2x2 Matrix2x2::operator = (const Matrix2x2 &other){
+			data_[0][0] = other.data_[0][0];
+			data_[0][1] = other.data_[0][1];
+			data_[1][0] = other.data_[1][0];
+			data_[1][1] = other.data_[1][1];
 
-    return *this;
-  }
+			return *this;
+		}
 
-  /* Returns true if calling object and other have the same memory address or if
-   * all corresponding matrix elements are the same.  Otherwise, == returns false.
-   */
-  bool Matrix2x2::operator == (const Matrix2x2 &other) const {
-    // Check if addresses are equal
-    if (this == &other)
-      return true;
+		/* Returns true if calling object and other have the same memory address or if
+		 * all corresponding matrix elements are the same.  Otherwise, == returns false.
+		 */
+		bool Matrix2x2::operator == (const Matrix2x2 &other) const {
+			// Check if addresses are equal
+			if (this == &other)
+				return true;
 
-    // Check if all matrix elements are equal.
-    else if ((feq(data_[0][0], other.data_[0][0])) &&
-             (feq(data_[0][1], other.data_[0][1])) &&
-             (feq(data_[1][0], other.data_[1][0])) &&
-             (feq(data_[1][1], other.data_[1][1])))
-      return true;
-    else
-      return false;
-  }
+			// Check if all matrix elements are equal.
+			else if ((feq(data_[0][0], other.data_[0][0])) &&
+							 (feq(data_[0][1], other.data_[0][1])) &&
+							 (feq(data_[1][0], other.data_[1][0])) &&
+							 (feq(data_[1][1], other.data_[1][1])))
+				return true;
+			else
+				return false;
+		}
 
-  void Matrix2x2::setZeros(){
-    data_[0][0] = 0.0f;
-    data_[0][1] = 0.0f;
-    data_[1][0] = 0.0f;
-    data_[1][1] = 0.0f;
-  }
+		void Matrix2x2::setZeros(){
+			data_[0][0] = 0.0f;
+			data_[0][1] = 0.0f;
+			data_[1][0] = 0.0f;
+			data_[1][1] = 0.0f;
+		}
 
-  Matrix2x2 Matrix2x2::operator * (const Matrix2x2 &other) const {
-    Matrix2x2 result;
+		Matrix2x2 Matrix2x2::operator * (const Matrix2x2 &other) const {
+			Matrix2x2 result;
 
-    result(0,0) = (data_[0][0] * other.data_[0][0]) + (data_[0][1] * other.data_[1][0]);
-    result(0,1) = (data_[0][0] * other.data_[0][1]) + (data_[0][1] * other.data_[1][1]);
-    result(1,0) = (data_[1][0] * other.data_[0][0]) + (data_[1][1] * other.data_[1][0]);
-    result(1,1) = (data_[1][0] * other.data_[0][1]) + (data_[1][1] * other.data_[1][1]);
+			result(0,0) = (data_[0][0] * other.data_[0][0]) + (data_[0][1] * other.data_[1][0]);
+			result(0,1) = (data_[0][0] * other.data_[0][1]) + (data_[0][1] * other.data_[1][1]);
+			result(1,0) = (data_[1][0] * other.data_[0][0]) + (data_[1][1] * other.data_[1][0]);
+			result(1,1) = (data_[1][0] * other.data_[0][1]) + (data_[1][1] * other.data_[1][1]);
 
-    return result;
-  }
+			return result;
+		}
 
-  Matrix2x2 Matrix2x2::setIdentity(){
-    data_[0][0] = data_[1][1] = 1.0f;
-    data_[0][1] = data_[1][0] = 0.0f;
+		Matrix2x2 Matrix2x2::setIdentity(){
+			data_[0][0] = data_[1][1] = 1.0f;
+			data_[0][1] = data_[1][0] = 0.0f;
 
-    return *this;
-  }
+			return *this;
+		}
 
-  float * Matrix2x2::operator [] (unsigned int row){
-    if (row < 3)
-      return data_[row];
-    else
-			return data_[2];
-  }
+		Matrix2x2 Matrix2x2::operator * (float value) const{
+			Matrix2x2 result;
+
+			result.data_[0][0] = data_[0][0] * value;
+			result.data_[0][1] = data_[0][1] * value;
+			result.data_[1][0] = data_[1][0] * value;
+			result.data_[1][1] = data_[1][1] * value;
+
+			return result;
+		}
+
+		float * Matrix2x2::operator [] (unsigned int row){
+			if (row < 3)
+				return data_[row];
+			else
+				return data_[2];
+		}
 
   bool Matrix2x2::hasInverse(int maxUlp) const{
     if (feq(this->det(), 0.0f, maxUlp))
