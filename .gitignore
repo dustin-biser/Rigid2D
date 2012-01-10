@@ -7,4 +7,4 @@
 # Specific files to ignore
 matrix2x2_unittest
 rigid_exception_unittest
-num_digits_unittest
+vector3_unittest
