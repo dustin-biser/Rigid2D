@@ -8,6 +8,7 @@
 #include <cassert>
 #include <cstdlib>
 #include <cmath>
+#include "feq.h"
 
 namespace Rigid2D {
 
@@ -53,6 +54,10 @@ namespace Rigid2D {
         x /= scalar; 
         y /= scalar; 
         z /= scalar; 
+      }
+
+      bool operator==(const Vector3 & vec) const {
+        return (feq(x, vec.x) && feq(y, vec.y) && feq(z, vec.z));
       }
 
       float operator[](const size_t i) const {

@@ -23,3 +23,4 @@ namespace Rigid2D {
     file_ << text;
   }
 }
+
