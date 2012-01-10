@@ -46,7 +46,7 @@ namespace Rigid2D {
       Matrix2x2 setIdentity();
 
       // returns the determinant of calling object, in floating-point format.
-      inline float det() const{
+      float det() const{
         return (data_[0][0]*data_[1][1] - data_[0][1]*data_[1][0]);
       }
 
