@@ -1,59 +1,68 @@
-//#include "num_digits.h"
-//#include <new>
+#ifndef EXCEPTION_H
+#define EXCEPTION_H
+#include <exception>
+#include <sstream>
+#include <string>
+using std::string;
 
 namespace Rigid2D {
-  class Exception {
-    // True only if memory for description_ is allocated via new.
-    //bool trigger_description_deletion;
-
+  class Exception : public std::exception {
     protected:
-      const long line_;
-      const char * function_;
-      const char * file_;
-      const char * description_;
+      long line_;
+      string function_;
+      string file_;
+      string description_;
     public:
-      Exception ( long line, const char * const function, const char * const file,
-          const char * description = "" ) : line_(line),
-                                            function_(function),
-                                            file_(file),
-                                            description_(description) {
-        //trigger_description_deletion = false;
+      Exception ( long line, const char * function, const char * file,
+          const char * description = "") throw();
 
-        //if (description == ""){
-          //// fill out description using supplied parameters
-          //int length = strlen("Exception ocurred in file:  ,  function:  , line:  .")
-          //length += numberOfDigits(line) + strlen(function) + strlen(file);
-          //try{
-            //description_ = new char [length + 1];
-            ////use sprintf(dest, "%ld", line_) to convert line_ from long int to string
-          //}
-          //catch (bad_alloc error){
+      Exception ( long line, const string& function, const string& file,
+          const string& description = "") throw() : line_(line),
+                                                    function_(function),
+                                                    file_(file),
+                                                    description_(description) { }
 
-          //}
-        //}
-      }
-
-      ~Exception(){
-        if (trigger_description_deletion)
-          delete [] description_;
-      }
+      ~Exception () throw() { }
 
       // Returns the line number where the error occured.
-      long getLine ( ) { return line_; }
+      long getLine ( ) const throw() { return line_; }
 
       // Returns a string representing the function name where error occured.
-      const char * getFunction () { return function_; }
+      const string getFunction () const throw() { return function_; }
 
       // Returns a string representing the file where error occured.
-      const char * getFile () { return file_; }
+      const string getFile () const throw() { return file_; }
 
       // Returns a string representing a description of error.
-      const char * getDescription () { return description_; }
+      const string getDescription () const throw () { return description_; }
+
+      // Returns a c-string representing the full description of exception
+      // including line number, function, file, and, if available, a further
+      // specified description.
+      virtual const char * what() const throw();
   };
 
-  class UnimplementedException : public Exception {
+  class InternalErrorException : public Exception {
     public:
-      UnimplementedException (long line, const char * const function, const char * const file, const char * description = "") :
-          Exception (line, function, file, description) {}
+      InternalErrorException ( long line, const char * function, const char * file,
+          const char * description = "") throw() : Exception (line, function, file, description) { }
+
+      // Returns a c-string representing the full description of exception
+      // including line number, function, file, and, if available, a further
+      // specified description.
+      virtual const char * what() const throw();
+
+  };
+
+  class InvalidParameterException : public Exception {
+    public:
+      InvalidParameterException ( long line, const char * function, const char * file,
+          const char * description = "") throw() : Exception (line, function, file, description) { }
+
+      // Returns a c-string representing the full description of exception
+      // including line number, function, file, and, if available, a further
+      // specified description.
+      virtual const char * what() const throw();
   };
 }
+#endif

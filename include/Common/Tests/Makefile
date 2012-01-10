@@ -99,9 +99,12 @@ matrix2x2_unittest.o : $(TEST_DIR)matrix2x2_unittest.cpp $(SRC_DIR)feq.h \
 matrix2x2_unittest : matrix2x2.o matrix2x2_unittest.o feq.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
+exception.o : $(SRC_DIR)exception.cpp $(SRC_DIR)exception.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)exception.cpp
+
 exception_unittest.o : $(TEST_DIR)exception_unittest.cpp \
                      $(SRC_DIR)exception.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)exception_unittest.cpp
 
-exception_unittest : exception_unittest.o num_digits.o gtest_main.a
+exception_unittest : exception_unittest.o exception.o num_digits.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
