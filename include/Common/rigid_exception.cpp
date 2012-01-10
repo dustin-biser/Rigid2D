@@ -9,6 +9,7 @@ namespace Rigid2D{
 		function_ = string(function);
 		file_ = string(file);
 		description_ = string(description);
+    exceptionType_ = "Exception";
 	}
 
 	const char * Exception::what() const throw(){
@@ -19,39 +20,7 @@ namespace Rigid2D{
 
 		ss << line_;
 
-		result =  file_ + ":" + ss.str() + " Exception occured in function '" + function_ + "'";
-
-		if (description_ != "")
-			result += " : " + description_;
-
-		return result.c_str();
-	}
-
-	const char * InternalErrorException::what() const throw(){
-		//Build up result by appending line_, function_, file_, and
-		//description_ into a c-string and return it.
-		string result;
-		stringstream ss;
-
-		ss << line_;
-
-		result =  file_ + ":" + ss.str() + " InternalErrorException occured in function '" + function_ + "'";
-
-		if (description_ != "")
-			result += " : " + description_;
-
-		return result.c_str();
-	}
-
-	const char * InvalidParameterException::what() const throw(){
-		//Build up result by appending line_, function_, file_, and
-		//description_ into a c-string and return it.
-		string result;
-		stringstream ss;
-
-		ss << line_;
-
-		result =  file_ + ":" + ss.str() + " InvalidParameterException occured in function '" + function_ + "'";
+		result =  file_ + ":" + ss.str() + " " +  exceptionType_ + " occured in function '" + function_ + "'";
 
 		if (description_ != "")
 			result += " : " + description_;

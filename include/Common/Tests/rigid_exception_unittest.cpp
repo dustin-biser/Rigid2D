@@ -25,19 +25,6 @@ TEST(ExceptionTest, CreationWithStringLiterals){
   EXPECT_EQ(e.getDescription(), "description");
 }
 
-TEST(ExceptionTest, CreationWithStringsObjects){
-  string str1 = "funct";
-  string str2 = "file";
-  string str3 = "description";
-
-  Exception e(2, str1, str2, str3);
-
-  EXPECT_EQ(e.getLine(), 2);
-  EXPECT_EQ(e.getFunction(), "funct");
-  EXPECT_EQ(e.getFile(), "file");
-  EXPECT_EQ(e.getDescription(), "description");
-}
-
 TEST(ExceptionTest, WithWhat){
   Exception e(1, "funct", "file", "description");
   EXPECT_STREQ(e.what(), "file:1 Exception occured in function 'funct' : description");
