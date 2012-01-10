@@ -23,7 +23,8 @@ SRC_DIR = ../
 TEST_DIR =
 
 # Flags passed to the preprocessor.
-CPPFLAGS += -I$(GTEST_DIR)/include
+CPPFLAGS += -I$(GTEST_DIR)/include \
+						-I../../../ # Point to root directory of Rigid2D
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra

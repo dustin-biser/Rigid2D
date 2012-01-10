@@ -1,5 +1,6 @@
 // matrix2x2.cpp
 #include "matrix2x2.h"
+#include "RigidSettings.h"
 
 namespace Rigid2D {
 
@@ -10,7 +11,7 @@ namespace Rigid2D {
     data_[1][1] = other.data_[1][1];
   }
 
-  float & Matrix2x2::operator () (unsigned int row, unsigned int col){
+  Real & Matrix2x2::operator () (unsigned int row, unsigned int col){
 		if (row > 2) row = 2;
 		if (col > 2) col= 2;
 
@@ -91,7 +92,7 @@ namespace Rigid2D {
 			return *this;
 		}
 
-		Matrix2x2 Matrix2x2::operator * (float value) const{
+		Matrix2x2 Matrix2x2::operator * (Real value) const{
 			Matrix2x2 result;
 
 			result.data_[0][0] = data_[0][0] * value;
@@ -102,7 +103,7 @@ namespace Rigid2D {
 			return result;
 		}
 
-		float * Matrix2x2::operator [] (unsigned int row){
+		Real * Matrix2x2::operator [] (unsigned int row){
 			if (row < 3)
 				return data_[row];
 			else
@@ -117,9 +118,9 @@ namespace Rigid2D {
   }
 
   bool Matrix2x2::inv(Matrix2x2& invMatrix, int maxUlp) const{
-    float det = this->det();
+    Real det = this->det();
 
-    // Check if determinant is within maxUlp-1 floats from zero.
+    // Check if determinant is within maxUlp-1 floating-point values from zero.
     if (feq(det, 0.0f, maxUlp)){
       invMatrix.setZeros();
       return false;
