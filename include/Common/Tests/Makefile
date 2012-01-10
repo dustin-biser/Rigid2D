@@ -30,7 +30,9 @@ CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = matrix2x2_unittest
+TESTS = matrix2x2_unittest \
+				exception_unittest \
+				num_digits_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -72,8 +74,18 @@ gtest_main.a : gtest-all.o gtest_main.o
 # gtest_main.a, depending on whether it defines its own main()
 # function.
 
-feq.o : $(SRC_DIR)feq.cpp
+feq.o : $(SRC_DIR)feq.cpp $(SRC_DIR)feq.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)feq.cpp
+
+num_digits.o : $(SRC_DIR)num_digits.cpp $(SRC_DIR)num_digits.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)num_digits.cpp
+
+num_digits_unittest.o : $(TEST_DIR)num_digits_unittest.cpp $(SRC_DIR)num_digits.h \
+												$(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)num_digits_unittest.cpp
+
+num_digits_unittest : num_digits.o num_digits_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 matrix2x2.o : $(SRC_DIR)matrix2x2.cpp $(SRC_DIR)matrix2x2.h $(SRC_DIR)feq.h \
 							$(GTEST_HEADERS)
@@ -85,4 +97,14 @@ matrix2x2_unittest.o : $(TEST_DIR)matrix2x2_unittest.cpp $(SRC_DIR)feq.h \
 
 
 matrix2x2_unittest : matrix2x2.o matrix2x2_unittest.o feq.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+exception.o : $(SRC_DIR)exception.cpp $(SRC_DIR)exception.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)exception.cpp
+
+exception_unittest.o : $(TEST_DIR)exception_unittest.cpp \
+                     $(SRC_DIR)exception.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)exception_unittest.cpp
+
+exception_unittest : exception_unittest.o exception.o num_digits.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
