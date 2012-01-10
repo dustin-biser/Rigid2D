@@ -32,6 +32,7 @@ CXXFLAGS += -g -Wall -Wextra
 # created to the list.
 TESTS = matrix2x2_unittest \
 				rigid_exception_unittest \
+        vector3_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -97,3 +98,13 @@ rigid_exception_unittest.o : $(TEST_DIR)rigid_exception_unittest.cpp \
 
 rigid_exception_unittest : rigid_exception_unittest.o rigid_exception.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+  
+vector3_unittest.o : $(TEST_DIR)vector3_unittest.cpp $(SRC_DIR)feq.h \
+                     $(SRC_DIR)vector3.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)vector3_unittest.cpp
+
+
+vector3_unittest : vector3_unittest.o feq.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+
