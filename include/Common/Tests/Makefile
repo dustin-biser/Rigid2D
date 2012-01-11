@@ -31,7 +31,7 @@ CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = Matrix2UnitTest \
+TESTS = Matrix2-UnitTest \
 				RigidException-UnitTest \
         vector3_unittest
 
@@ -82,12 +82,12 @@ Matrix2.o : $(SRC_DIR)Matrix2.cpp $(SRC_DIR)Matrix2.h $(SRC_DIR)feq.h \
 							$(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)Matrix2.cpp
 
-Matrix2UnitTest.o : $(TEST_DIR)Matrix2UnitTest.cpp $(SRC_DIR)feq.h \
+Matrix2-UnitTest.o : $(TEST_DIR)Matrix2-UnitTest.cpp $(SRC_DIR)feq.h \
                      $(SRC_DIR)Matrix2.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Matrix2UnitTest.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Matrix2-UnitTest.cpp
 
 
-Matrix2UnitTest : Matrix2.o Matrix2UnitTest.o feq.o gtest_main.a
+Matrix2-UnitTest : Matrix2.o Matrix2-UnitTest.o feq.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 RigidException.o : $(SRC_DIR)RigidException.cpp $(SRC_DIR)RigidException.h $(GTEST_HEADERS)
