@@ -32,7 +32,7 @@ CXXFLAGS += -g -Wall -Wextra
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
 TESTS = Matrix2UnitTest \
-				rigid_exception_unittest \
+				RigidException-UnitTest \
         vector3_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
@@ -90,14 +90,14 @@ Matrix2UnitTest.o : $(TEST_DIR)Matrix2UnitTest.cpp $(SRC_DIR)feq.h \
 Matrix2UnitTest : Matrix2.o Matrix2UnitTest.o feq.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
-rigid_exception.o : $(SRC_DIR)rigid_exception.cpp $(SRC_DIR)rigid_exception.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)rigid_exception.cpp
+RigidException.o : $(SRC_DIR)RigidException.cpp $(SRC_DIR)RigidException.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)RigidException.cpp
 
-rigid_exception_unittest.o : $(TEST_DIR)rigid_exception_unittest.cpp \
-                     $(SRC_DIR)rigid_exception.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)rigid_exception_unittest.cpp
+RigidException-UnitTest.o : $(TEST_DIR)RigidException-UnitTest.cpp \
+                     $(SRC_DIR)RigidException.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)RigidException-UnitTest.cpp
 
-rigid_exception_unittest : rigid_exception_unittest.o rigid_exception.o gtest_main.a
+RigidException-UnitTest : RigidException-UnitTest.o RigidException.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
   
 vector3_unittest.o : $(TEST_DIR)vector3_unittest.cpp $(SRC_DIR)feq.h \

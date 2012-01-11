@@ -1,4 +1,4 @@
-#include "rigid_exception.h"
+#include "RigidException.h"
 using std::string;
 using std::stringstream;
 

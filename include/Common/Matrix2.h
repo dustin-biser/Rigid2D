@@ -1,4 +1,3 @@
-// matrix2x2.h
 #ifndef RIGID_MATRIX2_H
 #define RIGID_MATRIX2_H
 #include "RigidSettings.h"
