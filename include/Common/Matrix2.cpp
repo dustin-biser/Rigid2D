@@ -1,25 +1,24 @@
 // matrix2x2.cpp
-#include "matrix2x2.h"
-#include "RigidSettings.h"
+#include "Matrix2.h"
 
 namespace Rigid2D {
 
-  Matrix2x2::Matrix2x2(Matrix2x2& other){
+  Matrix2::Matrix2(Matrix2& other){
     data_[0][0] = other.data_[0][0];
     data_[0][1] = other.data_[0][1];
     data_[1][0] = other.data_[1][0];
     data_[1][1] = other.data_[1][1];
   }
 
-  Real & Matrix2x2::operator () (unsigned int row, unsigned int col){
-		if (row > 2) row = 2;
-		if (col > 2) col= 2;
+  Real & Matrix2::operator () (unsigned int row, unsigned int col){
+		assert (row < 2);
+		assert (col < 2);
 
     return data_[row][col];
   }
 
-  Matrix2x2 Matrix2x2::operator + (const Matrix2x2 &other) const {
-    Matrix2x2 result;
+  Matrix2 Matrix2::operator + (const Matrix2 &other) const {
+    Matrix2 result;
 
     result.data_[0][0] = data_[0][0] + other.data_[0][0];
     result.data_[0][1] = data_[0][1] + other.data_[0][1];
@@ -29,8 +28,8 @@ namespace Rigid2D {
     return result;
   }
 
-  Matrix2x2 Matrix2x2::operator - (const Matrix2x2 &other) const {
-    Matrix2x2 result;
+  Matrix2 Matrix2::operator - (const Matrix2 &other) const {
+    Matrix2 result;
 
     result.data_[0][0] = data_[0][0] - other.data_[0][0];
     result.data_[0][1] = data_[0][1] - other.data_[0][1];
@@ -40,7 +39,7 @@ namespace Rigid2D {
 			return result;
 		}
 
-		Matrix2x2 Matrix2x2::operator = (const Matrix2x2 &other){
+		Matrix2 Matrix2::operator = (const Matrix2 &other){
 			data_[0][0] = other.data_[0][0];
 			data_[0][1] = other.data_[0][1];
 			data_[1][0] = other.data_[1][0];
@@ -52,7 +51,7 @@ namespace Rigid2D {
 		/* Returns true if calling object and other have the same memory address or if
 		 * all corresponding matrix elements are the same.  Otherwise, == returns false.
 		 */
-		bool Matrix2x2::operator == (const Matrix2x2 &other) const {
+		bool Matrix2::operator == (const Matrix2 &other) const {
 			// Check if addresses are equal
 			if (this == &other)
 				return true;
@@ -67,15 +66,15 @@ namespace Rigid2D {
 				return false;
 		}
 
-		void Matrix2x2::setZeros(){
+		void Matrix2::setZeros(){
 			data_[0][0] = 0.0f;
 			data_[0][1] = 0.0f;
 			data_[1][0] = 0.0f;
 			data_[1][1] = 0.0f;
 		}
 
-		Matrix2x2 Matrix2x2::operator * (const Matrix2x2 &other) const {
-			Matrix2x2 result;
+		Matrix2 Matrix2::operator * (const Matrix2 &other) const {
+			Matrix2 result;
 
 			result(0,0) = (data_[0][0] * other.data_[0][0]) + (data_[0][1] * other.data_[1][0]);
 			result(0,1) = (data_[0][0] * other.data_[0][1]) + (data_[0][1] * other.data_[1][1]);
@@ -85,15 +84,15 @@ namespace Rigid2D {
 			return result;
 		}
 
-		Matrix2x2 Matrix2x2::setIdentity(){
+		Matrix2 Matrix2::setIdentity(){
 			data_[0][0] = data_[1][1] = 1.0f;
 			data_[0][1] = data_[1][0] = 0.0f;
 
 			return *this;
 		}
 
-		Matrix2x2 Matrix2x2::operator * (Real value) const{
-			Matrix2x2 result;
+		Matrix2 Matrix2::operator * (Real value) const{
+			Matrix2 result;
 
 			result.data_[0][0] = data_[0][0] * value;
 			result.data_[0][1] = data_[0][1] * value;
@@ -103,21 +102,19 @@ namespace Rigid2D {
 			return result;
 		}
 
-		Real * Matrix2x2::operator [] (unsigned int row){
-			if (row < 3)
-				return data_[row];
-			else
-				return data_[2];
+		Real * Matrix2::operator [] (unsigned int row){
+			assert ( row < 2 );
+			return data_[row];
 		}
 
-  bool Matrix2x2::hasInverse(int maxUlp) const{
+  bool Matrix2::hasInverse(int maxUlp) const{
     if (feq(this->det(), 0.0f, maxUlp))
       return false;
     else
       return true;
   }
 
-  bool Matrix2x2::inv(Matrix2x2& invMatrix, int maxUlp) const{
+  bool Matrix2::inv(Matrix2& invMatrix, int maxUlp) const{
     Real det = this->det();
 
     // Check if determinant is within maxUlp-1 floating-point values from zero.
@@ -134,8 +131,8 @@ namespace Rigid2D {
     return true;
   }
   
-  Matrix2x2 Matrix2x2::transpose() const {
-    Matrix2x2 result;
+  Matrix2 Matrix2::transpose() const {
+    Matrix2 result;
 
     result.data_[0][0] = data_[0][0];
     result.data_[0][1] = data_[1][0];

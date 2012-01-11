@@ -31,7 +31,7 @@ CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = matrix2x2_unittest \
+TESTS = Matrix2UnitTest \
 				rigid_exception_unittest \
         vector3_unittest
 
@@ -78,16 +78,16 @@ gtest_main.a : gtest-all.o gtest_main.o
 feq.o : $(SRC_DIR)feq.cpp $(SRC_DIR)feq.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)feq.cpp
 
-matrix2x2.o : $(SRC_DIR)matrix2x2.cpp $(SRC_DIR)matrix2x2.h $(SRC_DIR)feq.h \
+Matrix2.o : $(SRC_DIR)Matrix2.cpp $(SRC_DIR)Matrix2.h $(SRC_DIR)feq.h \
 							$(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)matrix2x2.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)Matrix2.cpp
 
-matrix2x2_unittest.o : $(TEST_DIR)matrix2x2_unittest.cpp $(SRC_DIR)feq.h \
-                     $(SRC_DIR)matrix2x2.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)matrix2x2_unittest.cpp
+Matrix2UnitTest.o : $(TEST_DIR)Matrix2UnitTest.cpp $(SRC_DIR)feq.h \
+                     $(SRC_DIR)Matrix2.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Matrix2UnitTest.cpp
 
 
-matrix2x2_unittest : matrix2x2.o matrix2x2_unittest.o feq.o gtest_main.a
+Matrix2UnitTest : Matrix2.o Matrix2UnitTest.o feq.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 rigid_exception.o : $(SRC_DIR)rigid_exception.cpp $(SRC_DIR)rigid_exception.h $(GTEST_HEADERS)
