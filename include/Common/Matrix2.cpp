@@ -1,6 +1,5 @@
 // matrix2x2.cpp
-#include "matrix2x2.h"
-#include "RigidSettings.h"
+#include "Matrix2.h"
 
 namespace Rigid2D {
 
@@ -12,8 +11,8 @@ namespace Rigid2D {
   }
 
   Real & Matrix2x2::operator () (unsigned int row, unsigned int col){
-		if (row > 2) row = 2;
-		if (col > 2) col= 2;
+		assert (row < 2);
+		assert (col < 2);
 
     return data_[row][col];
   }
@@ -104,10 +103,8 @@ namespace Rigid2D {
 		}
 
 		Real * Matrix2x2::operator [] (unsigned int row){
-			if (row < 3)
-				return data_[row];
-			else
-				return data_[2];
+			assert ( row < 2 );
+			return data_[row];
 		}
 
   bool Matrix2x2::hasInverse(int maxUlp) const{

@@ -5,6 +5,6 @@
 *.gch
 
 # Specific files to ignore
-matrix2x2_unittest
+Matrix2UnitTest
 rigid_exception_unittest
 vector3_unittest
