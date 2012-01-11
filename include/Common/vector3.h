@@ -1,7 +1,3 @@
-/*
- *	Author: Michail Denchev
- */
-
 #ifndef VEC3F_HPP
 #define VEC3F_HPP
 
