@@ -42,8 +42,10 @@ namespace Rigid2D {
 
       bool operator == (const Matrix2& other) const;
 
+			// Set all elements of calling object to zero.
       void setZeros();
 
+			// Modify calling object, making it a 2 by 2 identity matrix and returning a copy.
       Matrix2 setIdentity();
 
       // returns the determinant of calling object, in floating-point format.
