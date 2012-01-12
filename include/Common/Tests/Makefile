@@ -23,16 +23,17 @@ SRC_DIR = ../
 TEST_DIR =
 
 # Flags passed to the preprocessor.
-CPPFLAGS += -I$(GTEST_DIR)/include
+CPPFLAGS += -I$(GTEST_DIR)/include \
+						-I../../../ # Point to root directory of Rigid2D
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = matrix2x2_unittest \
-				rigid_exception_unittest \
-        vector3_unittest
+TESTS = Matrix2-UnitTest \
+				RigidException-UnitTest \
+        Vector3-UnitTest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -77,34 +78,32 @@ gtest_main.a : gtest-all.o gtest_main.o
 feq.o : $(SRC_DIR)feq.cpp $(SRC_DIR)feq.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)feq.cpp
 
-matrix2x2.o : $(SRC_DIR)matrix2x2.cpp $(SRC_DIR)matrix2x2.h $(SRC_DIR)feq.h \
+Matrix2.o : $(SRC_DIR)Matrix2.cpp $(SRC_DIR)Matrix2.h $(SRC_DIR)feq.h \
 							$(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)matrix2x2.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)Matrix2.cpp
 
-matrix2x2_unittest.o : $(TEST_DIR)matrix2x2_unittest.cpp $(SRC_DIR)feq.h \
-                     $(SRC_DIR)matrix2x2.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)matrix2x2_unittest.cpp
+Matrix2-UnitTest.o : $(TEST_DIR)Matrix2-UnitTest.cpp $(SRC_DIR)feq.h \
+                     $(SRC_DIR)Matrix2.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Matrix2-UnitTest.cpp
 
-
-matrix2x2_unittest : matrix2x2.o matrix2x2_unittest.o feq.o gtest_main.a
+Matrix2-UnitTest : Matrix2.o Matrix2-UnitTest.o feq.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
-rigid_exception.o : $(SRC_DIR)rigid_exception.cpp $(SRC_DIR)rigid_exception.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)rigid_exception.cpp
+RigidException.o : $(SRC_DIR)RigidException.cpp $(SRC_DIR)RigidException.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)RigidException.cpp
 
-rigid_exception_unittest.o : $(TEST_DIR)rigid_exception_unittest.cpp \
-                     $(SRC_DIR)rigid_exception.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)rigid_exception_unittest.cpp
+RigidException-UnitTest.o : $(TEST_DIR)RigidException-UnitTest.cpp \
+                     $(SRC_DIR)RigidException.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)RigidException-UnitTest.cpp
 
-rigid_exception_unittest : rigid_exception_unittest.o rigid_exception.o gtest_main.a
+RigidException-UnitTest : RigidException-UnitTest.o RigidException.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
   
-vector3_unittest.o : $(TEST_DIR)vector3_unittest.cpp $(SRC_DIR)feq.h \
+Vector3-UnitTest.o : $(TEST_DIR)Vector3-UnitTest.cpp $(SRC_DIR)feq.h \
                      $(SRC_DIR)vector3.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)vector3_unittest.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Vector3-UnitTest.cpp
 
-
-vector3_unittest : vector3_unittest.o feq.o gtest_main.a
+Vector3-UnitTest : Vector3-UnitTest.o feq.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 

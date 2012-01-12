@@ -1,12 +1,6 @@
-/*
- *	Author: Michail Denchev
- */
-
-#ifndef VEC3F_HPP
-#define VEC3F_HPP
-
+#ifndef RIGID_VECTOR_H
+#define RIGID_VECTOR_H
 #include <cassert>
-#include <cstdlib>
 #include <cmath>
 
 namespace Rigid2D {
@@ -19,45 +13,45 @@ namespace Rigid2D {
     public:
       Vector3() {}
 
-      Vector3(const float X, const float Y, const float Z) { 
-        x = X; 
-        y = Y; 
-        z = Z; 
+      Vector3(const float X, const float Y, const float Z) {
+        x = X;
+        y = Y;
+        z = Z;
       }
 
-      Vector3(const float arr[3]) { 
-        x = arr[0]; 
-        y = arr[1]; 
-        z = arr[2]; 
+      Vector3(const float arr[3]) {
+        x = arr[0];
+        y = arr[1];
+        z = arr[2];
       }
 
-      void operator=(const Vector3 &vector) { 
-        x = vector.x; 
-        y = vector.y; 
+      void operator=(const Vector3 &vector) {
+        x = vector.x;
+        y = vector.y;
         z = vector.z;
       }
 
-      void operator+=(const Vector3 &vector) { 
-        x += vector.x; 
-        y += vector.y; 
-        z += vector.z; 
+      void operator+=(const Vector3 &vector) {
+        x += vector.x;
+        y += vector.y;
+        z += vector.z;
       }
 
-      void operator*=(float scalar) { 
-        x *= scalar; 
-        y *= scalar; 
-        z *= scalar; 
+      void operator*=(float scalar) {
+        x *= scalar;
+        y *= scalar;
+        z *= scalar;
       }
 
-      void operator/=(float scalar) { 
-        x /= scalar; 
-        y /= scalar; 
-        z /= scalar; 
+      void operator/=(float scalar) {
+        x /= scalar;
+        y /= scalar;
+        z /= scalar;
       }
 
-      float operator[](const size_t i) const {
+      float operator[](const unsigned int i) const {
         assert(i < 3);
-        return *(&x + i); 
+        return *(&x + i);
       }
 
 
