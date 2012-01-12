@@ -1,4 +1,4 @@
-#include "../rigid_exception.h"
+#include "../RigidException.h"
 #include "gtest/gtest.h"
 #include <cstdio>
 #include <string>
@@ -20,19 +20,6 @@ TEST(ExceptionTest, CreationWithStringLiterals){
   Exception e(1, "funct", "file", "description");
 
   EXPECT_EQ(e.getLine(), 1);
-  EXPECT_EQ(e.getFunction(), "funct");
-  EXPECT_EQ(e.getFile(), "file");
-  EXPECT_EQ(e.getDescription(), "description");
-}
-
-TEST(ExceptionTest, CreationWithStringsObjects){
-  string str1 = "funct";
-  string str2 = "file";
-  string str3 = "description";
-
-  Exception e(2, str1, str2, str3);
-
-  EXPECT_EQ(e.getLine(), 2);
   EXPECT_EQ(e.getFunction(), "funct");
   EXPECT_EQ(e.getFile(), "file");
   EXPECT_EQ(e.getDescription(), "description");

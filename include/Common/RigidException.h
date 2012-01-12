@@ -12,15 +12,10 @@ namespace Rigid2D {
       string function_;
       string file_;
       string description_;
+      string exceptionType_;
     public:
       Exception ( long line, const char * function, const char * file,
           const char * description = "") throw();
-
-      Exception ( long line, const string& function, const string& file,
-          const string& description = "") throw() : line_(line),
-                                                    function_(function),
-                                                    file_(file),
-                                                    description_(description) { }
 
       ~Exception () throw() { }
 
@@ -45,24 +40,13 @@ namespace Rigid2D {
   class InternalErrorException : public Exception {
     public:
       InternalErrorException ( long line, const char * function, const char * file,
-          const char * description = "") throw() : Exception (line, function, file, description) { }
-
-      // Returns a c-string representing the full description of exception
-      // including line number, function, file, and, if available, a further
-      // specified description.
-      virtual const char * what() const throw();
-
+          const char * description = "") throw() : Exception (line, function, file, description) { exceptionType_ = "InternalErrorException"; }
   };
 
   class InvalidParameterException : public Exception {
     public:
       InvalidParameterException ( long line, const char * function, const char * file,
-          const char * description = "") throw() : Exception (line, function, file, description) { }
-
-      // Returns a c-string representing the full description of exception
-      // including line number, function, file, and, if available, a further
-      // specified description.
-      virtual const char * what() const throw();
+          const char * description = "") throw() : Exception (line, function, file, description) { exceptionType_ = "InvalidParameterException"; }
   };
 }
 #endif

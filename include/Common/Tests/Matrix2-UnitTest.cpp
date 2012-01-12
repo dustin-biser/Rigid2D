@@ -1,12 +1,12 @@
 //matrix2x2_unittest.cpp
-#include "../matrix2x2.h"
+#include "../Matrix2.h"
 #include "../feq.h"
 #include "gtest/gtest.h"
 #include <float.h>
 using namespace Rigid2D;
 
-TEST(Matrix2x2Test, ConstructorParameterized){
-  Matrix2x2 m(1,2,3,4);
+TEST(Matrix2Test, ConstructorParameterized){
+  Matrix2 m(1,2,3,4);
 
   EXPECT_EQ(1.0, m(0,0));
   EXPECT_EQ(2.0, m(0,1));
@@ -14,9 +14,9 @@ TEST(Matrix2x2Test, ConstructorParameterized){
   EXPECT_EQ(4.0, m(1,1));
 }
 
-TEST(Matrix2x2Test, CosntructorDeepCopy){
-  Matrix2x2 a(101, 0.0020, -333.333, 4.0f/5.0f);
-  Matrix2x2 b(a);
+TEST(Matrix2Test, CosntructorDeepCopy){
+  Matrix2 a(101, 0.0020, -333.333, 4.0f/5.0f);
+  Matrix2 b(a);
 
   EXPECT_TRUE(feq(a(0,0), b(0,0)));
   EXPECT_TRUE(feq(a(0,1), b(0,1)));
@@ -24,8 +24,8 @@ TEST(Matrix2x2Test, CosntructorDeepCopy){
   EXPECT_TRUE(feq(a(1,1), b(1,1)));
 }
 
-TEST(Matrix2x2Test, SetZeros){
-  Matrix2x2 m(1,1,1,1);
+TEST(Matrix2Test, SetZeros){
+  Matrix2 m(1,1,1,1);
   m.setZeros();
 
   EXPECT_EQ(0.0, m(0,0));
@@ -34,8 +34,8 @@ TEST(Matrix2x2Test, SetZeros){
   EXPECT_EQ(0.0, m(1,1));
 }
 
-TEST(Matrix2x2Test, SetIdentity){
-  Matrix2x2 a;
+TEST(Matrix2Test, SetIdentity){
+  Matrix2 a;
   a.setIdentity();
 
   EXPECT_TRUE(feq(a(0,0), 1.0f));
@@ -44,9 +44,9 @@ TEST(Matrix2x2Test, SetIdentity){
   EXPECT_TRUE(feq(a(1,1), 1.0f));
 }
 
-TEST(Matrix2x2Test, Transpose){
-  Matrix2x2 a(1,2,3,4);
-  Matrix2x2 c;
+TEST(Matrix2Test, Transpose){
+  Matrix2 a(1,2,3,4);
+  Matrix2 c;
 
   c = a.transpose();
 
@@ -57,33 +57,33 @@ TEST(Matrix2x2Test, Transpose){
 
 }
 //=== Test Determinant ========================================================
-TEST(Matrix2x2Determinant, DeterminantIsNegative){
-  Matrix2x2 a(1,2,3,4);
+TEST(Matrix2Determinant, DeterminantIsNegative){
+  Matrix2 a(1,2,3,4);
 
   EXPECT_TRUE(feq(a.det(), -2.0f));
 }
 
-TEST(Matrix2x2Determinant, DeterminantIsPositive){
-  Matrix2x2 a(1,-1,1,1);
+TEST(Matrix2Determinant, DeterminantIsPositive){
+  Matrix2 a(1,-1,1,1);
 
   EXPECT_TRUE(feq(a.det(), 2.0f));
 }
 
-TEST(Matrix2x2Determinant, DeterminantIsZero){
-  Matrix2x2 a(4,1,4,1);
+TEST(Matrix2Determinant, DeterminantIsZero){
+  Matrix2 a(4,1,4,1);
 
   EXPECT_TRUE(feq(a.det(), 0.0f));
 }
 
-TEST(Matrix2x2Determinant, DeterminantIsSmallPositive){
-  Matrix2x2 a(1e-3, 0, 0, 1e-3);
+TEST(Matrix2Determinant, DeterminantIsSmallPositive){
+  Matrix2 a(1e-3, 0, 0, 1e-3);
 
 
   EXPECT_TRUE(feq(a.det(), 1e-6));
 }
 
-TEST(Matrix2x2Determinant, DeterminantIsSmallNegative){
-  Matrix2x2 a(-1e-3, 0, 0, 1e-3);
+TEST(Matrix2Determinant, DeterminantIsSmallNegative){
+  Matrix2 a(-1e-3, 0, 0, 1e-3);
 
 
   EXPECT_TRUE(feq(a.det(), -1e-6));
@@ -92,22 +92,22 @@ TEST(Matrix2x2Determinant, DeterminantIsSmallNegative){
 //==============================================================================
 
 //=== Test Inverse =============================================================
-TEST(Matrix2x2Inverse, HasInverseTrue){
-  Matrix2x2 a(1,1,1,2);
+TEST(Matrix2Inverse, HasInverseTrue){
+  Matrix2 a(1,1,1,2);
 
   EXPECT_TRUE(a.hasInverse());
 }
 
-TEST(Matrix2x2Inverse, HasInverseFalse){
-  Matrix2x2 a(1,1,1,1);
+TEST(Matrix2Inverse, HasInverseFalse){
+  Matrix2 a(1,1,1,1);
 
   EXPECT_FALSE(a.hasInverse());
 }
 
-TEST(Matrix2x2Inverse, ComputeInverseSimple){
-  Matrix2x2 a(1,2,2,1);
-  Matrix2x2 true_inv(-1.0/3.0, 2.0/3.0, 2.0/3.0, -1.0/3.0);
-  Matrix2x2 result;
+TEST(Matrix2Inverse, ComputeInverseSimple){
+  Matrix2 a(1,2,2,1);
+  Matrix2 true_inv(-1.0/3.0, 2.0/3.0, 2.0/3.0, -1.0/3.0);
+  Matrix2 result;
 
   EXPECT_TRUE(a.inv(result));
   EXPECT_TRUE(feq(result(0,0), true_inv(0,0)));
@@ -116,10 +116,10 @@ TEST(Matrix2x2Inverse, ComputeInverseSimple){
   EXPECT_TRUE(feq(result(1,1), true_inv(1,1)));
 }
 
-TEST(Matrix2x2Inverse, ComputeInverseIdentity){
-  Matrix2x2 a(1,0,0,1);
-  Matrix2x2 true_inv(1,0,0,1);
-  Matrix2x2 result;
+TEST(Matrix2Inverse, ComputeInverseIdentity){
+  Matrix2 a(1,0,0,1);
+  Matrix2 true_inv(1,0,0,1);
+  Matrix2 result;
 
   EXPECT_TRUE(a.inv(result));
   EXPECT_TRUE(feq(result(0,0), 1.0f));
@@ -128,9 +128,9 @@ TEST(Matrix2x2Inverse, ComputeInverseIdentity){
   EXPECT_TRUE(feq(result(1,1), 1.0f));
 }
 
-TEST(Matrix2x2Inverse, ComputeInverseSmall){
-  Matrix2x2 a(1e-6, 2e-6, 2e-6, 1e-6);
-  Matrix2x2 result;
+TEST(Matrix2Inverse, ComputeInverseSmall){
+  Matrix2 a(1e-6, 2e-6, 2e-6, 1e-6);
+  Matrix2 result;
 
   EXPECT_TRUE(a.inv(result));
   EXPECT_TRUE(feq(result(0,0), -(1.0/3.0)*1e+6));
@@ -141,9 +141,9 @@ TEST(Matrix2x2Inverse, ComputeInverseSmall){
 // End Test Inverse
 //==============================================================================
 
-//=== Test Matrix2x2 Operators =================================================
-TEST(Matrix2x2Operator, ParenthesesElementAssignment){
-  Matrix2x2 a;
+//=== Test Matrix2 Operators =================================================
+TEST(Matrix2Operator, ParenthesesElementAssignment){
+  Matrix2 a;
   
   a(0,0) = 1.0f;
   a(0,1) = 2.0f;
@@ -156,8 +156,8 @@ TEST(Matrix2x2Operator, ParenthesesElementAssignment){
   EXPECT_TRUE(feq(a(1,1), 4.0f));
 }
 
-TEST(Matrix2x2Operator, ParenthesesElementAccess){
-  Matrix2x2 a(1.0f, 2.0f, 3.0f, 4.0f);
+TEST(Matrix2Operator, ParenthesesElementAccess){
+  Matrix2 a(1.0f, 2.0f, 3.0f, 4.0f);
 
   EXPECT_TRUE(feq(a(0,0), 1.0f));
   EXPECT_TRUE(feq(a(0,1), 2.0f));
@@ -165,8 +165,8 @@ TEST(Matrix2x2Operator, ParenthesesElementAccess){
   EXPECT_TRUE(feq(a(1,1), 4.0f));
 }
 
-TEST(Matrix2x2Operator, BracketsMemberAccess){
-  Matrix2x2 a(1,2,3,4);
+TEST(Matrix2Operator, BracketsMemberAccess){
+  Matrix2 a(1,2,3,4);
 
   EXPECT_TRUE(feq(a[0][0], 1.0f));
   EXPECT_TRUE(feq(a[0][1], 2.0f));
@@ -174,8 +174,8 @@ TEST(Matrix2x2Operator, BracketsMemberAccess){
   EXPECT_TRUE(feq(a[1][1], 4.0f));
 }
 
-TEST(Matrix2x2Operator, BracketsMemberAssignment){
-  Matrix2x2 a;
+TEST(Matrix2Operator, BracketsMemberAssignment){
+  Matrix2 a;
 
   a[0][0] = 1.0f;
   a[0][1] = 2.0f;
@@ -188,9 +188,9 @@ TEST(Matrix2x2Operator, BracketsMemberAssignment){
   EXPECT_TRUE(feq(a[1][1], 4.0f));
 }
 
-TEST(Matrix2x2Operator, MatrixAddition){
-  Matrix2x2 a(1,2,3,4);
-  Matrix2x2 b(5,6,7,8);
+TEST(Matrix2Operator, MatrixAddition){
+  Matrix2 a(1,2,3,4);
+  Matrix2 b(5,6,7,8);
 
   EXPECT_EQ(6.0, (a+b)(0,0));
   EXPECT_EQ(8.0, (a+b)(0,1));
@@ -198,10 +198,10 @@ TEST(Matrix2x2Operator, MatrixAddition){
   EXPECT_EQ(12.0, (a+b)(1,1));
 }
 
-TEST(Matrix2x2Operator, MatrixAdditionAndAssignment){
-  Matrix2x2 a(22,33,44,55);
-  Matrix2x2 b(-1,-1,-1,-1);
-  Matrix2x2 c;
+TEST(Matrix2Operator, MatrixAdditionAndAssignment){
+  Matrix2 a(22,33,44,55);
+  Matrix2 b(-1,-1,-1,-1);
+  Matrix2 c;
 
   c = a + b;
 
@@ -211,10 +211,10 @@ TEST(Matrix2x2Operator, MatrixAdditionAndAssignment){
   EXPECT_TRUE(feq(54, c(1,1)));
 }
 
-TEST(Matrix2x2Operator, MatrixAdditionWithIdentity){
-  Matrix2x2 a;
-  Matrix2x2 b(-1, 0, 0, -1);
-  Matrix2x2 c;
+TEST(Matrix2Operator, MatrixAdditionWithIdentity){
+  Matrix2 a;
+  Matrix2 b(-1, 0, 0, -1);
+  Matrix2 c;
 
   c = a.setIdentity() + b;
 
@@ -224,9 +224,9 @@ TEST(Matrix2x2Operator, MatrixAdditionWithIdentity){
   EXPECT_TRUE(feq(c(0,1), 0.0f));
 }
 
-TEST(Matrix2x2Operator, MatrixToMatrixAssignmentWithInts){
-  Matrix2x2 a;
-  Matrix2x2 b(-1, 0, 1, 2);
+TEST(Matrix2Operator, MatrixToMatrixAssignmentWithInts){
+  Matrix2 a;
+  Matrix2 b(-1, 0, 1, 2);
 
   a = b;
 
@@ -236,9 +236,9 @@ TEST(Matrix2x2Operator, MatrixToMatrixAssignmentWithInts){
   EXPECT_EQ(2, a(1,1));
 }
 
-TEST(Matrix2x2Operator, MatrixToMatrixAssignmentWithFloats){
-  Matrix2x2 a;
-  Matrix2x2 b(0x1p+0, 0x1p+1, 0x1.8p+1, 0x1p+2); // b(1,2,3,4) in floating-point hex
+TEST(Matrix2Operator, MatrixToMatrixAssignmentWithFloats){
+  Matrix2 a;
+  Matrix2 b(0x1p+0, 0x1p+1, 0x1.8p+1, 0x1p+2); // b(1,2,3,4) in floating-point hex
 
   a = b;
 
@@ -248,9 +248,9 @@ TEST(Matrix2x2Operator, MatrixToMatrixAssignmentWithFloats){
   EXPECT_EQ(0x1p+2, a(1,1));
 }
 
-TEST(Matrix2x2Operator, MatrixToMatrixAssignmentWithFloats2){
-  Matrix2x2 a;
-  Matrix2x2 b(-123.0, 99999.9, 0.12345, 0.0000001);
+TEST(Matrix2Operator, MatrixToMatrixAssignmentWithFloats2){
+  Matrix2 a;
+  Matrix2 b(-123.0, 99999.9, 0.12345, 0.0000001);
 
   a = b;
 
@@ -261,10 +261,10 @@ TEST(Matrix2x2Operator, MatrixToMatrixAssignmentWithFloats2){
   EXPECT_TRUE(feq(b(1,1), a(1,1)));
 }
 
-TEST(Matrix2x2Operator, MatrixSubtraction1){
-  Matrix2x2 a(11,22,33,44);
-  Matrix2x2 b(10,20,30,40);
-  Matrix2x2 c;
+TEST(Matrix2Operator, MatrixSubtraction1){
+  Matrix2 a(11,22,33,44);
+  Matrix2 b(10,20,30,40);
+  Matrix2 c;
 
   c = a - b;
 
@@ -274,10 +274,10 @@ TEST(Matrix2x2Operator, MatrixSubtraction1){
   EXPECT_TRUE(feq(4,c(1,1)));
 }
 
-TEST(Matrix2x2Operator, MatrixSubtraction2){
-  Matrix2x2 a(11,22,33,44);
-  Matrix2x2 b(10,20,30,40);
-  Matrix2x2 c;
+TEST(Matrix2Operator, MatrixSubtraction2){
+  Matrix2 a(11,22,33,44);
+  Matrix2 b(10,20,30,40);
+  Matrix2 c;
 
   c = b - a;
 
@@ -287,26 +287,26 @@ TEST(Matrix2x2Operator, MatrixSubtraction2){
   EXPECT_TRUE(feq(-4,c(1,1)));
 }
 
-TEST(Matrix2x2Operator, EqualityByAddress){
-  Matrix2x2 a;
-  Matrix2x2 *ptr;
+TEST(Matrix2Operator, EqualityByAddress){
+  Matrix2 a;
+  Matrix2 *ptr;
 
   ptr = &a;
 
   EXPECT_TRUE(a == *ptr);
 }
 
-TEST(Matrix2x2Operator, EqualityByElements){
-  Matrix2x2 a(-10, 99999.9, 0.1234, 0.000001);
-  Matrix2x2 b(-10, 99999.9, 0.1234, 0.000001);
+TEST(Matrix2Operator, EqualityByElements){
+  Matrix2 a(-10, 99999.9, 0.1234, 0.000001);
+  Matrix2 b(-10, 99999.9, 0.1234, 0.000001);
 
   EXPECT_TRUE(a == b);
 }
 
-TEST(Matrix2x2Operator, MatrixToMatrixMultiplicationWithIdentity){
-  Matrix2x2 I;
-  Matrix2x2 b(1,-2,-3,4);
-  Matrix2x2 c;
+TEST(Matrix2Operator, MatrixToMatrixMultiplicationWithIdentity){
+  Matrix2 I;
+  Matrix2 b(1,-2,-3,4);
+  Matrix2 c;
 
   I.setIdentity();
 
@@ -321,10 +321,10 @@ TEST(Matrix2x2Operator, MatrixToMatrixMultiplicationWithIdentity){
   EXPECT_EQ(c,b);
 }
 
-TEST(Matrix2x2Operator, MatrixToMatrixMultiplication){
-  Matrix2x2 a(1, 2, 2, 1);
-  Matrix2x2 b(3, 1, 1, 3);
-  Matrix2x2 c;
+TEST(Matrix2Operator, MatrixToMatrixMultiplication){
+  Matrix2 a(1, 2, 2, 1);
+  Matrix2 b(3, 1, 1, 3);
+  Matrix2 c;
 
   c = a * b;
 
@@ -343,9 +343,9 @@ TEST(Matrix2x2Operator, MatrixToMatrixMultiplication){
   EXPECT_TRUE(feq(c(1,1), 5.0f));
 }
 
-TEST(Matrix2x2Operator, MatrixToFloatMultiplication){
-	Matrix2x2 a(-1,2,3,-4);
-	Matrix2x2 b;
+TEST(Matrix2Operator, MatrixToFloatMultiplication){
+	Matrix2 a(-1,2,3,-4);
+	Matrix2 b;
 
 	b = a * 2.0f;
 
@@ -355,5 +355,5 @@ TEST(Matrix2x2Operator, MatrixToFloatMultiplication){
 	EXPECT_TRUE(feq(b(1,1), -8.0f));
 }
 
-// end Test Matrix2x2 Operators
+// end Test Matrix2 Operators
 //==============================================================================
