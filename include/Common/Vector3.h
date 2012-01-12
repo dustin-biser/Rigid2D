@@ -1,5 +1,5 @@
-#ifndef RIGID_VECTOR_H
-#define RIGID_VECTOR_H
+#ifndef RIGID_VECTOR3_H
+#define RIGID_VECTOR3_H
 #include <cassert>
 #include <cmath>
 #include "feq.h"
@@ -45,6 +45,7 @@ namespace Rigid2D {
       }
 
       void operator/=(float scalar) {
+        assert(scalar != 0);
         x /= scalar;
         y /= scalar;
         z /= scalar;
@@ -65,7 +66,7 @@ namespace Rigid2D {
       }
 
       float getLength() const {
-        return sqrt(getLengthSquared());
+        return sqrt(x * x + y * y + z * z;);
       }
 
       float dotProduct(const Vector3 & vec) const {

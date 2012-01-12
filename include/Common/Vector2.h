@@ -2,8 +2,8 @@
  *	Author: Michail Denchev
  */
 
-#ifndef VEC3F_HPP
-#define VEC3F_HPP
+#ifndef RIGID_VECTOR2_H
+#define RIGID_VECTOR2_H
 
 #include <cassert>
 #include <cstdlib>
