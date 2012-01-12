@@ -1,7 +1,8 @@
-#ifndef RIGID_VECTOR_H
-#define RIGID_VECTOR_H
+#ifndef RIGID_VECTOR3_H
+#define RIGID_VECTOR3_H
 #include <cassert>
 #include <cmath>
+#include "feq.h"
 
 namespace Rigid2D {
 
@@ -25,16 +26,36 @@ namespace Rigid2D {
         z = arr[2];
       }
 
+      Vector3(const Vector3 & vector) {
+        x = vector.x;
+        y = vector.y;
+        z = vector.z;
+      }
+
       void operator=(const Vector3 &vector) {
         x = vector.x;
         y = vector.y;
         z = vector.z;
       }
 
-      void operator+=(const Vector3 &vector) {
+      friend Vector3 operator+(const Vector3 & l, const Vector3 & r) {
+        return Vector3(l.x + r.x, l.y + r.y, l.z + r.z);
+      }
+
+      friend Vector3 operator-(const Vector3 & l, const Vector3 & r) {
+        return Vector3(l.x - r.x, l.y - r.y, l.z - r.z);
+      }
+      
+      void operator+=(const Vector3 & vector) {
         x += vector.x;
         y += vector.y;
         z += vector.z;
+      }
+      
+      void operator-=(const Vector3 & vector) {
+        x -= vector.x;
+        y -= vector.y;
+        z -= vector.z;
       }
 
       void operator*=(float scalar) {
@@ -43,10 +64,19 @@ namespace Rigid2D {
         z *= scalar;
       }
 
+      Vector3 operator*(float scalar) {
+        return Vector3(x * scalar, y * scalar, z * scalar);
+      }
+ 
       void operator/=(float scalar) {
+        assert(scalar != 0);
         x /= scalar;
         y /= scalar;
         z /= scalar;
+      }
+
+      bool operator==(const Vector3 & vec) const {
+        return (feq(x, vec.x) && feq(y, vec.y) && feq(z, vec.z));
       }
 
       float operator[](const unsigned int i) const {
@@ -54,20 +84,19 @@ namespace Rigid2D {
         return *(&x + i);
       }
 
-
       float getLengthSquared() const {
         return x * x + y * y + z * z;
       }
 
       float getLength() const {
-        return sqrt(getLengthSquared());
+        return sqrt(x * x + y * y + z * z);
       }
 
-      float dotProduct(const Vector3 & vec) const {
+      float dot(const Vector3 & vec) const {
         return x * vec.x + y * vec.y + z * vec.z;
       }
 
-      Vector3 crossProduct(const Vector3 & rhsVector) const {
+      Vector3 cross(const Vector3 & rhsVector) const {
         return Vector3(
             y * rhsVector.z - z * rhsVector.y,
             z * rhsVector.x - x * rhsVector.z,
