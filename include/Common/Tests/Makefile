@@ -98,9 +98,9 @@ RigidException-UnitTest.o : $(TEST_DIR)RigidException-UnitTest.cpp \
 
 RigidException-UnitTest : RigidException-UnitTest.o RigidException.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
-  
+
 Vector3-UnitTest.o : $(TEST_DIR)Vector3-UnitTest.cpp $(SRC_DIR)feq.h \
-                     $(SRC_DIR)vector3.h $(GTEST_HEADERS)
+                     $(SRC_DIR)Vector3.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Vector3-UnitTest.cpp
 
 Vector3-UnitTest : Vector3-UnitTest.o feq.o gtest_main.a
