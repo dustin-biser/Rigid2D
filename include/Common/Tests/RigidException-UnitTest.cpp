@@ -94,4 +94,3 @@ TEST(IOExceptionTest, WithWhat){
   IOException e(1, "funct", "file", "description");
   EXPECT_STREQ(e.what(), "file:1 IOException occured in function 'funct' : description");
 }
-
