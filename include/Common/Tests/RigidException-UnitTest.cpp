@@ -78,3 +78,19 @@ TEST(FileNotFoundExceptionTest, WithWhat){
   FileNotFoundException e(1, "funct", "file", "description");
   EXPECT_STREQ(e.what(), "file:1 FileNotFoundException occured in function 'funct' : description");
 }
+
+
+//=== Test IOException =============================================
+TEST(IOExceptionTest, Creation){
+  IOException subject(1, "funct", "file", "description");
+
+  EXPECT_EQ(subject.getLine(), 1);
+  EXPECT_EQ(subject.getFunction(), "funct");
+  EXPECT_EQ(subject.getFile(), "file");
+  EXPECT_EQ(subject.getDescription(), "description");
+}
+
+TEST(IOExceptionTest, WithWhat){
+  IOException e(1, "funct", "file", "description");
+  EXPECT_STREQ(e.what(), "file:1 IOException occured in function 'funct' : description");
+}
