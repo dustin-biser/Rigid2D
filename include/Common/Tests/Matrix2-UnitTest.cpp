@@ -343,11 +343,23 @@ TEST(Matrix2Operator, MatrixToMatrixMultiplication){
   EXPECT_TRUE(feq(c(1,1), 5.0f));
 }
 
-TEST(Matrix2Operator, MatrixToFloatMultiplication){
+TEST(Matrix2Operator, MatrixToRealMultiplication){
 	Matrix2 a(-1,2,3,-4);
 	Matrix2 b;
 
 	b = a * 2.0f;
+
+	EXPECT_TRUE(feq(b(0,0), -2.0f));
+	EXPECT_TRUE(feq(b(0,1),  4.0f));
+	EXPECT_TRUE(feq(b(1,0),  6.0f));
+	EXPECT_TRUE(feq(b(1,1), -8.0f));
+}
+
+TEST(Matrix2Operator, RealToMatrixMultiplication){
+	Matrix2 a(-1,2,3,-4);
+	Matrix2 b;
+
+	b =  2.0f * a;
 
 	EXPECT_TRUE(feq(b(0,0), -2.0f));
 	EXPECT_TRUE(feq(b(0,1),  4.0f));
