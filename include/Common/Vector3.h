@@ -1,6 +1,6 @@
 #ifndef RIGID_VECTOR3_H
 #define RIGID_VECTOR3_H
-#include "RigidSettings"
+#include "RigidSettings.h"
 #include <cassert>
 #include <cmath>
 #include "feq.h"
@@ -39,11 +39,15 @@ namespace Rigid2D {
         z = vector.z;
       }
 
-      friend Vector3 operator+(const Vector3 & l, const Vector3 & r) {
+      //TODO: No reason for friend function here.  Rewrite as a member function, which will be faster
+      //since only one argument will be passed.
+      friend Vector3 operator+(const Vector3 & l, const Vector3 & r){
         return Vector3(l.x + r.x, l.y + r.y, l.z + r.z);
       }
 
-      friend Vector3 operator-(const Vector3 & l, const Vector3 & r) {
+      //TODO: No reason for friend function here.  Rewrite as a member function, which will be faster
+      //since only one argument will be passed.
+      friend Vector3 operator-(const Vector3 & l, const Vector3 & r){
         return Vector3(l.x - r.x, l.y - r.y, l.z - r.z);
       }
 
@@ -68,6 +72,13 @@ namespace Rigid2D {
       Vector3 operator*(Real scalar) {
         return Vector3(x * scalar, y * scalar, z * scalar);
       }
+
+      /* TODO: Implement the following functions:
+
+      friend Vector& operator * (Real, Vector&);
+      Vector& operator / (Real) const;
+
+      */
 
       void operator/=(Real scalar) {
         assert(scalar != 0);
