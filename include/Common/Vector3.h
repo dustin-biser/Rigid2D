@@ -81,7 +81,7 @@ namespace Rigid2D {
       */
 
       void operator/=(Real scalar) {
-        assert(scalar != 0);
+        assert(scalar != 0.0f);
         x /= scalar;
         y /= scalar;
         z /= scalar;
@@ -91,7 +91,8 @@ namespace Rigid2D {
         return (feq(x, vec.x) && feq(y, vec.y) && feq(z, vec.z));
       }
 
-      Real operator[](const unsigned int i) const {
+			// member access/assignment using the construct vector[].
+      Real& operator[](const unsigned int i){
         assert(i < 3);
         return *(&x + i);
       }

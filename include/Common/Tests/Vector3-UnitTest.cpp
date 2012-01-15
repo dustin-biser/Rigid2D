@@ -118,6 +118,16 @@ TEST(Vector3OperationTest, RealToVectorMultiplication){
 	EXPECT_TRUE(false);
 }
 
+TEST(Vector3OperationTest, DivsionByZeroAssert){
+//TODO: implement test.
+	EXPECT_TRUE(false);
+}
+
+TEST(Vector3OperationTest, MemberAssignment){
+//TODO: implement test.
+// - Test vector member assignment using the form vec[0] = 2.0f.
+	EXPECT_TRUE(false);
+}
 
 TEST(Vector3DeathTest, BracketsInvalidIndex){
   Vector3 v(1.0, 2.0, 3.0);

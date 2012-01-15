@@ -12,4 +12,16 @@ TEST(Vector2Test, ConstructorXY){
   EXPECT_FLOAT_EQ(2.0, v.y);
 }
 
-//TODO implement more tests.
+TEST(Vector2OperationTest, DivsionByZeroAssert){
+//TODO: implement test.
+	EXPECT_TRUE(false);
+}
+
+TEST(Vector2OperationTest, MemberAssignment){
+//TODO: implement test.
+// - Test vector member assignment using the form vec[0] = 2.0f.
+	EXPECT_TRUE(false);
+}
+
+//TODO implement more tests. Need full code coverage.
+
