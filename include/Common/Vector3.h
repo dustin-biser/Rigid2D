@@ -39,62 +39,69 @@ namespace Rigid2D {
         z = vector.z;
       }
 
-      //TODO: No reason for friend function here.  Rewrite as a member function, which will be faster
-      //since only one argument will be passed.
-      friend Vector3 operator+(const Vector3 & l, const Vector3 & r){
-        return Vector3(l.x + r.x, l.y + r.y, l.z + r.z);
+      Vector3 operator + (const Vector3 & r) const {
+        return Vector3(x + r.x, y + r.y, z + r.z);
       }
 
-      //TODO: No reason for friend function here.  Rewrite as a member function, which will be faster
-      //since only one argument will be passed.
-      friend Vector3 operator-(const Vector3 & l, const Vector3 & r){
-        return Vector3(l.x - r.x, l.y - r.y, l.z - r.z);
+      Vector3 operator - (const Vector3 & r) const {
+        return Vector3(x - r.x, y - r.y, z - r.z);
       }
 
-      void operator+=(const Vector3 & vector) {
+      void operator += (const Vector3 & vector) {
         x += vector.x;
         y += vector.y;
         z += vector.z;
       }
 
-      void operator-=(const Vector3 & vector) {
+      void operator -= (const Vector3 & vector) {
         x -= vector.x;
         y -= vector.y;
         z -= vector.z;
       }
 
-      void operator*=(Real scalar) {
+      void operator *= (Real scalar) {
         x *= scalar;
         y *= scalar;
         z *= scalar;
       }
 
-      Vector3 operator*(Real scalar) {
+      Vector3 operator * (const Real scalar) const {
         return Vector3(x * scalar, y * scalar, z * scalar);
       }
 
-      /* TODO: Implement the following functions:
+      friend Vector3 operator * (const Real scalar, const Vector3 & vec) {
+        return vec * scalar;
+      }
 
-      friend Vector& operator * (Real, Vector&);
-      Vector& operator / (Real) const;
+      Vector3 operator / (const Real scalar) const {
+        assert(feq(scalar, 0) == false);
+        return Vector3(x / scalar, y / scalar, z / scalar);
+      }
 
-      */
+      friend Vector3 operator / (const Real scalar, Vector3 & vec) {
+        assert(feq(scalar, 0) == false);
+        return vec / scalar;
+      }
 
-      void operator/=(Real scalar) {
-        assert(scalar != 0.0f);
+      void operator /= (const Real scalar) {
+        assert(feq(scalar, 0) == false);
         x /= scalar;
         y /= scalar;
         z /= scalar;
       }
 
-      bool operator==(const Vector3 & vec) const {
+      bool operator == (const Vector3 & vec) const {
         return (feq(x, vec.x) && feq(y, vec.y) && feq(z, vec.z));
       }
 
-			// member access/assignment using the construct vector[].
-      Real& operator[](const unsigned int i){
+      Real operator [] (const unsigned int i) const {
         assert(i < 3);
         return *(&x + i);
+      }
+      
+      Real& operator [] (const unsigned int i) {
+        assert( i < 3 );
+        return *(&x+i);
       }
 
       Real getLengthSquared() const {
@@ -119,6 +126,7 @@ namespace Rigid2D {
 
       void normalize() {
         Real length = getLength();
+        assert(feq(length, 0) != false);
         x /= length;
         y /= length;
         z /= length;
