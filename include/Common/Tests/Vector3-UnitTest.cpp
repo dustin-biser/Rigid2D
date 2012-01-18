@@ -29,6 +29,7 @@ TEST(Vector3OperationTest, DeepCopy){
   EXPECT_FLOAT_EQ(v2.x, v1.x);
   EXPECT_FLOAT_EQ(v2.y, v1.y);
   EXPECT_FLOAT_EQ(v2.z, v1.z);
+	EXPECT_FALSE(&v1 == &v2);
 }
 
 TEST(Vector3OperationTest, Add){
@@ -39,12 +40,24 @@ TEST(Vector3OperationTest, Add){
   EXPECT_FLOAT_EQ(6.0, v3.x);
   EXPECT_FLOAT_EQ(8.0, v3.y);
   EXPECT_FLOAT_EQ(10.0, v3.z);
+
+  v3 = v2 + v1;
+
+  EXPECT_FLOAT_EQ(6.0, v3.x);
+  EXPECT_FLOAT_EQ(8.0, v3.y);
+  EXPECT_FLOAT_EQ(10.0, v3.z);
 }
 
 TEST(Vector3OperationTest, Subtract){
   Vector3 v1(1.0, 2.0, 3.0);
   Vector3 v2(5.0, 6.0, 7.0);
   Vector3 v3 = v2 - v1;
+
+  EXPECT_FLOAT_EQ(4.0, v3.x);
+  EXPECT_FLOAT_EQ(4.0, v3.y);
+  EXPECT_FLOAT_EQ(4.0, v3.z);
+
+  v3 = v2 - v1;
 
   EXPECT_FLOAT_EQ(4.0, v3.x);
   EXPECT_FLOAT_EQ(4.0, v3.y);
@@ -95,6 +108,27 @@ TEST(Vector3OperationTest, BracketNotation){
   EXPECT_FLOAT_EQ(3.0, v[2]);
 }
 
+TEST(Vector3OperationTest, ScalarDivistion){
+//TODO: implement test.
+	EXPECT_TRUE(false);
+}
+
+TEST(Vector3OperationTest, RealToVectorMultiplication){
+//TODO: implement test.
+	EXPECT_TRUE(false);
+}
+
+TEST(Vector3OperationTest, DivsionByZeroAssert){
+//TODO: implement test.
+	EXPECT_TRUE(false);
+}
+
+TEST(Vector3OperationTest, MemberAssignment){
+//TODO: implement test.
+// - Test vector member assignment using the form vec[0] = 2.0f.
+	EXPECT_TRUE(false);
+}
+
 TEST(Vector3DeathTest, BracketsInvalidIndex){
   Vector3 v(1.0, 2.0, 3.0);
 
@@ -133,7 +167,4 @@ TEST(Vector3MethodTest, normalize) {
   EXPECT_FLOAT_EQ(v.y, -2.0 / 3);
   EXPECT_FLOAT_EQ(v.z, 1.0 / 3);
 }
-
-
-
 

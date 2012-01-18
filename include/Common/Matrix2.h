@@ -28,14 +28,14 @@ namespace Rigid2D {
       // member access/assignment using the construct mat[i][j].
       Real * operator [] (unsigned int row);
 
-      // arithmetic operations
+      // arithmetic operations with matrices
       Matrix2 operator + (const Matrix2& other) const;
       Matrix2 operator - (const Matrix2& other) const;
       Matrix2 operator * (const Matrix2& other) const;
 
-			// Returns a Matrix2 object representing the state of calling object whos
-			// elements are all multiplied by value.
-			Matrix2 operator * (Real value) const;
+      // arithmetic operations with scalars
+			friend Matrix2 operator * (Real leftOperand, Matrix2& rightOperand);
+      friend Matrix2 operator * (Matrix2& leftOperand, Real rightOperand);
 
       Matrix2 operator = (const Matrix2& other);
 
