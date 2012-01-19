@@ -74,17 +74,12 @@ namespace Rigid2D {
       }
 
       Vector3 operator / (const Real scalar) const {
-        assert(feq(scalar, 0) == false);
+        assert(feq(scalar, 0.0) == false);
         return Vector3(x / scalar, y / scalar, z / scalar);
       }
 
-      friend Vector3 operator / (const Real scalar, Vector3 & vec) {
-        assert(feq(scalar, 0) == false);
-        return vec / scalar;
-      }
-
       void operator /= (const Real scalar) {
-        assert(feq(scalar, 0) == false);
+        assert(feq(scalar, 0.0) == false);
         x /= scalar;
         y /= scalar;
         z /= scalar;
@@ -92,11 +87,6 @@ namespace Rigid2D {
 
       bool operator == (const Vector3 & vec) const {
         return (feq(x, vec.x) && feq(y, vec.y) && feq(z, vec.z));
-      }
-
-      Real operator [] (const unsigned int i) const {
-        assert(i < 3);
-        return *(&x + i);
       }
       
       Real& operator [] (const unsigned int i) {
@@ -126,7 +116,7 @@ namespace Rigid2D {
 
       void normalize() {
         Real length = getLength();
-        assert(feq(length, 0) != false);
+        assert(feq(length, 0.0) == false);
         x /= length;
         y /= length;
         z /= length;
