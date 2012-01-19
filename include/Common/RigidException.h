@@ -17,7 +17,7 @@ namespace Rigid2D {
       Exception ( long line, const char * function, const char * file,
           const char * description = "") throw();
 
-      ~Exception () throw() { }
+      virtual ~Exception () throw() { }
 
       // Returns the line number where the error occured.
       long getLine ( ) const throw() { return line_; }
