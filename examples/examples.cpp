@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     SelectionTree->setColumnCount(1);
     QList<QTreeWidgetItem *> items;
     for (int i = 0; i < 10; ++i)
-      items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("item: %1").arg(1))));
+      items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("item: %1").arg(i))));
     SelectionTree->insertTopLevelItems(0, items);
     SelectionLayout->addWidget(SelectionTree);
 
