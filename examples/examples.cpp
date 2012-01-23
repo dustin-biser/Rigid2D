@@ -6,6 +6,7 @@
 #include <QFrame>
 #include <QLabel>
 #include <QGLWidget>
+#include <QPushButton>
 #include "SampleDemo.h"
 
 
@@ -15,7 +16,7 @@ int main(int argc, char **argv)
 
     // Create the main frame
     QFrame *MainFrame = new QFrame;
-    MainFrame->setWindowTitle("Qt SFML");
+    MainFrame->setWindowTitle("Rigid2D Examples");
     MainFrame->resize(800, 800);
     QHBoxLayout *MainLayout = new QHBoxLayout;
     MainFrame->setLayout(MainLayout);
@@ -31,24 +32,35 @@ int main(int argc, char **argv)
     QTreeWidget *SelectionTree = new QTreeWidget();
     SelectionTree->setMaximumWidth(200);
     SelectionTree->setColumnCount(1);
-    QList<QTreeWidgetItem *> items;
-    for (int i = 0; i < 10; ++i)
-      items.append(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("item: %1").arg(i))));
-    SelectionTree->insertTopLevelItems(0, items);
+    SelectionTree->setHeaderLabel(QString("Examples"));
+    QTreeWidgetItem *demosHeader = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Demos")));
+    SelectionTree->addTopLevelItem(demosHeader);
+    QTreeWidgetItem *demo1 = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Demo 1")));
+    demosHeader->addChild(demo1);
     SelectionLayout->addWidget(SelectionTree);
 
     // DemoToolBar layer (top of demo layer)
     QHBoxLayout *DemoToolBarLayout = new QHBoxLayout;
     DemoLayout->addLayout(DemoToolBarLayout);
 
-    QLabel *label = new QLabel;
-    label->setText("testsdfvsdF");
-    DemoToolBarLayout->addWidget(label);
+    // DemoToolBar Buttons
+    QPushButton *RunButton = new QPushButton("Run");
+    DemoToolBarLayout->addWidget(RunButton);
 
     // Create an OGLDemo
-    SampleDemo *sampleDemo = new SampleDemo;
-    sampleDemo->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    DemoLayout->addWidget(sampleDemo);
+    SampleDemo *Demo1 = new SampleDemo;
+    Demo1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    DemoLayout->addWidget(Demo1);
+
+    // Create an fps display
+    QHBoxLayout *FPSLayout = new QHBoxLayout;
+    FPSLayout->setAlignment(Qt::AlignRight);
+    QLabel *FPSTextLabel = new QLabel("Fps: ");
+    QLabel *FPSNumLabel = new QLabel;
+    QObject::connect(Demo1, SIGNAL(fpsChanged(int)), FPSNumLabel, SLOT(setNum(int)));
+    FPSLayout->addWidget(FPSTextLabel);
+    FPSLayout->addWidget(FPSNumLabel);
+    DemoLayout->addLayout(FPSLayout);
 
     MainFrame->show();
 
