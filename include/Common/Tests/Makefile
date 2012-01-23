@@ -22,6 +22,9 @@ SRC_DIR = ../
 # Where to find test code relative to this file
 TEST_DIR =
 
+# Root of Rigid2D folder
+ROOT_DIR = ../../../
+
 # Flags passed to the preprocessor.
 CPPFLAGS += -I$(GTEST_DIR)/include \
 						-I../../../ # Point to root directory of Rigid2D
@@ -40,6 +43,12 @@ TESTS = Matrix2-UnitTest \
 # definition.
 GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
                 $(GTEST_DIR)/include/gtest/internal/*.h
+
+# Standard commands to compile object file
+COMPILE = $(CXX) $(CPPFLAGS) $(CXXFLAGS) -c
+
+# Standard commands to link object files and create executable
+LINK = $(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 # House-keeping build targets.
 
@@ -77,41 +86,52 @@ gtest_main.a : gtest-all.o gtest_main.o
 # function.
 
 feq.o : $(SRC_DIR)feq.cpp $(SRC_DIR)feq.h
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)feq.cpp
+	$(COMPILE) $(SRC_DIR)feq.cpp
 
-Matrix2.o : $(SRC_DIR)Matrix2.cpp $(SRC_DIR)Matrix2.h $(SRC_DIR)feq.h \
-							$(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)Matrix2.cpp
+Matrix2.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)feq.h
 
-Matrix2-UnitTest.o : $(TEST_DIR)Matrix2-UnitTest.cpp $(SRC_DIR)feq.h \
-                     $(SRC_DIR)Matrix2.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Matrix2-UnitTest.cpp
+Matrix2.o : $(SRC_DIR)Matrix2.cpp $(SRC_DIR)Matrix2.h $(GTEST_HEADERS)
+	$(COMPILE) $(SRC_DIR)Matrix2.cpp
+
+Matrix2-UnitTest.o : $(TEST_DIR)Matrix2-UnitTest.cpp $(SRC_DIR)Matrix2.h $(GTEST_HEADERS)
+	$(COMPILE) $(TEST_DIR)Matrix2-UnitTest.cpp
 
 Matrix2-UnitTest : Matrix2.o Matrix2-UnitTest.o feq.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(LINK)
 
 RigidException.o : $(SRC_DIR)RigidException.cpp $(SRC_DIR)RigidException.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)RigidException.cpp
+	$(COMPILE) $(SRC_DIR)RigidException.cpp
 
 RigidException-UnitTest.o : $(TEST_DIR)RigidException-UnitTest.cpp \
                      $(SRC_DIR)RigidException.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)RigidException-UnitTest.cpp
+	$(COMPILE) $(TEST_DIR)RigidException-UnitTest.cpp
 
 RigidException-UnitTest : RigidException-UnitTest.o RigidException.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(LINK)
 
-Vector3-UnitTest.o : $(TEST_DIR)Vector3-UnitTest.cpp $(SRC_DIR)feq.h \
-                     $(SRC_DIR)Vector3.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Vector3-UnitTest.cpp
+Vector3.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)feq.h
+
+Vector3-UnitTest.o : $(TEST_DIR)Vector3-UnitTest.cpp $(SRC_DIR)Vector3.h $(GTEST_HEADERS)
+	$(COMPILE) $(TEST_DIR)Vector3-UnitTest.cpp
 
 Vector3-UnitTest : Vector3-UnitTest.o feq.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(LINK)
 
-Vector2-UnitTest.o : $(TEST_DIR)Vector2-UnitTest.cpp $(SRC_DIR)feq.h \
-                     $(SRC_DIR)Vector2.h $(GTEST_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Vector2-UnitTest.cpp
+Vector2.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)feq.h
+
+Vector2-UnitTest.o : $(TEST_DIR)Vector2-UnitTest.cpp $(SRC_DIR)Vector2.h $(GTEST_HEADERS)
+	$(COMPILE) $(TEST_DIR)Vector2-UnitTest.cpp
 
 Vector2-UnitTest : Vector2-UnitTest.o feq.o gtest_main.a
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+	$(LINK)
 
+OdeSolver.h : $(ROOT_DIR)RigidSettings.h
+
+OdeSolver.o : $(SRC_DIR)OdeSolver.h $(SRC_DIR)OdeSolver.cpp $(GTEST_HEADERS)
+	$(COMPILE) $(SRC_DIR)OdeSolver.cpp
+
+OdeRungeKutta4.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)OdeSolver.h $(SRC_DIR)RigidException.h
+
+OdeRungeKutta4.o : $(SRC_DIR)OdeRungeKutta4.h $(SRC_DIR)OdeRungeKutta4.cpp $(GTEST_HEADERS)
+	$(COMPILE) $(SRC_DIR)OdeRungeKutta4.cpp
 
