@@ -27,7 +27,8 @@ ROOT_DIR = ../../../
 
 # Flags passed to the preprocessor.
 CPPFLAGS += -I$(GTEST_DIR)/include \
-						-I../../../ # Point to root directory of Rigid2D
+						-I$(ROOT_DIR) \
+						-I$(SRC_DIR) \
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra
@@ -37,7 +38,8 @@ CXXFLAGS += -g -Wall -Wextra
 TESTS = Matrix2-UnitTest \
 				RigidException-UnitTest \
         Vector3-UnitTest \
-        Vector2-UnitTest
+        Vector2-UnitTest \
+				OdeRungeKutta4-UnitTest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -127,11 +129,24 @@ Vector2-UnitTest : Vector2-UnitTest.o feq.o gtest_main.a
 
 OdeSolver.h : $(ROOT_DIR)RigidSettings.h
 
-OdeSolver.o : $(SRC_DIR)OdeSolver.h $(SRC_DIR)OdeSolver.cpp $(GTEST_HEADERS)
+OdeSolver.o : $(SRC_DIR)OdeSolver.h $(SRC_DIR)OdeSolver.cpp
 	$(COMPILE) $(SRC_DIR)OdeSolver.cpp
 
 OdeRungeKutta4.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)OdeSolver.h $(SRC_DIR)RigidException.h
 
-OdeRungeKutta4.o : $(SRC_DIR)OdeRungeKutta4.h $(SRC_DIR)OdeRungeKutta4.cpp $(GTEST_HEADERS)
+OdeRungeKutta4.o : $(SRC_DIR)OdeRungeKutta4.h $(SRC_DIR)OdeRungeKutta4.cpp
 	$(COMPILE) $(SRC_DIR)OdeRungeKutta4.cpp
+
+ForceFunctions.h : $(ROOT_DIR)RigidSettings.h
+
+ForceFunctions.o : ForceFunctions.cpp ForceFunctions.h
+	$(COMPILE) ForceFunctions.cpp
+
+OdeRungeKutta4-UnitTest.o : OdeRungeKutta4-UnitTest.cpp $(SRC_DIR)OdeRungeKutta4.h \
+														$(SRC_DIR)feq.h ForceFunctions.h $(GTEST_HEADERS)
+	$(COMPILE) OdeRungeKutta4-UnitTest.cpp
+
+OdeRungeKutta4-UnitTest : OdeRungeKutta4-UnitTest.o OdeRungeKutta4.o OdeSolver.o \
+													RigidException.o ForceFunctions.o feq.o gtest_main.a
+	$(LINK)
 
