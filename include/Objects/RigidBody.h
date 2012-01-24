@@ -1,7 +1,7 @@
 #ifndef RIGID_RIGID_BODY_H
 #define RIGID_RIGID_BODY_H
 
-#include "Vector2.h"
+#include "Common/Vector2.h"
 #include "RigidSetting.h"
 
 namespace Rigid2D

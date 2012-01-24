@@ -67,7 +67,7 @@ namespace Rigid2D {
       }
 
       float dotProduct(const Vector2 & vec) const {
-        return x * vec.x + y * vec.y + z * vec.z;
+        return x * vec.x + y * vec.y;
       }
 
       void normalize() {
