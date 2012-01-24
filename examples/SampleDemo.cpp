@@ -26,6 +26,7 @@ void SampleDemo::initializeGL()
   glClearDepth(1.0f);
 
   glEnable(GL_DEPTH_TEST);
+  glEnableClientState(GL_VERTEX_ARRAY);
 }
 
 void SampleDemo::resizeGL(int w, int h)
