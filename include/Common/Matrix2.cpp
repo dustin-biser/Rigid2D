@@ -91,16 +91,29 @@ namespace Rigid2D {
 			return *this;
 		}
 
-		Matrix2 Matrix2::operator * (Real value) const{
+    //=== Matrix-Scalar operators =============================================
+		Matrix2 operator * (Real leftOperand, Matrix2& rightOperand){
 			Matrix2 result;
 
-			result.data_[0][0] = data_[0][0] * value;
-			result.data_[0][1] = data_[0][1] * value;
-			result.data_[1][0] = data_[1][0] * value;
-			result.data_[1][1] = data_[1][1] * value;
+			result.data_[0][0] = rightOperand.data_[0][0] * leftOperand;
+			result.data_[0][1] = rightOperand.data_[0][1] * leftOperand;
+			result.data_[1][0] = rightOperand.data_[1][0] * leftOperand;
+			result.data_[1][1] = rightOperand.data_[1][1] * leftOperand;
 
 			return result;
 		}
+
+		Matrix2 operator * (Matrix2& leftOperand, Real rightOperand){
+			Matrix2 result;
+
+			result.data_[0][0] = leftOperand.data_[0][0] * rightOperand;
+			result.data_[0][1] = leftOperand.data_[0][1] * rightOperand;
+			result.data_[1][0] = leftOperand.data_[1][0] * rightOperand;
+			result.data_[1][1] = leftOperand.data_[1][1] * rightOperand;
+
+			return result;
+		}
+    //=========================================================================
 
 		Real * Matrix2::operator [] (unsigned int row){
 			assert ( row < 2 );

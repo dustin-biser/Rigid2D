@@ -33,7 +33,8 @@ CXXFLAGS += -g -Wall -Wextra
 # created to the list.
 TESTS = Matrix2-UnitTest \
 				RigidException-UnitTest \
-        Vector3-UnitTest
+        Vector3-UnitTest \
+        Vector2-UnitTest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -98,12 +99,19 @@ RigidException-UnitTest.o : $(TEST_DIR)RigidException-UnitTest.cpp \
 
 RigidException-UnitTest : RigidException-UnitTest.o RigidException.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
-  
+
 Vector3-UnitTest.o : $(TEST_DIR)Vector3-UnitTest.cpp $(SRC_DIR)feq.h \
                      $(SRC_DIR)Vector3.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Vector3-UnitTest.cpp
 
 Vector3-UnitTest : Vector3-UnitTest.o feq.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+Vector2-UnitTest.o : $(TEST_DIR)Vector2-UnitTest.cpp $(SRC_DIR)feq.h \
+                     $(SRC_DIR)Vector2.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)Vector2-UnitTest.cpp
+
+Vector2-UnitTest : Vector2-UnitTest.o feq.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
 
 

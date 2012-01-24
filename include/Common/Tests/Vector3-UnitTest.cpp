@@ -29,6 +29,7 @@ TEST(Vector3OperationTest, DeepCopy){
   EXPECT_FLOAT_EQ(v2.x, v1.x);
   EXPECT_FLOAT_EQ(v2.y, v1.y);
   EXPECT_FLOAT_EQ(v2.z, v1.z);
+	EXPECT_FALSE(&v1 == &v2);
 }
 
 TEST(Vector3OperationTest, Add){
@@ -39,12 +40,24 @@ TEST(Vector3OperationTest, Add){
   EXPECT_FLOAT_EQ(6.0, v3.x);
   EXPECT_FLOAT_EQ(8.0, v3.y);
   EXPECT_FLOAT_EQ(10.0, v3.z);
+
+  v3 = v2 + v1;
+
+  EXPECT_FLOAT_EQ(6.0, v3.x);
+  EXPECT_FLOAT_EQ(8.0, v3.y);
+  EXPECT_FLOAT_EQ(10.0, v3.z);
 }
 
 TEST(Vector3OperationTest, Subtract){
   Vector3 v1(1.0, 2.0, 3.0);
   Vector3 v2(5.0, 6.0, 7.0);
   Vector3 v3 = v2 - v1;
+
+  EXPECT_FLOAT_EQ(4.0, v3.x);
+  EXPECT_FLOAT_EQ(4.0, v3.y);
+  EXPECT_FLOAT_EQ(4.0, v3.z);
+
+  v3 = v2 - v1;
 
   EXPECT_FLOAT_EQ(4.0, v3.x);
   EXPECT_FLOAT_EQ(4.0, v3.y);
@@ -95,9 +108,39 @@ TEST(Vector3OperationTest, BracketNotation){
   EXPECT_FLOAT_EQ(3.0, v[2]);
 }
 
+TEST(Vector3OperationTest, ScalarDivision){
+  Vector3 v(24.0, 24.0, 24.0);
+  Vector3 v2 = v / 6;
+  EXPECT_FLOAT_EQ(v2.x, 4.0);
+  EXPECT_FLOAT_EQ(v2.y, 4.0);
+  EXPECT_FLOAT_EQ(v2.z, 4.0);
+}
+
+TEST(Vector3OperationTest, RealToVectorMult){
+  Vector3 v(24.0, 24.0, 24.0);
+  Vector3 v2 = 2 * v;
+  EXPECT_FLOAT_EQ(v2.x, 48.0);
+  EXPECT_FLOAT_EQ(v2.y, 48.0);
+  EXPECT_FLOAT_EQ(v2.z, 48.0);
+}
+
+TEST(Vector3DeathTest, DivsionByZeroAssert){
+  Vector3 v(24.0, 24.0, 24.0);
+  EXPECT_DEATH({v/0;}, "");
+}
+
+TEST(Vector3OperationTest, MemberAssignment){
+  Vector3 v(24.0, 24.0, 24.0);
+  v[0] = 48.0;
+  v[1] = 48.0;
+  v[2] = 48.0;
+  EXPECT_FLOAT_EQ(v.x, 48.0);
+  EXPECT_FLOAT_EQ(v.y, 48.0);
+  EXPECT_FLOAT_EQ(v.z, 48.0);
+}
+
 TEST(Vector3DeathTest, BracketsInvalidIndex){
   Vector3 v(1.0, 2.0, 3.0);
-
   EXPECT_DEATH({v[3];}, "Assertion `i < 3' failed");
 }
 
@@ -133,7 +176,4 @@ TEST(Vector3MethodTest, normalize) {
   EXPECT_FLOAT_EQ(v.y, -2.0 / 3);
   EXPECT_FLOAT_EQ(v.z, 1.0 / 3);
 }
-
-
-
 

@@ -48,5 +48,17 @@ namespace Rigid2D {
       InvalidParameterException ( long line, const char * function, const char * file,
           const char * description = "") throw() : Exception (line, function, file, description) { exceptionType_ = "InvalidParameterException"; }
   };
+
+  class FileNotFoundException : public Exception {
+    public:
+      FileNotFoundException ( long line, const char * function, const char * file,
+          const char * description = "") throw() : Exception (line, function, file, description) { exceptionType_ = "FileNotFoundException"; }
+  };
+
+  class IOException : public Exception {
+    public:
+      IOException ( long line, const char * function, const char * file,
+          const char * description = "") throw() : Exception (line, function, file, description) { exceptionType_ = "IOException"; }
+  };
 }
 #endif
