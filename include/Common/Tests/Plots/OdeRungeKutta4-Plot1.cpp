@@ -38,7 +38,10 @@ int main(){
   //g1.plot_slope(1.0, 0.0, "y=x");
   //g1.set_pointsize(1.5).set_style("points");
   //g1.set_style("lines");
-	g1.plot_equation("1.0/10.0*cos(2*x)","1.0/10.0*cos(2*x)");
+	//g1.plot_equation("1.0/10.0*cos(2*x)","(1/10)cos(2*x)");
+	g1.cmd("set style line 8 lt 6 lw 3");
+	g1.cmd("set xrange [-pi:pi]");
+	g1.cmd("plot cos(4*x) w l ls 8");
 
   vector<double> vecX;  // Store position values x[0] of state vector
   vector<double> vecTime;  // Store time values
@@ -53,7 +56,7 @@ int main(){
   iterateX = vecX.insert(iterateX, stateVector[0]);
   iterateT = vecTime.insert(iterateT, 0.0);	
 
-	for(Real t = 0; t <= TAU;){
+	for(Real t = 0; t <= 2*TAU;){
     // Update t and stateVector with new values
     solver->ProcessNextStep(t, stateVector, t, stateVector);
     iterateX = vecX.insert(iterateX, stateVector[0]);

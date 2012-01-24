@@ -127,11 +127,9 @@ Vector2-UnitTest.o : $(TEST_DIR)Vector2-UnitTest.cpp $(SRC_DIR)Vector2.h $(GTEST
 Vector2-UnitTest : Vector2-UnitTest.o feq.o gtest_main.a
 	$(LINK)
 
-OdeSolver.h : $(ROOT_DIR)RigidSettings.h
-
-OdeRungeKutta4.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)OdeSolver.h $(SRC_DIR)RigidException.h
-
-OdeRungeKutta4.o : $(SRC_DIR)OdeRungeKutta4.h $(SRC_DIR)OdeRungeKutta4.cpp
+OdeRungeKutta4.o : $(SRC_DIR)OdeRungeKutta4.h $(SRC_DIR)OdeRungeKutta4.cpp \
+									 $(SRC_DIR)OdeSolver.h $(ROOT_DIR)RigidSettings.h \
+									 $(SRC_DIR)RigidException.h
 	$(COMPILE) $(SRC_DIR)OdeRungeKutta4.cpp
 
 ForceFunctions.h : $(ROOT_DIR)RigidSettings.h

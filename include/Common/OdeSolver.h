@@ -19,7 +19,7 @@ namespace Rigid2D{
 
     protected:
         OdeSolver (unsigned int dimension, Real* x, Function function,
-            Real stepSize, void* optionalData = 0);
+            Real step, void* optionalData = 0);
 
     public:
         virtual ~OdeSolver (){ }
@@ -42,22 +42,23 @@ namespace Rigid2D{
                                      // data (e.g. error tolerance, stepSize
                                      // factors for adaptive schemes, ect.)
   };
-}
 
-inline OdeSolver::OdeSolver (unsigned int dimension, Real* x, OdeSolver::Function function,
-    Real stepSize, void* optionalData)
-    : dimension_(dimension),
-      xValue_(x),
-      stepSize_(stepSize),
-      f_(function),
-      optionalData_(optionalData) { }
+  inline OdeSolver::OdeSolver (unsigned int dimension, Real* x, OdeSolver::Function function,
+      Real step, void* optionalData)
+      : dimension_(dimension),
+        xValue_(x),
+        stepSize_(step),
+        f_(function),
+        optionalData_(optionalData) { }
 
-inline Real OdeSolver::stepSize() const {
-  return stepSize_;
-}
+  inline Real OdeSolver::stepSize() const {
+    return stepSize_;
+  }
 
-inline void OdeSolver::SetStepSize(Real stepSize){
-  stepSize_ = stepSize;	
-}
+  inline void OdeSolver::SetStepSize(Real stepSize){
+    stepSize_ = stepSize;	
+  }
+
+} //end namespace Rigid2D
 
 #endif
