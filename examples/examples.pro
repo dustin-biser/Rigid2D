@@ -5,9 +5,9 @@
 TEMPLATE = app
 TARGET = 
 DEPENDPATH += .
-INCLUDEPATH += .
+INCLUDEPATH += ../include ../
 
 # Input
 QT += opengl
-HEADERS += SampleDemo.h
+HEADERS += SampleDemo.h 
 SOURCES += examples.cpp SampleDemo.cpp
