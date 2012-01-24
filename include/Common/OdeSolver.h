@@ -24,8 +24,8 @@ namespace Rigid2D{
     public:
         virtual ~OdeSolver (){ }
         virtual void ProcessNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut) = 0;
-        Real GetStepSize() const;
-        void SetStepSize(const Real stepSize);
+        Real stepSize() const;
+        void SetStepSize(Real stepSize);
 
     protected:
       unsigned int dimension_;       // dimension size of system
@@ -42,6 +42,22 @@ namespace Rigid2D{
                                      // data (e.g. error tolerance, stepSize
                                      // factors for adaptive schemes, ect.)
   };
+}
+
+inline OdeSolver::OdeSolver (unsigned int dimension, Real* x, OdeSolver::Function function,
+    Real stepSize, void* optionalData)
+    : dimension_(dimension),
+      xValue_(x),
+      stepSize_(stepSize),
+      f_(function),
+      optionalData_(optionalData) { }
+
+inline Real OdeSolver::stepSize() const {
+  return stepSize_;
+}
+
+inline void OdeSolver::SetStepSize(Real stepSize){
+  stepSize_ = stepSize;	
 }
 
 #endif

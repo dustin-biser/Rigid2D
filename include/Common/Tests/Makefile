@@ -129,9 +129,6 @@ Vector2-UnitTest : Vector2-UnitTest.o feq.o gtest_main.a
 
 OdeSolver.h : $(ROOT_DIR)RigidSettings.h
 
-OdeSolver.o : $(SRC_DIR)OdeSolver.h $(SRC_DIR)OdeSolver.cpp
-	$(COMPILE) $(SRC_DIR)OdeSolver.cpp
-
 OdeRungeKutta4.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)OdeSolver.h $(SRC_DIR)RigidException.h
 
 OdeRungeKutta4.o : $(SRC_DIR)OdeRungeKutta4.h $(SRC_DIR)OdeRungeKutta4.cpp
@@ -143,10 +140,10 @@ ForceFunctions.o : ForceFunctions.cpp ForceFunctions.h
 	$(COMPILE) ForceFunctions.cpp
 
 OdeRungeKutta4-UnitTest.o : OdeRungeKutta4-UnitTest.cpp $(SRC_DIR)OdeRungeKutta4.h \
-														$(SRC_DIR)feq.h ForceFunctions.h $(GTEST_HEADERS)
+													 	$(SRC_DIR)feq.h ForceFunctions.h $(GTEST_HEADERS)
 	$(COMPILE) OdeRungeKutta4-UnitTest.cpp
 
-OdeRungeKutta4-UnitTest : OdeRungeKutta4-UnitTest.o OdeRungeKutta4.o OdeSolver.o \
+OdeRungeKutta4-UnitTest : OdeRungeKutta4-UnitTest.o OdeRungeKutta4.o \
 													RigidException.o ForceFunctions.o feq.o gtest_main.a
 	$(LINK)
 
