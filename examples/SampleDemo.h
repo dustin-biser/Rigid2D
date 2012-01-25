@@ -5,6 +5,8 @@
 #include <QTime>
 #include <QTimer>
 #include <iostream>
+#include "RigidSettings.h"
+#include "Objects/RigidBody.h"
 
 class SampleDemo : public QGLWidget
 {
@@ -25,6 +27,7 @@ class SampleDemo : public QGLWidget
     QTime *fpsTimer;
     int frameCount;
     int fps;
+    Rigid2D::RigidBody *body;
 
   protected:
     void initializeGL();

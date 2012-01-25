@@ -1,18 +1,27 @@
 #include "SampleDemo.h"
+#include <QMouseEvent>
+
+using namespace Rigid2D;
 
 SampleDemo::SampleDemo(QWidget *parent)
         : QGLWidget(parent) 
 {
   setMouseTracking(true);
-
-  std::cout << "t";
+  setAutoBufferSwap(true);
+ 
   animationTimer = new QTimer(this);
-  connect(animationTimer, SIGNAL(timeout()), this, SLOT(paintGL()));
+  connect(animationTimer, SIGNAL(timeout()), this, SLOT(updateGL()));
   animationTimer->start(0);
 
   fpsTimer = new QTime;
   fpsTimer->start();
   frameCount = 0;
+
+  Real *vertex_array = new Real[8];
+  Real temp_arr[8] = {-5, 5, 5, 5,
+                          5, -5, -5, -5};
+  memcpy(vertex_array, temp_arr, 8 * sizeof(Real));
+  body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 8, Vector2(0, 0));
 }
 
 SampleDemo::~SampleDemo() 
@@ -21,18 +30,29 @@ SampleDemo::~SampleDemo()
 
 void SampleDemo::initializeGL()
 {
-  glClearColor(0.0, 0.0, 0.0, 0.0);
+  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  glClearDepth(1.0f);
+
   glEnable(GL_DEPTH_TEST);
+  glEnableClientState(GL_VERTEX_ARRAY);
 }
 
 void SampleDemo::resizeGL(int w, int h)
 {
-  glViewport(0, 0, (GLint) w, (GLint)h);
+  h = h?h:1;
+
+  glViewport( 0, 0, (GLint)w, (GLint)h );
+
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  gluPerspective(45.0f,(GLfloat)w / (GLfloat)h, 0.1f, 1000.0f);
+
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
 }
 
 void SampleDemo::paintGL()
 {
-  ///std::cout << "T";
   // Figure out fps
   float elapsed = fpsTimer->elapsed();
   if (elapsed >= 1000) {
@@ -44,24 +64,20 @@ void SampleDemo::paintGL()
   frameCount++;
 
   // Do drawing here!!
-  glClear (GL_COLOR_BUFFER_BIT);
-  glClearColor(1.0, 0.0, 0.0, 0.0);
+  glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glLoadIdentity();
 
-  glBegin (GL_TRIANGLES);
-  glColor3f (1.0, 0.0, 0.0);
-  glVertex2f (5.0, 5.0);
-  glColor3f (0.0, 1.0, 0.0);
-  glVertex2f (25.0, 5.0);
-  glColor3f (0.0, 0.0, 1.0);
-  glVertex2f (5.0, 25.0);
-  glEnd();
+  glTranslatef(0, 0, -30);
 
-  glFlush();
+  glColor3f (1, 1, 1);
+  glVertexPointer(2, GL_FLOAT, 0, body->getVertexArray());
+  glDrawArrays(GL_POLYGON, 0, body->getVertexCount());
+
 }
 
 void SampleDemo::mousePressEvent(QMouseEvent *event) 
 {
-
+  std::cout << event->y() << std::endl;
 }
 
 void SampleDemo::mouseMoveEvent(QMouseEvent *event) 
