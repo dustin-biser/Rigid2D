@@ -18,21 +18,16 @@ namespace Rigid2D{
             );
 
     protected:
-        OdeSolver (unsigned int dimension, Real* x, Function function,
-            Real step, void* optionalData = 0);
+        OdeSolver (unsigned int dimension, Real step, Function function, void* optionalData = 0);
 
     public:
         virtual ~OdeSolver (){ }
-        virtual void ProcessNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut) = 0;
+        virtual void ProcessNextStep (Real& t, Real* x) = 0;
         Real stepSize() const;
         void SetStepSize(Real stepSize);
 
     protected:
       unsigned int dimension_;       // dimension size of system
-
-      Real* xValue_;                 // x
-
-      Real* fValue_;                 // f(t,x)
 
       Real stepSize_;                // dt, difference between two adjancent time steps
 
@@ -43,10 +38,8 @@ namespace Rigid2D{
                                      // factors for adaptive schemes, ect.)
   };
 
-  inline OdeSolver::OdeSolver (unsigned int dimension, Real* x, OdeSolver::Function function,
-      Real step, void* optionalData)
+  inline OdeSolver::OdeSolver (unsigned int dimension, Real step, OdeSolver::Function function, void* optionalData)
       : dimension_(dimension),
-        xValue_(x),
         stepSize_(step),
         f_(function),
         optionalData_(optionalData) { }

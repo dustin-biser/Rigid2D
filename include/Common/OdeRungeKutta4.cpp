@@ -2,9 +2,8 @@
 
 using namespace Rigid2D;
 
-OdeRungeKutta4::OdeRungeKutta4(unsigned int dimension, Real* x, OdeSolver::Function function,
-    Real stepSize, void* optionalData)
-    : OdeSolver(dimension, x, function, stepSize, optionalData) {
+OdeRungeKutta4::OdeRungeKutta4(unsigned int dimension, Real stepSize, OdeSolver::Function function, void* optionalData)
+    : OdeSolver(dimension, stepSize, function, optionalData) {
 
   oneHalfStep_ = 0.5*stepSize_;
   oneSixthStep_ = stepSize_/6.0;
@@ -30,41 +29,41 @@ OdeRungeKutta4::~OdeRungeKutta4(){
   delete [] tmp_;
 }
 
-void OdeRungeKutta4::ProcessNextStep(Real tIn, Real* xIn, Real& tOut, Real* xOut){
-  assert(xIn != 0);
-  assert(xOut != 0);
-  assert(tIn == tIn);  // check for NaN
+void OdeRungeKutta4::ProcessNextStep(Real& t, Real* x){
+  assert(x != 0);
+  assert(x != 0);
+  assert(t == t);  // check for NaN
 
   unsigned int i;
   // Step 1
-  //kn1_ = f_(tIn, xIn);
-  f_(tIn, xIn, kn1_);
+  //kn1_ = f_(t, x);
+  f_(t, x, kn1_);
 
   // Step 2
-  // kn2_ = f_(tIn + oneHalfStep_, xIn + oneHalfStep*kn1_);
+  // kn2_ = f_(t + oneHalfStep_, x + oneHalfStep*kn1_);
   for(i = 0; i < dimension_; ++i){
-    tmp_[i] = xIn[i] + oneHalfStep_*kn1_[i];
+    tmp_[i] = x[i] + oneHalfStep_*kn1_[i];
   }
-  f_(tIn + oneHalfStep_, tmp_, kn2_);
+  f_(t + oneHalfStep_, tmp_, kn2_);
 
   // Step 3
-  //kn3_ = f_(tIn + oneHalfStep_, xIn + oneHalfStep*kn2_);
+  //kn3_ = f_(t + oneHalfStep_, x + oneHalfStep*kn2_);
   for(i = 0; i < dimension_; ++i){
-    tmp_[i] = xIn[i] + oneHalfStep_*kn2_[i];
+    tmp_[i] = x[i] + oneHalfStep_*kn2_[i];
   }
-  f_(tIn + oneHalfStep_, tmp_, kn3_);
+  f_(t + oneHalfStep_, tmp_, kn3_);
 
   // Step 4
   for(i = 0; i < dimension_; ++i){
-    tmp_[i] = xIn[i] + stepSize_*kn3_[i];
+    tmp_[i] = x[i] + stepSize_*kn3_[i];
   }
-  f_(tIn + stepSize_, tmp_, kn4_);
+  f_(t + stepSize_, tmp_, kn4_);
 
-  //xOut = xIn + (stepSize/6)*(kn1_ + 2*(kn2_ + kn3_) + kn4_);
+  //x = x + (stepSize/6)*(kn1_ + 2*(kn2_ + kn3_) + kn4_);
   for(i = 0; i < dimension_; ++i){
-    xOut[i] = xIn[i] + oneSixthStep_*(kn1_[i] + 2*(kn2_[i] + kn3_[i]) + kn4_[i]);
+    x[i] += oneSixthStep_*(kn1_[i] + 2*(kn2_[i] + kn3_[i]) + kn4_[i]);
   }
 
-  tOut = tIn + stepSize_;
+  t += stepSize_;
 }
 

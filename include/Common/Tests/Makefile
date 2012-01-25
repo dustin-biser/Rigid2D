@@ -138,7 +138,7 @@ ForceFunctions.o : ForceFunctions.cpp ForceFunctions.h
 	$(COMPILE) ForceFunctions.cpp
 
 OdeRungeKutta4-UnitTest.o : OdeRungeKutta4-UnitTest.cpp $(SRC_DIR)OdeRungeKutta4.h \
-													 	$(SRC_DIR)feq.h ForceFunctions.h $(GTEST_HEADERS)
+													 	$(SRC_DIR)OdeSolver.h $(SRC_DIR)feq.h ForceFunctions.h $(GTEST_HEADERS)
 	$(COMPILE) OdeRungeKutta4-UnitTest.cpp
 
 OdeRungeKutta4-UnitTest : OdeRungeKutta4-UnitTest.o OdeRungeKutta4.o \
