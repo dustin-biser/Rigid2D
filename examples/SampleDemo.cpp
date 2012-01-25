@@ -1,6 +1,8 @@
 #include "SampleDemo.h"
 #include <QMouseEvent>
 
+using namespace Rigid2D;
+
 SampleDemo::SampleDemo(QWidget *parent)
         : QGLWidget(parent) 
 {
@@ -14,6 +16,12 @@ SampleDemo::SampleDemo(QWidget *parent)
   fpsTimer = new QTime;
   fpsTimer->start();
   frameCount = 0;
+
+  Real *vertex_array = new Real[8];
+  Real temp_arr[8] = {-5, 5, 5, 5,
+                          5, -5, -5, -5};
+  memcpy(vertex_array, temp_arr, 8 * sizeof(Real));
+  body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 8, Vector2(0, 0));
 }
 
 SampleDemo::~SampleDemo() 
@@ -59,16 +67,11 @@ void SampleDemo::paintGL()
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
-  glTranslatef(0, 0, -300);
+  glTranslatef(0, 0, -30);
 
-  glBegin (GL_TRIANGLES);
-  glColor3f (1, 0, 0);
-  glVertex2f (0, 0);
-  glColor3f (0, 1, 0);
-  glVertex2f (30, 0);
-  glColor3f (0, 0, 1);
-  glVertex2f (15, 15);
-  glEnd();
+  glColor3f (1, 1, 1);
+  glVertexPointer(2, GL_FLOAT, 0, body->getVertexArray());
+  glDrawArrays(GL_POLYGON, 0, body->getVertexCount());
 
 }
 

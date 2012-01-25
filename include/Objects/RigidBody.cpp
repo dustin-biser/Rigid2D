@@ -2,15 +2,17 @@
 
 namespace Rigid2D {
 
-  RigidBody::RigidBody(Vector2 &position, Vector2 &mass, Real *vertex_array, Vector2 &momentum)
+  RigidBody::RigidBody(Vector2 position, Real mass, Real *vertex_array, 
+      int vertex_count, Vector2 momentum)
   {
     position_ = position;
     mass_ = mass;
+    vertex_count_ = vertex_count;
     vertex_array_ = vertex_array;
     momentum_ = momentum;
   }
 
-  ~RigidBody::RigidBody() 
+  RigidBody::~RigidBody() 
   {
     delete [] vertex_array_;
   }
@@ -35,7 +37,7 @@ namespace Rigid2D {
     return vertex_count_;
   }
 
-  Real* RigidBody::getVertexArray() const
+  Real* RigidBody::getVertexArray()
   {
     return vertex_array_;
   }

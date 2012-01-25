@@ -9,5 +9,5 @@ INCLUDEPATH += ../include ../
 
 # Input
 QT += opengl
-HEADERS += SampleDemo.h 
-SOURCES += examples.cpp SampleDemo.cpp
+HEADERS += SampleDemo.h ../include/Objects/RigidBody.h
+SOURCES += examples.cpp SampleDemo.cpp ../include/Objects/RigidBody.cpp

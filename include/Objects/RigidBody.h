@@ -2,21 +2,20 @@
 #define RIGID_RIGID_BODY_H
 
 #include "Common/Vector2.h"
-#include "RigidSetting.h"
+#include "RigidSettings.h"
 
 namespace Rigid2D
 {
   class RigidBody
   {
     public:
-      RigidBody(Vector2 &position, Real &mass, Real *vertex_array, Real &vertex_count, Vector2 &momentum);
+      RigidBody(Vector2 position, Real mass, Real *vertex_array, int vertex_count, Vector2 momentum);
       ~RigidBody();
-
       Vector2 getPosition() const;
       Vector2 getMomentum() const;
       Real getMass() const;
       Real getVertexCount() const;
-      Real* getVertexArray() const;
+      Real* getVertexArray();
 
       void setPosition(const Vector2 &);
       void setMomentum(const Vector2 &);
