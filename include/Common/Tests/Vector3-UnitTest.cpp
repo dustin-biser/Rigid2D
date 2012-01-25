@@ -126,7 +126,7 @@ TEST(Vector3OperationTest, RealToVectorMult){
 
 TEST(Vector3DeathTest, DivsionByZeroAssert){
   Vector3 v(24.0, 24.0, 24.0);
-  EXPECT_DEATH({v/0;}, "Assertion `i != 0' failed");
+  EXPECT_DEATH({v/0;}, "");
 }
 
 TEST(Vector3OperationTest, MemberAssignment){

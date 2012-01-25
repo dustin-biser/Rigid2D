@@ -24,54 +24,73 @@ namespace Rigid2D {
         y = arr[1];
       }
 
-      void operator=(const Vector2 &vector) {
+      Vector2(const Vector2 & vector) {
         x = vector.x;
         y = vector.y;
       }
 
-      void operator+=(const Vector2 &vector) {
+      void operator = (const Vector2 &vector) {
+        x = vector.x;
+        y = vector.y;
+      }
+
+      Vector2 operator + (const Vector2 & r) const {
+        return Vector2(x + r.x, y + r.y);
+      }
+
+      Vector2 operator - (const Vector2 & r) const {
+        return Vector2(x - r.x, y - r.y);
+      }
+
+      void operator += (const Vector2 & vector) {
         x += vector.x;
         y += vector.y;
       }
 
-      void operator*=(Real scalar) {
+      void operator -= (const Vector2 & vector) {
+        x -= vector.x;
+        y -= vector.y;
+      }
+
+      void operator *= (Real scalar) {
         x *= scalar;
         y *= scalar;
       }
 
-      void operator/=(Real scalar) {
-				assert(scalar != 0.0f);
+      Vector2 operator * (const Real scalar) const {
+        return Vector2(x * scalar, y * scalar);
+      }
+
+      friend Vector2 operator * (const Real scalar, const Vector2 & vec) {
+        return vec * scalar;
+      }
+
+      Vector2 operator / (const Real scalar) const {
+        assert(feq(scalar, 0.0) == false);
+        return Vector2(x / scalar, y / scalar);
+      }
+
+      void operator /= (const Real scalar) {
+        assert(feq(scalar, 0.0) == false);
         x /= scalar;
         y /= scalar;
       }
 
-			/* TODO Please implement the following functions:
-			 *
-			Vector& operator + (Vector& other) const;
-			Vector& operator - (Vector& other) const;
-			Vector& operator * (Real scalar) const;
-			Vector& friend operator * (Real leftOperand, Vector& rightOperand);
-			Vector& operator -= (Vector& other);
-
-			*/
-
-      bool operator==(const Vector2 & vec) const {
+      bool operator == (const Vector2 & vec) const {
         return (feq(x, vec.x) && feq(y, vec.y));
       }
-
-			// member access/assignment using the construct vector[].
-      Real& operator[](const unsigned int i) {
-        assert(i < 3);
-        return *(&x + i);
+      
+      Real& operator [] (const unsigned int i) {
+        assert( i < 2 );
+        return *(&x+i);
       }
 
       Real getLengthSquared() const {
         return x * x + y * y;
       }
 
-			// TODO: Hard code return instead of using a function call.
       Real getLength() const {
-        return sqrt(getLengthSquared());
+        return sqrt(x * x + y * y);
       }
 
       Real dot(const Vector2 & vec) const {
@@ -80,6 +99,7 @@ namespace Rigid2D {
 
       void normalize() {
         Real length = getLength();
+        assert(feq(length, 0.0) == false);
         x /= length;
         y /= length;
       }
