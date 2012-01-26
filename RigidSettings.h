@@ -13,6 +13,8 @@ namespace Rigid2D{
 
 	#define tau 6.283185307
 
+  #define NULL 0
+
 }
 
 #endif

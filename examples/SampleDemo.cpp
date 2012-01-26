@@ -1,4 +1,5 @@
 #include "SampleDemo.h"
+#include "Common/MathUtils.h"
 #include <QMouseEvent>
 
 using namespace Rigid2D;
@@ -53,21 +54,13 @@ void SampleDemo::resizeGL(int w, int h)
 
 void SampleDemo::paintGL()
 {
-  // Figure out fps
-  float elapsed = fpsTimer->elapsed();
-  if (elapsed >= 1000) {
-    fps = frameCount * (elapsed/1000);
-    fpsTimer->restart();
-    frameCount = 0;
-    emit fpsChanged(fps);
-  }
-  frameCount++;
+  calculateFps();
 
   // Do drawing here!!
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
-  glTranslatef(0, 0, -30);
+  glTranslatef(0, 0, -50);
 
   glColor3f (1, 1, 1);
   glVertexPointer(2, GL_FLOAT, 0, body->getVertexArray());
@@ -77,7 +70,7 @@ void SampleDemo::paintGL()
 
 void SampleDemo::mousePressEvent(QMouseEvent *event) 
 {
-  std::cout << event->y() << std::endl;
+
 }
 
 void SampleDemo::mouseMoveEvent(QMouseEvent *event) 
@@ -90,7 +83,20 @@ void SampleDemo::keyPressEvent(QKeyEvent *event)
 
 }
 
-int SampleDemo::getFPS()
+int SampleDemo::getFps()
 {
   return fps;
+}
+
+void SampleDemo::calculateFps()
+{
+  // Figure out fps
+  float elapsed = fpsTimer->elapsed();
+  if (elapsed >= 1000) {
+    fps = frameCount * (elapsed/1000);
+    fpsTimer->restart();
+    frameCount = 0;
+    emit fpsChanged(fps);
+  }
+  frameCount++;
 }
