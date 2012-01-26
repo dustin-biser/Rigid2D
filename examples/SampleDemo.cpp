@@ -60,7 +60,7 @@ void SampleDemo::paintGL()
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
-  glTranslatef(0, 0, -50);
+  glTranslatef(0, 0, -90);
 
   glColor3f (1, 1, 1);
   glVertexPointer(2, GL_FLOAT, 0, body->getVertexArray());
@@ -70,7 +70,22 @@ void SampleDemo::paintGL()
 
 void SampleDemo::mousePressEvent(QMouseEvent *event) 
 {
+  makeCurrent();
+  GLint viewport[4];
+  GLdouble modelview[16];
+  GLdouble projection[16];
+  GLfloat winX, winY, winZ;
+  GLdouble posX, posY, posZ;
 
+  glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
+  glGetDoublev( GL_PROJECTION_MATRIX, projection );
+  glGetIntegerv( GL_VIEWPORT, viewport );
+
+  //winX = (Real)x;
+  //winY = (Real)viewport[3] - (Real)y;
+  //glReadPixels( x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ );
+
+  //gluUnProject( winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
 }
 
 void SampleDemo::mouseMoveEvent(QMouseEvent *event) 
