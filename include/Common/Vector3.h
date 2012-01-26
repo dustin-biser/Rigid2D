@@ -88,7 +88,7 @@ namespace Rigid2D {
       bool operator == (const Vector3 & vec) const {
         return (feq(x, vec.x) && feq(y, vec.y) && feq(z, vec.z));
       }
-      
+
       Real& operator [] (const unsigned int i) {
         assert( i < 3 );
         return *(&x+i);
