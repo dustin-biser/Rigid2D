@@ -1,0 +1,10 @@
+.metadata/
+.cproject
+.project
+Makefile
+Makefile.Debug
+Makefile.Release
+debug/
+examples
+moc_SampleDemo.cpp
+

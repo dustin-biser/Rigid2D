@@ -14,3 +14,7 @@ OdeRungeKutta4-Plot1
 Makefile
 examples
 moc_SampleDemo.cpp
+OdeRungKutta4-UnitTest
+
+# Ignore w/e .metadata is
+.metadata/
