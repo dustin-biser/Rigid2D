@@ -10,3 +10,6 @@ RigidException-UnitTest
 Vector3-UnitTest
 Vector2-UnitTest
 OdeRungKutta4-UnitTest
+
+# Ignore w/e .metadata is
+.metadata/
