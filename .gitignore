@@ -9,4 +9,8 @@ Matrix2-UnitTest
 RigidException-UnitTest
 Vector3-UnitTest
 Vector2-UnitTest
-OdeRungKutta4-UnitTest
+OdeRungeKutta4-UnitTest
+OdeRungeKutta4-Plot1
+Makefile
+examples
+moc_SampleDemo.cpp
