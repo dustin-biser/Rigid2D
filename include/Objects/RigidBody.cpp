@@ -43,7 +43,7 @@ namespace Rigid2D {
     return vertex_array_;
   }
 
-  void RigidBody::getState(Real *sub_s, Real *sub_dsdt)
+  void RigidBody::getState(Real* const sub_s, Real* const sub_dsdt) const
   {
     sub_s[0] = position_[0];
     sub_s[1] = position_[1];
@@ -53,6 +53,14 @@ namespace Rigid2D {
     sub_dsdt[1] = momentum_[1] / mass_;
     sub_dsdt[2] = force_[0] / mass_;
     sub_dsdt[3] = force_[1] / mass_;
+  }
+
+  void RigidBody::setState(Real* const sub_s)
+  {
+    position_[0] = sub_s[0];
+    position_[1] = sub_s[1];
+    momentum_[0] = sub_s[2];
+    momentum_[1] = sub_s[3];
   }
 
   void RigidBody::setPosition(const Vector2 &position)

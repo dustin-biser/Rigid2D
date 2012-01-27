@@ -17,7 +17,11 @@ namespace Rigid2D
       Real getMass() const;
       int getVertexCount() const;
       Real* getVertexArray();
-      void getState(Real *sub_s, Real *sub_dsdt);
+
+      // *sub_s is a pointer to the element in which the state will be inserted into.
+      // same for *sub_dsdt but for the differentiated state
+      void getState(Real* const sub_s, Real * const sub_dsdt) const;
+      void setState(Real* const sub_s);
 
       void setPosition(const Vector2 &);
       void setMomentum(const Vector2 &);
