@@ -74,12 +74,11 @@ namespace Rigid2D {
   bool RigidBody::pointIsInterior(Real x, Real y)
   {
     // Go through all the edges calculating or2d(Mouse, pt1, pt2)
-    int edges_count = vertex_count_ - 1;
     Vector2 pt1, pt2, pt3;
     pt1.x = x;
     pt1.y = y;
 
-    for (int i = 0; i < edges_count - 1; i++)
+    for (int i = 0; i < vertex_count_ - 1; i++)
     {
       pt2.x = vertex_array_[i*2];
       pt2.y = vertex_array_[i*2 + 1];
@@ -89,8 +88,8 @@ namespace Rigid2D {
         return false;
     }
     // special check for last edge
-    pt2.x = vertex_array_[vertex_count_-2];
-    pt2.y = vertex_array_[vertex_count_-1];
+    pt2.x = vertex_array_[2 * vertex_count_ - 2];
+    pt2.y = vertex_array_[2 * vertex_count_ - 1];
     pt3.x = vertex_array_[0];
     pt3.y = vertex_array_[1];
     if (or2d(pt1, pt2, pt3) != -1)

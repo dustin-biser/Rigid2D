@@ -22,7 +22,7 @@ SampleDemo::SampleDemo(QWidget *parent)
   Real temp_arr[8] = {-5, 5, 5, 5,
                           5, -5, -5, -5};
   memcpy(vertex_array, temp_arr, 8 * sizeof(Real));
-  body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 8, Vector2(0, 0));
+  body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 4, Vector2(0, 0));
 }
 
 SampleDemo::~SampleDemo() 
@@ -81,11 +81,14 @@ void SampleDemo::mousePressEvent(QMouseEvent *event)
   glGetDoublev( GL_PROJECTION_MATRIX, projection );
   glGetIntegerv( GL_VIEWPORT, viewport );
 
-  //winX = (Real)x;
-  //winY = (Real)viewport[3] - (Real)y;
-  //glReadPixels( x, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ );
+  winX = event->x();
+  winY = viewport[3] - event->y();
+  glReadPixels( winX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ );
 
-  //gluUnProject( winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+  gluUnProject( winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+  std::cout << body->pointIsInterior(posX, posY) << std::endl;
+  
 }
 
 void SampleDemo::mouseMoveEvent(QMouseEvent *event) 

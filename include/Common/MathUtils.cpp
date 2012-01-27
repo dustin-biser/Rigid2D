@@ -7,10 +7,10 @@ namespace Rigid2D
     Real det = det3(1.0, 1.0, 1.0,
               pt1.x, pt2.x, pt3.x,
               pt1.y, pt2.y, pt3.y);
-    if (det < 0)
-      return -1;
-    else if (feq(det,0))
+    if (feq(det,0))
       return 0;
+    else if (det < 0)
+      return -1;
     else
       return 1;
   }
