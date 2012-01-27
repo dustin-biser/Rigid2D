@@ -5,15 +5,18 @@
 //#define NDEBUG
 #include <cassert>
 
+#ifndef NULL
+#define NULL 0
+#endif
+
 // Place all global library settings and constants in this file.
 namespace Rigid2D{
 	
 	typedef float Real;
 	typedef double PreciseReal;
 
-	#define tau 6.283185307
+	const PreciseReal tau = 6.283185307;
 
-  #define NULL 0
 
 }
 
