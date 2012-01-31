@@ -33,13 +33,13 @@ namespace Rigid2D{
         void setStepSize(Real stepSize);
 
     protected:
-      unsigned int dimension_;       // length of the vectors that compose the system dx/dt = f(t,x)
-      Real stepSize_;                // dt, difference between two adjancent time steps
-      DerivFunction f_;              // function used for updating t, x, and dx/dt
+      unsigned int dimension_;   // length of the vectors that compose the system dx/dt = f(t,x)
+      Real stepSize_;            // dt, difference between two adjancent time steps
+      DerivFunction f_;          // function used for updating t, x, and dx/dt
 
-      void* optionalData_;           // storage for implmentation of specific
-                                     // data (e.g. error tolerance, stepSize
-                                     // factors for adaptive schemes, ect.)
+      void* optionalData_;       // storage for implmentation of specific
+                                 // data (e.g. error tolerance, stepSize
+                                 // factors for adaptive schemes, ect.)
   };
 
   inline OdeSolver::OdeSolver (unsigned int dimension, Real step, OdeSolver::DerivFunction function, void* optionalData)

@@ -68,7 +68,7 @@ void OdeRungeKutta4::processNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOu
   tOut = tIn + stepSize_;
 }
 
-void OdeRungeutta4::processNextStep (Real t, Real * x){
+void OdeRungeKutta4::processNextStep (Real& t, Real* x){
   processNextStep (t, x, t, x);
 }
 

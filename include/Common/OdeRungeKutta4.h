@@ -13,23 +13,23 @@ namespace Rigid2D{
     public:
       OdeRungeKutta4(unsigned int dimension, Real step, DerivFunction dxdt, void* optionalData = 0);
 
-      ~OdeRungeKutta4() { }
+      ~OdeRungeKutta4();
 
       // Advances tOut and xOut by one step from tIn and xIn, respectively
       virtual void processNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut);
 
       // A simplier way to call processNextStep
-      virtual void processNextStep (Real t, Real* x);
+      virtual void processNextStep (Real& t, Real* x);
 
       virtual void setDimension (unsigned int newDim);
     private:
       Real oneHalfStep_;
       Real oneSixthStep_;
-      vector<Real> kn1_;
-      vector<Real> kn2_;
-      vector<Real> kn3_;
-      vector<Real> kn4_;
-      vector<Real> tmp_;
+      Real * kn1_;
+      Real * kn2_;
+      Real * kn3_;
+      Real * kn4_;
+      Real * tmp_;
   };
 }
 #endif
