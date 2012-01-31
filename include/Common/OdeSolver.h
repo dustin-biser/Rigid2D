@@ -29,7 +29,7 @@ namespace Rigid2D{
         virtual void processNextStep(Real& t, Real* x) = 0;
 
         virtual void setDimension(unsigned int newDim) = 0;
-        Real stepSize() const;
+        Real getStepSize() const;
         void setStepSize(Real stepSize);
 
     protected:
@@ -48,7 +48,7 @@ namespace Rigid2D{
         f_(function),
         optionalData_(optionalData) { }
 
-  inline Real OdeSolver::stepSize() const {
+  inline Real OdeSolver::getStepSize() const {
     return stepSize_;
   }
 
