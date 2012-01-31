@@ -1,6 +1,8 @@
 #ifndef RIGID_ODE_SOLVER_H
 #define RIGID_ODE_SOLVER_H
 #include "RigidSettings.h"
+#include <vector>
+using std::vector;
 
 namespace Rigid2D{
   // Abstract base class representing an ODE Solver that computes approximations to
@@ -8,9 +10,10 @@ namespace Rigid2D{
   class OdeSolver{
     public:
         // Given input values for t and array x, DerivFunction should compute the array dxdt.
-        typedef Real * (*DerivFunction)(
-            Real,          // Time t
-            const Real*    // State array x
+        typedef void (*DerivFunction)(
+            Real,          // time t
+            const Real*,   // state array x
+            Real *         // location to store dxdt
             );
 
     protected:
@@ -20,14 +23,14 @@ namespace Rigid2D{
         virtual ~OdeSolver (){ }
 
         // Advances tOut and xOut by one step from tIn and xIn, respectively
-        virtual void ProcessNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut) = 0;
+        virtual void processNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut) = 0;
 
         // A simiplier way of calling ProcessNextStep
-        virtual void ProcessNextStep(Real& t, Real* x) = 0;
+        virtual void processNextStep(Real& t, Real* x) = 0;
 
         virtual void setDimension(unsigned int newDim) = 0;
         Real stepSize() const;
-        void SetStepSize(Real stepSize);
+        void setStepSize(Real stepSize);
 
     protected:
       unsigned int dimension_;       // length of the vectors that compose the system dx/dt = f(t,x)
@@ -49,7 +52,7 @@ namespace Rigid2D{
     return stepSize_;
   }
 
-  inline void OdeSolver::SetStepSize(Real stepSize){
+  inline void OdeSolver::setStepSize(Real stepSize){
     stepSize_ = stepSize;	
   }
 
