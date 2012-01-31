@@ -22,8 +22,8 @@ namespace Rigid2D{
         // Advances tOut and xOut by one step from tIn and xIn, respectively
         virtual void ProcessNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut) = 0;
 
-        // Simiplier way of calling method
-        void ProcessNextStep(Real& t, Real* x);
+        // A simiplier way of calling ProcessNextStep
+        virtual void ProcessNextStep(Real& t, Real* x) = 0;
 
         virtual void setDimension(unsigned int newDim) = 0;
         Real stepSize() const;
@@ -51,10 +51,6 @@ namespace Rigid2D{
 
   inline void OdeSolver::SetStepSize(Real stepSize){
     stepSize_ = stepSize;	
-  }
-
-  inline void OdeSolver::ProcessNextStep(Real& t, Real* x){
-    ProcessNextStep(t, x, t, x);
   }
 
 } //end namespace Rigid2D
