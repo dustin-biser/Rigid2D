@@ -80,11 +80,13 @@ namespace Rigid2D {
         return (feq(x, vec.x) && feq(y, vec.y));
       }
 
-      Real operator [] (const unsigned int i) const {
+      // getter
+      Real operator [] (const unsigned int i) const { 
         assert( i < 2 );
         return *(&x+i);
       }
 
+      // setter
       Real& operator [] (const unsigned int i) {
         assert( i < 2 );
         return *(&x+i);

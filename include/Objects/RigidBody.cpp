@@ -10,7 +10,7 @@ namespace Rigid2D {
     vertex_count_ = vertex_count;
     vertex_array_ = vertex_array;
     momentum_ = momentum;
-    force_ = Vector2(0, 0);
+    force_accumulator_ = Vector2(0, 0);
   }
 
   RigidBody::~RigidBody() 
@@ -51,8 +51,8 @@ namespace Rigid2D {
     sub_s[3] = momentum_[1];
     sub_dsdt[0] = momentum_[0] / mass_;
     sub_dsdt[1] = momentum_[1] / mass_;
-    sub_dsdt[2] = force_[0] / mass_;
-    sub_dsdt[3] = force_[1] / mass_;
+    sub_dsdt[2] = force_accumulator_[0] / mass_;
+    sub_dsdt[3] = force_accumulator_[1] / mass_;
   }
 
   void RigidBody::setState(Real* const sub_s)

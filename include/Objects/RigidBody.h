@@ -32,7 +32,7 @@ namespace Rigid2D
     protected:
       Vector2 position_;
       Vector2 momentum_;
-      Vector2 force_;
+      Vector2 force_accumulator_;
       Real mass_;
       int vertex_count_;
       Real *vertex_array_;
