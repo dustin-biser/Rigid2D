@@ -1,11 +1,11 @@
-#ifndef STATE_MANAGER_H
-#define STATE_MANAGER_H
+#ifndef RIGID_BODY_SYSTEM_H
+#define RIGID_BODY_SYSTEM_H
 
 #include "Rigid2D/RigidSettings.h"
 #include "Rigid2D/include/Common/OdeSolver.h"
 
 namespace Rigid2D{
-  class StateManager {
+  class RigidBodySystem{
     public:
       // Computes the derivative dS/dt of the system state array S
       OdeSolver::DerivFunc stateDeriv(Real t, const Real* S, Real* dSdt);
