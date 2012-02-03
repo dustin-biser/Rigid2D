@@ -8,7 +8,7 @@ namespace Rigid2D{
   class StateManager {
     public:
       // Computes the derivative dS/dt of the system state array S
-      OdeSolver::DerivFunc stateDeriv(Real t, Real* S, Real* dSdt);
+      OdeSolver::DerivFunc stateDeriv(Real t, const Real* S, Real* dSdt);
 
       // Uses OdeSolver to update state information for each RigidBody
       void updateRigidBodies();
@@ -16,7 +16,7 @@ namespace Rigid2D{
     private:
       RigidBody * rigidBodies_;   // Collection of all rigid bodies
       Force * forces_;            // Collection of all forces
-      Real * systemState_         // S
+      Real * state_               // S
       unsigned long numBodies_;   // Number of rigid bodies within collection
       unsigned long numForces_;   // Number of forces within collction
       PreciseReal time_;          // Simulation clock
