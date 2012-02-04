@@ -3,8 +3,6 @@
 #include "RigidSettings.h"
 #include "OdeSolver.h"
 #include "RigidException.h"
-#include <vector>
-using std::vector;
 
 namespace Rigid2D{
   // Implementation of a 4th order 4 stage Runge Kutta method for approximating

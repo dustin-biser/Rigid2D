@@ -1,8 +1,6 @@
 #ifndef RIGID_ODE_SOLVER_H
 #define RIGID_ODE_SOLVER_H
 #include "RigidSettings.h"
-#include <vector>
-using std::vector;
 
 namespace Rigid2D{
   // Abstract base class representing an ODE Solver that computes approximations to
