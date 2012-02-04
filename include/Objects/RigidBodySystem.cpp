@@ -10,7 +10,11 @@ RigidBodySystem::RigidBodySystem(Real step){
     solver_ = new RungeKutta4RigidBodySolver(0,     // dimension of system
                                              0.01,  // stepSize
                                              0,     // null pointer to DerivFunc
-                                             this); // pass self to optionalData pointer
+
+                                             this); // pass self to optionalData
+                                                    // pointer so that OdeSolver
+                                                    // can access RigidBodySystem
+                                                    // state information
   }
   catch (std::bad_alloc error){
     throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,

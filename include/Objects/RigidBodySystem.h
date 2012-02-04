@@ -8,27 +8,34 @@
 
 namespace Rigid2D{
   class RigidBodySystem{
+    private:
+      // Computes the derivative dS/dt given inputs t and S
+      void computStateDeriv(Real t, const Real* S, Real* dSdt);
+
+      void buildSystemStateArray();
+
     public:
       RigidBodySystem(Real stepSize = 0.01);  // starting stepSize for the OdeSolver
       ~RigidBodySystem();
 
-      // Computes the derivative dS/dt of the system state array S
-      OdeSolver::DerivFunc stateDeriv(Real t, const Real* S, Real* dSdt);
 
       // Uses OdeSolver to update state information for each RigidBody
       void updateRigidBodies();
 
-      void addRigidBodies (RigidBody * rigidBodies);
-      void removeRigidBodies (RigidBody * rigidBodies);
-      void addForces (Force * forces);
-      void removeForces (Force * forces);
+      bool addRigidBodies (RigidBody * rigidBodies);
+      bool removeRigidBodies (RigidBody * rigidBodies);
+      bool addForces (Force * forces);
+      bool removeForces (Force * forces);
+      unsigned int getDimension();
 
     private:
       RigidBody * rigidBodies_;   // Collection of all rigid bodies
-      Force * forces_;            // Collection of all forces
-      Real * state_               // state array S, representing collection of all RigidBody states
       unsigned long numBodies_;   // Number of rigid bodies within the system
+      Force * forces_;            // Collection of all forces
       unsigned long numForces_;   // Number of forces within the system
+      Real * S_                   // state array S, representing collection of
+                                  // all RigidBody states
+
       PreciseReal time_;          // Simulation clock
       OdeSolver solver_;          // Used to solve the system dS/dt = f(t,S)
   };
