@@ -10,7 +10,7 @@ namespace Rigid2D {
   // are considered equal if one is within a range of the next 4 floats from the other.
   //
   // Credit goes to Bruce Dawson of Cygnus-Software.
-  extern bool feq(float A, float B, int maxUlp = 5);
+  bool feq(float A, float B, int maxUlp = 5);
 }
 
 #endif
