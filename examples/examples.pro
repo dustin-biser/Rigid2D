@@ -12,7 +12,8 @@ QT += opengl
 HEADERS = SampleDemo.h \
   ../include/Objects/*.h  \
   ../include/Common/*.h \
-  ../RigidSettings.h 
+  ../include/RigidSettings.h 
+
 SOURCES = examples.cpp \
   SampleDemo.cpp \
   ../include/Objects/*.cpp \

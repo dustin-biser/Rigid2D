@@ -1,13 +1,13 @@
 CFLAGS = -ggdb
 LFLAGS =
 INCLUDES = -I$(HOME)/opt/guplot/gnuplot-cpp/gnuplot-cpp \
-					 -I$(SRC_DIR) \
-					 -I$(ROOT_DIR) \
+					 -I$(INCLUDE_DIR) \
+					 -I$(INCLUDE_COMMON_DIR) \
 					 -I$(HOME)/Projects/C++/Rigid2D/
 
 OBJ_DIR = ../
-SRC_DIR = ../../
-ROOT_DIR = ../../../../
+INCLUDE_DIR = ../../../
+INCLUDE_COMMON_DIR = ../../
 DEFINES = -DDEBUGGA
 LIBS = -lstdc++
 CC=g++
@@ -18,7 +18,7 @@ OBJ_FILES = OdeRungeKutta4-Plot1.o $(OBJ_DIR)OdeRungeKutta4.o $(OBJ_DIR)RigidExc
 
 all::	OdeRungeKutta4-Plot1
 
-OdeRungeKutta4-Plot1.o : OdeRungeKutta4-Plot1.cpp $(SRC_DIR)OdeRungeKutta4.h
+OdeRungeKutta4-Plot1.o : OdeRungeKutta4-Plot1.cpp $(INCLUDE_COMMON_DIR)OdeRungeKutta4.h
 	$(COMPILE) OdeRungeKutta4-Plot1.cpp
 
 OdeRungeKutta4-Plot1 : $(OBJ_FILES)
