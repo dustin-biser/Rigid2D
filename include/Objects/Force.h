@@ -1,5 +1,6 @@
 #ifndef RIGID2D_FORCE_H
 #define RIGID2D_FORCE_H
+#include "Common/RigidSettings.h"
 
 namespace Rigid2D{
   class Force {
@@ -8,7 +9,7 @@ namespace Rigid2D{
       void (*ForceFunction)(RigidBodies * rigidBodies,   // Collection of RigidBodies
                                                          // that the force is acting upon.
 
-                            Real * dst,                  // Destination for storing force
+                            Vector2 * dst,               // Destination for storing force
                                                          // vectors.
 
                             void * optionalData);        // User specific data which can be
