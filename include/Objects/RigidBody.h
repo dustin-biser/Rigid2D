@@ -11,7 +11,7 @@ namespace Rigid2D
   {
     public:
       RigidBody(Vector2 position, Real mass, Real *vertex_array, int vertex_count, Vector2 momentum);
-      ~RigidBody();
+      ~RigidBody(){}
       Vector2 getPosition() const;
       Vector2 getMomentum() const;
       Real getMass() const;

@@ -1,5 +1,5 @@
-#ifndef RIGID_MATH_UTILS_H
-#define RIGID_MATH_UTILS_H
+#ifndef RIGID2D_MATH_UTILS_H
+#define RIGID2D_MATH_UTILS_H
 
 #include "RigidSettings.h"
 #include "Vector2.h"
