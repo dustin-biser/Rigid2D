@@ -5,8 +5,7 @@
 #include <QTime>
 #include <QTimer>
 #include <iostream>
-#include "RigidSettings.h"
-#include "Objects/RigidBody.h"
+#include "Rigid2D.h"
 
 class SampleDemo : public QGLWidget
 {

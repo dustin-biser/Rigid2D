@@ -10,9 +10,7 @@ INCLUDEPATH += ../include ../
 # Input
 QT += opengl
 HEADERS = SampleDemo.h \
-  ../include/Objects/*.h  \
-  ../include/Common/*.h \
-  ../include/RigidSettings.h 
+  ../include/Rigid2D.h
 
 SOURCES = examples.cpp \
   SampleDemo.cpp \

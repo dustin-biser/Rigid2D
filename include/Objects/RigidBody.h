@@ -1,7 +1,7 @@
 #ifndef RIGID_RIGID_BODY_H
 #define RIGID_RIGID_BODY_H
 
-#include "RigidSettings.h"
+#include "Common/RigidSettings.h"
 #include "Common/MathUtils.h"
 #include "Common/Vector2.h"
 

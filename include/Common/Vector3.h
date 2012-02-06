@@ -94,7 +94,7 @@ namespace Rigid2D {
         assert( i < 3 );
         return *(&x+i);
       }
-      
+
       // setter
       Real& operator [] (const unsigned int i) {
         assert( i < 3 );

@@ -1,6 +1,7 @@
 #ifndef RIGID2D_H
 #define RIGID2D_H
 
+#include "Common/RigidSettings.h"
 #include "Common/MathUtils.h"
 #include "Common/feq.h"
 #include "Common/Matrix2.h"
