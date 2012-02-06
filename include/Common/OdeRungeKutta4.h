@@ -9,13 +9,17 @@ namespace Rigid2D{
   // solutions to the system dx/dt = f(t,x), where x and f are m-dimensional vectors.
   class OdeRungeKutta4 : public OdeSolver {
     public:
-      OdeRungeKutta4(unsigned int dimension, Real stepSize, Function function, void* optionalData = 0);
+      OdeRungeKutta4(unsigned int dimension, Real step, DerivFunction dxdt, void* optionalData = 0);
 
       ~OdeRungeKutta4();
 
-      // Advances time t and state vector x to the next step of approximate
-      // solution to dx/dt = f(t,x).
-      virtual void ProcessNextStep (Real& t, Real* x);
+      // Advances tOut and xOut by one step from tIn and xIn, respectively
+      virtual void processNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut);
+
+      // A simplier way to call processNextStep
+      virtual void processNextStep (Real& t, Real* x);
+
+      virtual void setDimension (unsigned int newDim);
     private:
       Real oneHalfStep_;
       Real oneSixthStep_;

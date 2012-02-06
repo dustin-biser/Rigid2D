@@ -7,48 +7,50 @@ namespace Rigid2D{
   // the solution of the system dx/dt = f(t,x), where x and f are m-dimensional vectors.
   class OdeSolver{
     public:
-        typedef void (*Function)(
-            Real,          // Time t
-
-            const Real*,   // State vector x.  Constant because various
-                           // algorithms will need the current value of x at
-                           // different steps.
-
-            Real*          // Memory location for storing the value of f(t,x)
+        // Given input values for t and array x, DerivFunction should compute the array dxdt.
+        typedef void (*DerivFunction)(
+            Real,          // time t
+            const Real*,   // state array x
+            Real *         // location to store dxdt
             );
 
     protected:
-        OdeSolver (unsigned int dimension, Real step, Function function, void* optionalData = 0);
+        OdeSolver (unsigned int dimension, Real step, DerivFunction dxdt, void* optionalData = 0);
 
     public:
         virtual ~OdeSolver (){ }
-        virtual void ProcessNextStep (Real& t, Real* x) = 0;
-        Real stepSize() const;
-        void SetStepSize(Real stepSize);
+
+        // Advances tOut and xOut by one step from tIn and xIn, respectively
+        virtual void processNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut) = 0;
+
+        // A simiplier way of calling ProcessNextStep
+        virtual void processNextStep(Real& t, Real* x) = 0;
+
+        virtual void setDimension(unsigned int newDim) = 0;
+        Real getStepSize() const;
+        void setStepSize(Real stepSize);
 
     protected:
-      unsigned int dimension_;       // dimension size of system
+      unsigned int dimension_;   // length of the vectors that compose the system dx/dt = f(t,x)
+      Real stepSize_;            // dt, difference between two adjancent time steps
+      DerivFunction f_;          // function used for updating t, x, and dx/dt
 
-      Real stepSize_;                // dt, difference between two adjancent time steps
-
-      Function f_;                   // function used for updating t, x, and f(t,x)
-
-      void* optionalData_;           // storage for implmentation of specific
-                                     // data (e.g. error tolerance, stepSize
-                                     // factors for adaptive schemes, ect.)
+      void* optionalData_;       // storage for implmentation of specific
+                                 // data (e.g. error tolerance, stepSize
+                                 // factors for adaptive schemes, ect.)
   };
 
-  inline OdeSolver::OdeSolver (unsigned int dimension, Real step, OdeSolver::Function function, void* optionalData)
+  inline OdeSolver::OdeSolver (unsigned int dimension, Real step, OdeSolver::DerivFunction function, void* optionalData)
       : dimension_(dimension),
         stepSize_(step),
         f_(function),
         optionalData_(optionalData) { }
 
-  inline Real OdeSolver::stepSize() const {
+  inline Real OdeSolver::getStepSize() const {
     return stepSize_;
   }
 
-  inline void OdeSolver::SetStepSize(Real stepSize){
+  inline void OdeSolver::setStepSize(Real stepSize){
     stepSize_ = stepSize;	
   }
 
