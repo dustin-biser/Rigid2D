@@ -8,7 +8,20 @@
 namespace Rigid2D{
   class RungeKutta4RigidBodySolver : public OdeRungeKutta4 {
     public:
-      RungeKutta4RigidBodySolver(unsigned int dimension, Real step, DerivFunction dxdt, void* optionalData = 0);
+      // dimension corresponds to the dimension of the system dSdt = G(t, S).
+      // This should be number of RigidBodies * the number of states stored
+      // per RigidBody.  rigidBodySystem should be the address of the
+      // RigidBodySystem that keeps track of all Force and RigidBody objects.
+      // stepSize is the beginning stepSize for the OdeSolver.
+      RungeKutta4RigidBodySolver(unsigned int dimension,
+          RigidBodySystem * rigidBodySystem, Real stepSize = 0.01);
+
+      // Advances tOut and xOut by one step from tIn and xIn, respectively
+      virtual void processNextStep (Real tIn, Real* xIn, Real& tOut, Real* xOut);
+
+      // A simplier way to call processNextStep
+      virtual void processNextStep (Real& t, Real* x);
+
 
     private:
       RigidBodySystem * rigidBodySystem_;

@@ -1,11 +1,11 @@
 #include "gtest/gtest.h"
-#include "OdeRungeKutta4.h"
-#include "RigidSettings.h"
 #include "ForceFunctions.h"
-#include "feq.h"
+#include "Common/RigidSettings.h"
+#include "Common/OdeRungeKutta4.h"
 
 using namespace Rigid2D;
 
+// Fixture
 class OdeRungeKutta4Test : public ::testing::Test {
   protected:
     OdeRungeKutta4 * solver;
@@ -14,7 +14,7 @@ class OdeRungeKutta4Test : public ::testing::Test {
     virtual void SetUp(){
       int systemDimension = 2;
       stepSize = 0.1;
-      OdeSolver::Function function = springForce;
+      OdeSolver::DerivFunction function = springForce;
 
       solver = new OdeRungeKutta4 (systemDimension, stepSize, function);
     }
@@ -25,13 +25,13 @@ class OdeRungeKutta4Test : public ::testing::Test {
 
 };
 
-TEST_F(OdeRungeKutta4Test, StepSize){
-  EXPECT_TRUE ( feq(stepSize, solver->stepSize()) );
+TEST_F(OdeRungeKutta4Test, GetStepSize){
+  EXPECT_FLOAT_EQ (0.1, solver->getStepSize());
 }
 
 TEST_F(OdeRungeKutta4Test, SetStepSize){
-  solver->SetStepSize(0.2);
-  EXPECT_FLOAT_EQ ( 0.2, solver->stepSize() );
+  solver->setStepSize(0.2);
+  EXPECT_FLOAT_EQ ( 0.2, solver->getStepSize() );
 }
 
 // Test first step to the solution x'' = -w^2*x, where w = 2 and initial
@@ -42,7 +42,7 @@ TEST_F(OdeRungeKutta4Test, SimpleHarmonicMotion_1Step){
   Real x[2] = {0.1, 0};
   Real t = 0.0;
 
-  solver->ProcessNextStep(t, x);
+  solver->processNextStep(t, x);
   EXPECT_FLOAT_EQ ( 0.1, t);
   EXPECT_FLOAT_EQ ( 0.098006666, x[0]);
   EXPECT_FLOAT_EQ (-0.039733335, x[1]);
