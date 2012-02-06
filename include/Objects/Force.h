@@ -60,12 +60,12 @@ namespace Rigid2D{
       void setEnabled(bool trueOrFlase);
 
     protected:
-      Vector2 * forceVectors_
-      RigidBody * rigidBodies_
-      unsigned int numBodies_
-      void * userData_
-      bool enabled_
-      ForceFunction f_
+      Vector2 * forceVectors_;
+      RigidBody * rigidBodies_;
+      unsigned int numBodies_;
+      void * userData_;
+      bool enabled_;
+      ForceFunction f_;
   };
 } // end namespace Rigid2D
 
