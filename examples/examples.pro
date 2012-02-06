@@ -4,8 +4,8 @@
 
 TEMPLATE = app
 TARGET =
-DEPENDPATH += .../include ../
-INCLUDEPATH += ../include ../
+DEPENDPATH += .../include
+INCLUDEPATH += ../include
 
 # Input
 QT += opengl

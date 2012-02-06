@@ -18,10 +18,8 @@ SampleDemo::SampleDemo(QWidget *parent)
   fpsTimer->start();
   frameCount = 0;
 
-  Real *vertex_array = new Real[8];
-  Real temp_arr[8] = {-5, 5, 5, 5,
+  Real vertex_array[8] = {-5, 5, 5, 5,
                           5, -5, -5, -5};
-  memcpy(vertex_array, temp_arr, 8 * sizeof(Real));
   body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 4, Vector2(0, 0));
 }
 
