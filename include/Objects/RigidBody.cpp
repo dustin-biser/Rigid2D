@@ -1,5 +1,6 @@
 #include "RigidBody.h"
 #include <cassert>
+#include <cstring>
 
 namespace Rigid2D {
 
@@ -9,9 +10,15 @@ namespace Rigid2D {
     position_ = position;
     mass_ = mass;
     vertex_count_ = vertex_count;
-    vertex_array_ = vertex_array;
+    vertex_array_ = new Real[2 * vertex_count];
+    memcpy(vertex_array_, vertex_array, 2 * vertex_count * sizeof(Real));
     momentum_ = mass * velocity;
     forceAccumulator_ = Vector2(0, 0);
+  }
+
+  RigidBody::~RigidBody()
+  {
+    delete vertex_array_;
   }
 
   Vector2 RigidBody::getPosition() const

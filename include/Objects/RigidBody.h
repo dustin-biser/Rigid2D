@@ -10,10 +10,11 @@ namespace Rigid2D
   class RigidBody
   {
     public:
-
-      //TODO Add comments as to how vertex_array should be formatted
+      /* @vertex_array should be an array of tuples in the form of (x,y). It will get deep-copied. 
+       * @vertex_count is the number of tuples, not the number of Reals. */
       RigidBody(Vector2 position, Real mass, Real *vertex_array, int vertex_count, Vector2 velocity);
-      ~RigidBody(){}
+      /* Deletes vertex_array_. */
+      ~RigidBody();
       Vector2 getPosition() const;
       Vector2 getMomentum() const;
       Real getMass() const;
@@ -30,7 +31,8 @@ namespace Rigid2D
       void setMomentum(const Vector2 &);
       void setMass(const Real &);
 
-      //TODO Add comments
+      /* Given a point in OGL coordinate space, this function returns true if 
+       * the point lies within the convex polygon defined by vertex_array_.*/
       bool pointIsInterior(Real x, Real y);
 
     protected:
