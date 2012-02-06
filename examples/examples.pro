@@ -3,11 +3,16 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = 
-DEPENDPATH += .
-INCLUDEPATH += ../include ../
+TARGET =
+DEPENDPATH += .../include
+INCLUDEPATH += ../include
 
 # Input
 QT += opengl
-HEADERS += SampleDemo.h ../include/Objects/RigidBody.h
-SOURCES += examples.cpp SampleDemo.cpp ../include/Objects/RigidBody.cpp
+HEADERS = SampleDemo.h \
+  ../include/Rigid2D.h
+
+SOURCES = examples.cpp \
+  SampleDemo.cpp \
+  ../include/Objects/*.cpp \
+  ../include/Common/*.cpp

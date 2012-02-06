@@ -33,10 +33,18 @@ int main(int argc, char **argv)
     SelectionTree->setMaximumWidth(200);
     SelectionTree->setColumnCount(1);
     SelectionTree->setHeaderLabel(QString("Examples"));
-    QTreeWidgetItem *demosHeader = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Demos")));
+    // DemosHeader
+    QTreeWidgetItem *demosHeader = new QTreeWidgetItem((QTreeWidget*)0, 
+        QStringList(QString("Demos")));
     SelectionTree->addTopLevelItem(demosHeader);
-    QTreeWidgetItem *demo1 = new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Demo 1")));
+    SelectionTree->expandItem(demosHeader);
+    QTreeWidgetItem *demo1 = new QTreeWidgetItem((QTreeWidget*)0, 
+        QStringList(QString("Demo 1")));
     demosHeader->addChild(demo1);
+    // BenchmarksHeader
+    QTreeWidgetItem *benchmarksHeader = new QTreeWidgetItem((QTreeWidget*)0, 
+        QStringList(QString("Benchmarks")));
+    SelectionTree->addTopLevelItem(benchmarksHeader);
     SelectionLayout->addWidget(SelectionTree);
 
     // DemoToolBar layer (top of demo layer)
@@ -44,15 +52,20 @@ int main(int argc, char **argv)
     DemoLayout->addLayout(DemoToolBarLayout);
 
     // DemoToolBar Buttons
-    QPushButton *RunButton = new QPushButton("Run");
-    DemoToolBarLayout->addWidget(RunButton);
-
+    QPushButton *StartButton = new QPushButton("&Start");
+    DemoToolBarLayout->addWidget(StartButton);
+    QPushButton *PauseButton = new QPushButton("&Pause");
+    DemoToolBarLayout->addWidget(PauseButton);
+    QPushButton *RestartButton = new QPushButton("&Restart");
+    DemoToolBarLayout->addWidget(RestartButton);
+    ///DemoToolBarLayout->addStretch();
+    
     // Create an OGLDemo
     SampleDemo *Demo1 = new SampleDemo;
     Demo1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     DemoLayout->addWidget(Demo1);
 
-    // Create an fps display
+    // Create and connect an fps label display
     QHBoxLayout *FPSLayout = new QHBoxLayout;
     FPSLayout->setAlignment(Qt::AlignRight);
     QLabel *FPSTextLabel = new QLabel("Fps: ");

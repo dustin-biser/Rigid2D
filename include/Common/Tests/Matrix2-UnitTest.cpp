@@ -1,4 +1,3 @@
-//matrix2x2_unittest.cpp
 #include "../Matrix2.h"
 #include "../feq.h"
 #include "gtest/gtest.h"

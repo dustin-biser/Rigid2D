@@ -1,4 +1,5 @@
 #include "SampleDemo.h"
+#include "Common/MathUtils.h"
 #include <QMouseEvent>
 
 using namespace Rigid2D;
@@ -17,11 +18,9 @@ SampleDemo::SampleDemo(QWidget *parent)
   fpsTimer->start();
   frameCount = 0;
 
-  Real *vertex_array = new Real[8];
-  Real temp_arr[8] = {-5, 5, 5, 5,
+  Real vertex_array[8] = {-5, 5, 5, 5,
                           5, -5, -5, -5};
-  memcpy(vertex_array, temp_arr, 8 * sizeof(Real));
-  body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 8, Vector2(0, 0));
+  body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 4, Vector2(0, 0));
 }
 
 SampleDemo::~SampleDemo() 
@@ -53,21 +52,13 @@ void SampleDemo::resizeGL(int w, int h)
 
 void SampleDemo::paintGL()
 {
-  // Figure out fps
-  float elapsed = fpsTimer->elapsed();
-  if (elapsed >= 1000) {
-    fps = frameCount * (elapsed/1000);
-    fpsTimer->restart();
-    frameCount = 0;
-    emit fpsChanged(fps);
-  }
-  frameCount++;
+  calculateFps();
 
   // Do drawing here!!
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glLoadIdentity();
 
-  glTranslatef(0, 0, -30);
+  glTranslatef(0, 0, -90);
 
   glColor3f (1, 1, 1);
   glVertexPointer(2, GL_FLOAT, 0, body->getVertexArray());
@@ -77,7 +68,25 @@ void SampleDemo::paintGL()
 
 void SampleDemo::mousePressEvent(QMouseEvent *event) 
 {
-  std::cout << event->y() << std::endl;
+  makeCurrent();
+  GLint viewport[4];
+  GLdouble modelview[16];
+  GLdouble projection[16];
+  GLfloat winX, winY, winZ;
+  GLdouble posX, posY, posZ;
+
+  glGetDoublev( GL_MODELVIEW_MATRIX, modelview );
+  glGetDoublev( GL_PROJECTION_MATRIX, projection );
+  glGetIntegerv( GL_VIEWPORT, viewport );
+
+  winX = event->x();
+  winY = viewport[3] - event->y();
+  glReadPixels( winX, int(winY), 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ );
+
+  gluUnProject( winX, winY, winZ, modelview, projection, viewport, &posX, &posY, &posZ);
+
+  std::cout << body->pointIsInterior(posX, posY) << std::endl;
+  
 }
 
 void SampleDemo::mouseMoveEvent(QMouseEvent *event) 
@@ -90,7 +99,20 @@ void SampleDemo::keyPressEvent(QKeyEvent *event)
 
 }
 
-int SampleDemo::getFPS()
+int SampleDemo::getFps()
 {
   return fps;
+}
+
+void SampleDemo::calculateFps()
+{
+  // Figure out fps
+  float elapsed = fpsTimer->elapsed();
+  if (elapsed >= 1000) {
+    fps = frameCount * (elapsed/1000);
+    fpsTimer->restart();
+    frameCount = 0;
+    emit fpsChanged(fps);
+  }
+  frameCount++;
 }

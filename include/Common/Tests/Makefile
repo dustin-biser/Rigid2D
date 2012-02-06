@@ -25,9 +25,11 @@ TEST_DIR =
 # Root of Rigid2D folder
 ROOT_DIR = ../../../
 
+INCLUDE_DIR = $(ROOT_DIR)include/
+
 # Flags passed to the preprocessor.
-CPPFLAGS += -I$(GTEST_DIR)/include \
-						-I$(ROOT_DIR) \
+CPPFLAGS += -I$(ROOT_DIR)gtest/include \
+						-I$(INCLUDE_DIR) \
 						-I$(SRC_DIR) \
 
 # Flags passed to the C++ compiler.
@@ -90,7 +92,7 @@ gtest_main.a : gtest-all.o gtest_main.o
 feq.o : $(SRC_DIR)feq.cpp $(SRC_DIR)feq.h
 	$(COMPILE) $(SRC_DIR)feq.cpp
 
-Matrix2.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)feq.h
+Matrix2.h : $(SRC_DIR)RigidSettings.h $(SRC_DIR)feq.h
 
 Matrix2.o : $(SRC_DIR)Matrix2.cpp $(SRC_DIR)Matrix2.h $(GTEST_HEADERS)
 	$(COMPILE) $(SRC_DIR)Matrix2.cpp
@@ -111,7 +113,7 @@ RigidException-UnitTest.o : $(TEST_DIR)RigidException-UnitTest.cpp \
 RigidException-UnitTest : RigidException-UnitTest.o RigidException.o gtest_main.a
 	$(LINK)
 
-Vector3.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)feq.h
+Vector3.h : $(SRC_DIR)RigidSettings.h $(SRC_DIR)feq.h
 
 Vector3-UnitTest.o : $(TEST_DIR)Vector3-UnitTest.cpp $(SRC_DIR)Vector3.h $(GTEST_HEADERS)
 	$(COMPILE) $(TEST_DIR)Vector3-UnitTest.cpp
@@ -119,7 +121,7 @@ Vector3-UnitTest.o : $(TEST_DIR)Vector3-UnitTest.cpp $(SRC_DIR)Vector3.h $(GTEST
 Vector3-UnitTest : Vector3-UnitTest.o feq.o gtest_main.a
 	$(LINK)
 
-Vector2.h : $(ROOT_DIR)RigidSettings.h $(SRC_DIR)feq.h
+Vector2.h : $(SRC_DIR)RigidSettings.h $(SRC_DIR)feq.h
 
 Vector2-UnitTest.o : $(TEST_DIR)Vector2-UnitTest.cpp $(SRC_DIR)Vector2.h $(GTEST_HEADERS)
 	$(COMPILE) $(TEST_DIR)Vector2-UnitTest.cpp
@@ -128,11 +130,11 @@ Vector2-UnitTest : Vector2-UnitTest.o feq.o gtest_main.a
 	$(LINK)
 
 OdeRungeKutta4.o : $(SRC_DIR)OdeRungeKutta4.h $(SRC_DIR)OdeRungeKutta4.cpp \
-									 $(SRC_DIR)OdeSolver.h $(ROOT_DIR)RigidSettings.h \
+									 $(SRC_DIR)OdeSolver.h $(SRC_DIR)RigidSettings.h \
 									 $(SRC_DIR)RigidException.h
 	$(COMPILE) $(SRC_DIR)OdeRungeKutta4.cpp
 
-ForceFunctions.h : $(ROOT_DIR)RigidSettings.h
+ForceFunctions.h : $(SRC_DIR)RigidSettings.h
 
 ForceFunctions.o : ForceFunctions.cpp ForceFunctions.h
 	$(COMPILE) ForceFunctions.cpp

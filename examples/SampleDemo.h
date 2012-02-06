@@ -5,8 +5,7 @@
 #include <QTime>
 #include <QTimer>
 #include <iostream>
-#include "RigidSettings.h"
-#include "Objects/RigidBody.h"
+#include "Rigid2D.h"
 
 class SampleDemo : public QGLWidget
 {
@@ -15,6 +14,7 @@ class SampleDemo : public QGLWidget
   public: 
     SampleDemo(QWidget *parent = NULL);
     ~SampleDemo();
+    int getFps();
 
   signals:
     void fpsChanged(int value);
@@ -35,7 +35,7 @@ class SampleDemo : public QGLWidget
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
-    int getFPS();
+    void calculateFps();
 };
 
 #endif
