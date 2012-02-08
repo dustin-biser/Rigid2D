@@ -76,7 +76,7 @@ namespace Rigid2D {
 
     protected:
       Vector2 forceVector_;
-      unoreder_set<RigidBody*> rigidBodies_;
+      std::unordered_set<RigidBody*> rigidBodies_;
       unsigned int numBodies_;
       void * userData_;
       bool enabled_;
