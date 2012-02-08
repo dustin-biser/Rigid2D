@@ -6,6 +6,8 @@
 using namespace Rigid2D;
 
 RigidBodySystem::RigidBodySystem(Real step){
+  time_ = 0.0;
+
   try {
     solver_ = new RungeKutta4RigidBodySolver(0,     // dimension of system
                                              0.01,  // stepSize
@@ -25,4 +27,13 @@ RigidBodySystem::RigidBodySystem(Real step){
 
 RigidBodySystem::~RigidBodySystem(){
   delete solver_;
+}
+
+void RigidBodySystem::updateRigidBodies(){
+  // Build state array S_ and zero the forceAccumulator for each RigidBody
+  unsigned int i;
+  for(i = 0; i < num_bodies_; i++){
+
+  }
+
 }
