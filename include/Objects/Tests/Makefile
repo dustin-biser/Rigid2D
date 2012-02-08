@@ -94,7 +94,7 @@ feq.o : $(COMMON_DIR)feq.cpp $(COMMON_DIR)feq.h
 MathUtils.o : $(COMMON_DIR)MathUtils.cpp $(COMMON_DIR)MathUtils.h
 	$(COMPILE) $(COMMON_DIR)MathUtils.cpp
 
-RigidBody.o : $(SRC_DIR)RigidBody.h $(INCLUDE_DIR)RigidSettings.h  \
+RigidBody.o : $(SRC_DIR)RigidBody.h $(COMMON_DIR)RigidSettings.h  \
 					    $(COMMON_DIR)MathUtils.h $(COMMON_DIR)Vector2.h
 	$(COMPILE) $(SRC_DIR)RigidBody.cpp
 
