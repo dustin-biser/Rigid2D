@@ -46,7 +46,7 @@ int main(){
   Timer timer;
   // Fill in v with zeros
   vector<float> v(COUNT, 0);
-  vector<float> tmpv;
+  vector<float> tmpv(COUNT,0);
   float *p = new float [COUNT];
   float *tmpf;
   int i;
