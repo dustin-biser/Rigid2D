@@ -18,8 +18,8 @@ namespace Rigid2D {
   }
 
   void Force::applyForce(){
-    for (unordered_set<RigidBody*>::iterator it = rigidBodies_.begin();
-        it != rigidBodies_.end(); ++it) 
+    unordered_set<RigidBody*>::iterator it;
+    for (it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) 
     {
       forceFunction_(*it, &forceVector_, userData_);
       (*it)->addToForceAccum(forceVector_);
