@@ -38,11 +38,6 @@ namespace Rigid2D{
 
       ~Force();
 
-      /**
-       * Iterates through the set of RigidBodies calling ForceFunction by using the current
-       * RigidBody, forceVector_, and userData_ as parameters.
-       */
-
       // Calculates forces on each RigidBody by calling the given ForceFunction associated
       // with this Force object.  After a force is calculated for a given RigidBody it is
       // added to the RigidBodies forceAccumulator field.
