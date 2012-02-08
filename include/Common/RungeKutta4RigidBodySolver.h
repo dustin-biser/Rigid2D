@@ -22,7 +22,6 @@ namespace Rigid2D{
       // A simplier way to call processNextStep
       virtual void processNextStep (Real& t, Real* x);
 
-
     private:
       RigidBodySystem * rigidBodySystem_;
   };
