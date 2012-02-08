@@ -25,10 +25,10 @@ namespace Rigid2D{
                                                          // RigidBody that the force is acting
                                                          // upon.
 
-                            Real * dst,                  // Destination for storing force
+                               Vector2 * dst,            // Destination for storing force
                                                          // components.
 
-                            void * userData);            // User specific data which can be
+                               void * userData);         // User specific data which can be
                                                          // used in computing forces.
 
       Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray, unsigned int numBodies, void * userData = 0);
@@ -71,7 +71,7 @@ namespace Rigid2D{
       //TODO void setUserData(void * userData);
 
     protected:
-      Real * forceVector_;
+      Vector2 forceVector_;
       RigidBody * rigidBodies_;
       unsigned int numBodies_;
       void * userData_;

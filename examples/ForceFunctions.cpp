@@ -21,7 +21,7 @@
  * kd: damping constant
  *
 */
-void mouseSpringForce(RigidBody * rigidBody, Real * dst, void * userData){
+void mouseSpringForce(RigidBody * rigidBody, Vector2 * dst, void * userData){
   assert(rigidBody != NULL);
   assert(dst != NULL);
   assert(userData != NULL);
@@ -44,6 +44,6 @@ void mouseSpringForce(RigidBody * rigidBody, Real * dst, void * userData){
   Real kdFactor = deltaVelocity.dot(deltaPosition) / deltaPosition.getLengthSquared();
 
   // Store computed force values
-  *dst++ = (ks + kd*kdFactor)*(-deltaPosition.x);  // x component of force
-  *dst   = (ks + kd*kdFactor)*(-deltaPosition.y);  // y component of force
+  dst->x = (ks + kd*kdFactor)*(-deltaPosition.x);  // x component of force
+  dst->y = (ks + kd*kdFactor)*(-deltaPosition.y);  // y component of force
 }
