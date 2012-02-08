@@ -25,9 +25,9 @@ namespace Rigid2D {
     // This will update forceVector_ with the computed force using any userData_
     // that was given.  Then add forceVector_ to the currentRigidBody's
     // forceAccumulator field.
-    for (unordered_set<RigidBody*>::iterator it = rigidBodies_.begin();
-        it != rigidBodies_.end(); ++it) 
-    {
+    unordered_set<RigidBody*>::iterator it;
+
+    for (it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it){
       forceFunction(*it, forceVector_, userData_);
       *it.addToForceAccum(forceVector_);
     }
