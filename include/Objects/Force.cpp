@@ -15,7 +15,7 @@ Force::Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray,
 
 }
 
-Force::applyForce(){
+void Force::applyForce(){
   // Iterate through the set of RigidBodies.  Force each RigidBody call
   //
   // forceFunction(currentRigidBody, forceVector_, userData_).

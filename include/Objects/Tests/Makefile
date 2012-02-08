@@ -41,7 +41,8 @@ CXXFLAGS += -g -Wall -Wextra
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = RigidBody-UnitTest
+TESTS = RigidBody-UnitTest \
+				Force-UnitTest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -106,8 +107,12 @@ RigidBody-UnitTest : RigidBody-UnitTest.o RigidBody.o \
 	$(LINK)
 
 Force.o : $(SRC_DIR)Force.h $(SRC_DIR)Force.cpp $(SRC_DIR)RigidBody.h
+	$(COMPILE) $(SRC_DIR)Force.cpp
+
+Force-UnitTest.o : $(SRC_DIR)Force.h $(SRC_DIR)Force.cpp $(GTEST_HEADERS)
 	$(COMPILE) Force-UnitTest.cpp
 
-Force-UnitTest.o $(SRC_DIR)Force.h
+Force-UnitTest : Force.o Force-UnitTest.o RigidBody.o MathUtils.o feq.o gtest_main.a
+	$(LINK)
 
 
