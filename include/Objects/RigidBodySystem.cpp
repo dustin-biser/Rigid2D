@@ -5,13 +5,13 @@
 
 using namespace Rigid2D;
 
-RigidBodySystem::RigidBodySystem(Real step){
+RigidBodySystem::RigidBodySystem( ){
   time_ = 0.0;
 
   try {
-    solver_ = new RungeKutta4RigidBodySolver(0,     // dimension of system
-                                             0.01,  // stepSize
-                                             0,     // null pointer to DerivFunc
+    solver_ = new RungeKutta4RigidBodySolver(0,                 // dimension of system
+                                             StartingStepSize,  // stepSize
+                                             0,                 // null pointer to DerivFunc
 
                                              this); // pass self to optionalData
                                                     // pointer so that OdeSolver
@@ -35,5 +35,23 @@ void RigidBodySystem::updateRigidBodies(){
   for(i = 0; i < num_bodies_; i++){
 
   }
+
+}
+
+bool RigidBodySystem::addRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies){
+
+}
+
+
+void RigidBodySystem::buildSystemStateArray(){
+	int i;
+
+	for(i = 1; i <= numBodies; ++i){
+		*S_++ = rigidBodies_->getPosition();
+
+	}
+
+	// Reset pointer position to front of array
+	S_ -= i;
 
 }

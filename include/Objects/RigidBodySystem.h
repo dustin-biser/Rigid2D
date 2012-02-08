@@ -1,7 +1,7 @@
 #ifndef RIGID2D_RIGID_BODY_SYSTEM_H
 #define RIGID2D_RIGID_BODY_SYSTEM_H
 
-#include "RigidSettings.h"
+#include "Common/RigidSettings.h"
 #include "Common/OdeSolver.h"
 #include "RigidBody.h"
 #include "Force.h"
@@ -10,9 +10,10 @@ namespace Rigid2D{
   class RigidBodySystem{
     private:
       // Computes the derivative dS/dt given inputs t and S
-      void computStateDeriv(Real t, const Real* S, Real* dSdt);
+      void computeStateDeriv(Real t, const Real* S, Real* dSdt);
 
-      // Iterates through each RigidBody 
+      // Iterates through each RigidBody collecting state information and appending
+			// it to S_
       void buildSystemStateArray();
 
     public:
@@ -92,7 +93,7 @@ namespace Rigid2D{
 
       PreciseReal time_;          // Simulation clock
       OdeSolver solver_;          // Used to solve the system dS/dt = G(t,S)
-  };
+
 } // end namespace Rigid2D
 
 #endif
