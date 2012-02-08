@@ -1,6 +1,7 @@
 #ifndef RIGID2D_FORCE_H
 #define RIGID2D_FORCE_H
 #include "Common/RigidSettings.h"
+#include "Common/Vector2.h"
 #include "Objects/RigidBody.h"
 
 namespace Rigid2D{

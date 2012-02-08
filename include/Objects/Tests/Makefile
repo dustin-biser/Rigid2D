@@ -105,4 +105,9 @@ RigidBody-UnitTest : RigidBody-UnitTest.o RigidBody.o \
 										 feq.o MathUtils.o gtest_main.a
 	$(LINK)
 
+Force.o : $(SRC_DIR)Force.h $(SRC_DIR)Force.cpp $(SRC_DIR)RigidBody.h
+	$(COMPILE) Force-UnitTest.cpp
+
+Force-UnitTest.o $(SRC_DIR)Force.h
+
 

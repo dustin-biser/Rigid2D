@@ -2,12 +2,16 @@
 
 using namespace Rigid2D;
 
-Force::Force(ForceFunction f, RigidBody * rigidBodyArray, void * userData)
-  : forceFunction_(f), rigidBodyArray_(rigidBodyArray), userData_(userData){
+Force::Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray,
+    unsigned int numBodies, void * userData)
+  : rigidBodies_(rigidBodyArray),
+    numBodies_(numBodies),
+    userData_(userData),
+    enabled_(true),
+    forceFunction_(forceFunction) {
 
     forceVector_.x = 0.0;
     forceVector_.y = 0.0;
-
 
 }
 
