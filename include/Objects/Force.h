@@ -6,6 +6,7 @@
 #include <unordered_set>
 
 namespace Rigid2D {
+  using namespace std;
   /// Representation of a force that acts one or more RigidBodies.
   /** Each Force object will contain an associated ForceFunction, written by
    *  the user, that tells the Force class how to calculate forces for each of
@@ -23,15 +24,15 @@ namespace Rigid2D {
   class Force {
     public:
       typedef
-      void (*ForceFunctionPtr)(RigidBody * rigidBody,    // Memory location for a particular
-                                                         // RigidBody that the force is acting
-                                                         // upon.
+      void (*ForceFunctionPtr)(RigidBody * const rigidBody,    // Memory location for a particular
+                                                               // RigidBody that the force is acting
+                                                               // upon.
 
-                               Vector2 * dst,            // Destination for storing force
-                                                         // components.
+                               Vector2 * dst,                  // Destination for storing force
+                                                               // components.
 
-                               void * userData);         // User specific data which can be
-                                                         // used in computing forces.
+                               void * userData);               // User specific data which can be
+                                                               // used in computing forces.
 
       Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray, unsigned int numBodies, void * userData = 0);
 
@@ -77,7 +78,7 @@ namespace Rigid2D {
 
     protected:
       Vector2 forceVector_;
-      std::unordered_set<RigidBody*> rigidBodies_;
+      unordered_set<RigidBody*> rigidBodies_;
       unsigned int numBodies_;
       void * userData_;
       bool enabled_;
