@@ -21,8 +21,9 @@ namespace Rigid2D{
   class Force {
     public:
       typedef
-      void (*ForceFunction)(RigidBodies * rigidBodies,   // Collection of RigidBodies
-                                                         // that the force is acting upon.
+      void (*ForceFunctionPtr)(RigidBody * rigidBody,    // Memory location for a particular
+                                                         // RigidBody that the force is acting
+                                                         // upon.
 
                             Vector2 * dst,               // Destination for storing force
                                                          // vectors.
@@ -30,9 +31,21 @@ namespace Rigid2D{
                             void * userData);            // User specific data which can be
                                                          // used in computing forces.
 
-      Force(ForceFunction funct, RigidBody * rigidBodyArray = 0, void * userData = 0);
-      Force(ForceFunction funct, void * userData = 0);
+      Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray, unsigned int numBodies, void * userData = 0);
+
+      //TODO Force(ForceFunctionPtr forceFunction, void * userData = 0);
+      //TODO Force();
+
       ~Force();
+
+      /**
+       * Iterates through the set of RigidBodies calling ForceFunction by using the current
+       * RigidBody, forceVector_, and userData_ as parameters.
+       */
+
+      // Calculates forces on each RigidBody by calling the given ForceFunction associated
+      // with this Force object.  After a force is calculated for a given RigidBody it is
+      // added to the RigidBodies forceAccumulator field.
       void applyForce();
 
       // Iterates through each pointer of rigidBodyArray checking that it is not
@@ -59,13 +72,16 @@ namespace Rigid2D{
       // RigidBodies until it is enabled again.
       void setEnabled(bool trueOrFlase);
 
+
+      //TODO void setUserData(void * userData);
+
     protected:
-      Vector2 * forceVectors_;
+      Vector2 forceVector_;
       RigidBody * rigidBodies_;
       unsigned int numBodies_;
       void * userData_;
       bool enabled_;
-      ForceFunction f_;
+      ForceFunctionPtr forceFunction_;
   };
 } // end namespace Rigid2D
 
