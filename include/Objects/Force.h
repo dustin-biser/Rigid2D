@@ -3,8 +3,9 @@
 #include "Common/RigidSettings.h"
 #include "Common/Vector2.h"
 #include "Objects/RigidBody.h"
+#include <unordered_set>
 
-namespace Rigid2D{
+namespace Rigid2D {
   /// Representation of a force that acts one or more RigidBodies.
   /** Each Force object will contain an associated ForceFunction, written by
    *  the user, that tells the Force class how to calculate forces for each of
@@ -44,18 +45,21 @@ namespace Rigid2D{
       // added to the RigidBodies forceAccumulator field.
       void applyForce();
 
-      // Iterates through each pointer of rigidBodyArray checking that it is not
+      // ??Iterates through each pointer of rigidBodyArray checking that it is not
       // contained in rigidBodies_, and adds it to the array if not found.  If
       // all pointers in rigidBodyArray are added to the array rigidBodies_,
-      // then addRigidBody returns True.  Returns false otherwise.
-      bool addRigidBodies(RigidBody * rigidBodyArray);
+      // then addRigidBody returns True.  Returns false otherwise.??
+      void addRigidBody(RigidBody *rigidBody);
+      void addRigidBodies(RigidBody * rigidBodyArray, unsigned count);
 
-      // Iterates through each pointer of rigidBodyArray and compares it to the
+      // ??Iterates through each pointer of rigidBodyArray and compares it to the
       // pointers found in rigidBodies_.  If the pointer is found, it is removed
       // from rigidBodies_.  If all pointers in rigidBodyArray are found and
       // removed from rigidBodies_ in this way, then removeRigidBodies returns
-      // true.  Returns false otherwise.
-      bool removeRigidBodies(RigidBody * rigidBodyArray);
+      // true.  Returns false otherwise.??
+      void removeRigidBody(RigidBody *rigidBody);
+      void removeRigidBodies(RigidBody * rigidBodyArray, unsigned count);
+      void clearRigidBodies();
 
       // Set funct as the new ForceFunctionPtr
       void setForceFunction(ForceFunctionPtr funct);
@@ -73,7 +77,7 @@ namespace Rigid2D{
 
     protected:
       Vector2 forceVector_;
-      RigidBody * rigidBodies_;
+      std::unordered_set<RigidBody*> rigidBodies_;
       unsigned int numBodies_;
       void * userData_;
       bool enabled_;

@@ -39,7 +39,9 @@ namespace Rigid2D
       void setVelocity(const Vector2 & velocity);
       void setMass(const Real &);
 
-      /* Given a point in OpenGL coordinate space, this function returns true if
+      void addToForceAccum(const Vector2 &);
+
+      /* Given a point in graphics coordinate space, this function returns true if
        * the point lies within the convex polygon defined by vertex_array_.*/
       bool pointIsInterior(Real x, Real y);
 

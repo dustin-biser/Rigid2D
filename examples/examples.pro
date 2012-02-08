@@ -16,3 +16,5 @@ SOURCES = examples.cpp \
   SampleDemo.cpp \
   ../include/Objects/*.cpp \
   ../include/Common/*.cpp
+
+CXXFLAGS += -std=c++0x
