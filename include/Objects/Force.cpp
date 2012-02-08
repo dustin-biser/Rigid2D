@@ -1,15 +1,17 @@
 #include "Force.h"
 
+using namespace std;
+
 namespace Rigid2D {
 
   Force::Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray,
       unsigned int numBodies, void * userData)
-    : rigidBodies_(rigidBodyArray),
-      numBodies_(numBodies),
+    : numBodies_(numBodies),
       userData_(userData),
       enabled_(true),
-      forceFunction_(forceFunction) 
+      forceFunction_(forceFunction)
   {
+    addRigidBodies(rigidBodyArray, numBodies);
 
     forceVector_.x = 0.0;
     forceVector_.y = 0.0;
