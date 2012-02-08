@@ -1,6 +1,7 @@
 #ifndef RIGID2D_FORCE_H
 #define RIGID2D_FORCE_H
 #include "Common/RigidSettings.h"
+#include "Common/Vector2.h"
 #include "Objects/RigidBody.h"
 #include <unordered_set>
 
@@ -76,7 +77,7 @@ namespace Rigid2D {
 
     protected:
       Vector2 forceVector_;
-      unoreder_set<RigidBody*> rigidBodies_;
+      std::unordered_set<RigidBody*> rigidBodies_;
       unsigned int numBodies_;
       void * userData_;
       bool enabled_;
