@@ -25,8 +25,8 @@ namespace Rigid2D{
                                                          // RigidBody that the force is acting
                                                          // upon.
 
-                            Vector2 * dst,               // Destination for storing force
-                                                         // vectors.
+                            Real * dst,                  // Destination for storing force
+                                                         // components.
 
                             void * userData);            // User specific data which can be
                                                          // used in computing forces.
@@ -38,7 +38,7 @@ namespace Rigid2D{
 
       ~Force();
 
-      // Calculates forces on each RigidBody by calling the given ForceFunction associated
+      // Calculates forces on each RigidBody by calling the given ForceFunctionPtr associated
       // with this Force object.  After a force is calculated for a given RigidBody it is
       // added to the RigidBodies forceAccumulator field.
       void applyForce();
@@ -56,8 +56,8 @@ namespace Rigid2D{
       // true.  Returns false otherwise.
       bool removeRigidBodies(RigidBody * rigidBodyArray);
 
-      // Set funct as the new ForceFunction
-      void setForceFunction(ForceFunction funct);
+      // Set funct as the new ForceFunctionPtr
+      void setForceFunction(ForceFunctionPtr funct);
 
       // Returns true if force is enabled.  False otherwise.
       bool isEnabled();
@@ -71,7 +71,7 @@ namespace Rigid2D{
       //TODO void setUserData(void * userData);
 
     protected:
-      Vector2 forceVector_;
+      Real * forceVector_;
       RigidBody * rigidBodies_;
       unsigned int numBodies_;
       void * userData_;

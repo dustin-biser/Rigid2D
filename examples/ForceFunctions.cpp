@@ -21,19 +21,19 @@
  * kd: damping constant
  *
 */
-void mouseSpringForce(RigidBody * rigidBody, Vector2 * dst, void * userData){
+void mouseSpringForce(RigidBody * rigidBody, Real * dst, void * userData){
   assert(rigidBody != NULL);
   assert(dst != NULL);
   assert(userData != NULL);
 
-  Vector2 mousePos(userData[0], userData[1]);         // Store mouse coordinants
-  Vector2 centerOfMassPos = rigidBody->getposition(); // Center of mass of RigidBody
-  Real ks = userData[2];                              // Spring constant
-  Real kd = userData[3];                              // Damping constant
+  Vector2 mousePos ( ((Real*)userData)[0], ((Real*)userData)[1] );         // Store mouse coordinants
+  Vector2 centerOfMassPos = rigidBody->getPosition(); // Center of mass of RigidBody
+  Real ks = ((Real*)userData)[2];                        // Spring constant
+  Real kd = ((Real*)userData)[3];                        // Damping constant
 
   // l; Distance between the RigidBody's center of mass, and mouse coordinates
   Vector2 deltaPosition(centerOfMassPos.x - mousePos.x,
-      centerOfMassPos.y - mousePose.y);
+      centerOfMassPos.y - mousePos.y);
 
   // l_dot; Assume mouse is not moving, and only factor-in velocity of RigidBody's center of mass.
   Vector2 deltaVelocity(rigidBody->getVelocity());
@@ -44,6 +44,6 @@ void mouseSpringForce(RigidBody * rigidBody, Vector2 * dst, void * userData){
   Real kdFactor = deltaVelocity.dot(deltaPosition) / deltaPosition.getLengthSquared();
 
   // Store computed force values
-  dst[0] = (ks + kd*kdFactor)*(-deltaPosition.x);
-  dst[1] = (ks + kd*kdFactor)*(-deltaPosition.y);
+  *dst++ = (ks + kd*kdFactor)*(-deltaPosition.x);  // x component of force
+  *dst   = (ks + kd*kdFactor)*(-deltaPosition.y);  // y component of force
 }
