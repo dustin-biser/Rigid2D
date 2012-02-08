@@ -6,13 +6,13 @@ namespace Rigid2D {
 
   RigidBody::RigidBody(Vector2 position, Real mass, Real *vertex_array,
       int vertex_count, Vector2 velocity)
+    : position_(position),
+      velocity_(velocity),
+      mass_(mass),
+      vertex_count_(vertex_count)
   {
-    position_ = position;
-    mass_ = mass;
-    vertex_count_ = vertex_count;
     vertex_array_ = new Real[2 * vertex_count];
     memcpy(vertex_array_, vertex_array, 2 * vertex_count * sizeof(Real));
-    momentum_ = mass * velocity;
     forceAccumulator_ = Vector2(0, 0);
   }
 
@@ -26,9 +26,14 @@ namespace Rigid2D {
     return position_;
   }
 
+  Vector2 RigidBody::getVelocity() const
+  {
+    return velocity_;
+  }
+
   Vector2 RigidBody::getMomentum() const
   {
-    return momentum_;
+    return mass_ * velocity_;
   }
 
   Real RigidBody::getMass() const
@@ -52,28 +57,28 @@ namespace Rigid2D {
 
     sub_S[0] = position_.x;
     sub_S[1] = position_.y;
-    sub_S[2] = momentum_.x;
-    sub_S[3] = momentum_.y;
+    sub_S[2] = mass_ * velocity_.x;
+    sub_S[3] = mass_ * velocity_.y;
   }
 
   void RigidBody::copyStateDeriv(Real *sub_dSdt) const
   {
     assert(sub_dSdt != 0);
 
-    sub_dSdt[0] = momentum_.x / mass_;
-    sub_dSdt[1] = momentum_.y / mass_;
+    sub_dSdt[0] = velocity_.x;
+    sub_dSdt[1] = velocity_.y;
     sub_dSdt[2] = forceAccumulator_.x / mass_;
     sub_dSdt[3] = forceAccumulator_.y / mass_;
   }
 
-  void RigidBody::setPosition(const Vector2 &position)
+  void RigidBody::setPosition(const Vector2 & position)
   {
     position_ = position;
   }
 
-  void RigidBody::setMomentum(const Vector2 &momentum)
+  void RigidBody::setVelocity(const Vector2 & velocity)
   {
-    momentum_ = momentum;
+    velocity_ = velocity;
   }
 
   void RigidBody::setMass(const Real &mass)
