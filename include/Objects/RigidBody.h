@@ -31,6 +31,8 @@ namespace Rigid2D
       void setMomentum(const Vector2 &);
       void setMass(const Real &);
 
+      void addToForceAccum(const Vector2 &);
+
       /* Given a point in OGL coordinate space, this function returns true if 
        * the point lies within the convex polygon defined by vertex_array_.*/
       bool pointIsInterior(Real x, Real y);
