@@ -1,24 +1,33 @@
 #include "Force.h"
 
+using namespace std;
+
 namespace Rigid2D {
 
   Force::Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray,
       unsigned int numBodies, void * userData)
-    : rigidBodies_(rigidBodyArray),
-      numBodies_(numBodies),
+    : numBodies_(numBodies),
       userData_(userData),
       enabled_(true),
-      forceFunction_(forceFunction) 
+      forceFunction_(forceFunction)
   {
+    addRigidBodies(rigidBodyArray, numBodies);
 
     forceVector_.x = 0.0;
     forceVector_.y = 0.0;
   }
 
   void Force::applyForce(){
-    for (unordered_set<RigidBody*>::iterator it = rigidBodies_.begin();
-        it != rigidBodies_.end(); ++it) 
-    {
+    // Iterate through the set of RigidBodies.  Force each RigidBody call
+    //
+    // forceFunction(currentRigidBody, forceVector_, userData_).
+    //
+    // This will update forceVector_ with the computed force using any userData_
+    // that was given.  Then add forceVector_ to the currentRigidBody's
+    // forceAccumulator field.
+    unordered_set<RigidBody*>::iterator it;
+
+    for (it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it){
       forceFunction(*it, forceVector_, userData_);
       *it.addToForceAccum(forceVector_);
     }

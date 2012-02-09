@@ -17,6 +17,9 @@ namespace Rigid2D{
 
 	const PreciseReal tau = 6.283185307;
 
+	// Starting step size for the OdeSolver.
+	const Real StartingStepSize = 0.01;
+
 
 }
 
