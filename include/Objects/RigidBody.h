@@ -10,7 +10,7 @@ namespace Rigid2D
   class RigidBody
   {
     public:
-      /* @vertex_array should be an array of tuples in the form of (x,y). It will get deep-copied. 
+      /* @vertex_array should be an array of tuples in the form of (x,y). It will get deep-copied
        * @vertex_count is the number of tuples, not the number of Reals. */
       RigidBody(Vector2 position, Real mass, Real *vertex_array, int vertex_count, Vector2 velocity);
       /* Deletes vertex_array_. */

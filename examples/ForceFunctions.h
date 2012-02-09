@@ -4,6 +4,6 @@
 
 using namespace Rigid2D;
 
-void mouseSpringForce(RigidBody * rigidBody, Vector2 * dst, void * userData);
+void mouseSpringForce(RigidBody * const rigidBody, Vector2 * dst, void * userData);
 
 #endif
