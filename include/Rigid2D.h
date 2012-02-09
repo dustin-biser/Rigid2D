@@ -7,7 +7,7 @@
 #include "Common/Matrix2.h"
 #include "Common/OdeSolver.h"
 #include "Common/OdeRungeKutta4.h" // need both?
-#include "Common/RigidException.h"
+//#include "Common/RigidException.h"
 #include "Common/Vector2.h"
 #include "Common/Vector3.h"
 

@@ -14,7 +14,9 @@ HEADERS = SampleDemo.h \
 
 SOURCES = examples.cpp \
   SampleDemo.cpp \
-  ../include/Objects/*.cpp \
-  ../include/Common/*.cpp
+  ../include/Objects/RigidBody.cpp \
+  ../include/Objects/Force.cpp \
+	../include/Common/MathUtils.cpp \
+	../include/Common/feq.cpp
 
-CXXFLAGS += -std=c++0x
+QMAKE_CXXFLAGS += -std=c++0x
