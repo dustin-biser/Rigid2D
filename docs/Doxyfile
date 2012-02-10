@@ -1,3 +1,4 @@
+# B
 # Doxyfile 1.6.3
 
 # This file describes the settings to be used by the documentation system
@@ -38,7 +39,7 @@ PROJECT_NUMBER         = 0.1
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = /home/nqe/rigid2D/docs
+OUTPUT_DIRECTORY       = 
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
 # 4096 sub-directories (in 2 levels) under the output directory of each output 
