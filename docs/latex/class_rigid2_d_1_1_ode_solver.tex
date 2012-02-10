@@ -1,0 +1,82 @@
+\hypertarget{class_rigid2_d_1_1_ode_solver}{
+\section{Rigid2D::OdeSolver Class Reference}
+\label{class_rigid2_d_1_1_ode_solver}\index{Rigid2D::OdeSolver@{Rigid2D::OdeSolver}}
+}
+Inheritance diagram for Rigid2D::OdeSolver:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3cm]{class_rigid2_d_1_1_ode_solver}
+\end{center}
+\end{figure}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_ac375b33ae2cc32b12674f534bf2c21cd}{
+typedef void($\ast$ {\bfseries DerivFunction} )(Real, const Real $\ast$, Real $\ast$)}
+\label{class_rigid2_d_1_1_ode_solver_ac375b33ae2cc32b12674f534bf2c21cd}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_a65fafafc1bc529bd3e76bed1511517c7}{
+virtual void {\bfseries processNextStep} (Real tIn, Real $\ast$xIn, Real \&tOut, Real $\ast$xOut)=0}
+\label{class_rigid2_d_1_1_ode_solver_a65fafafc1bc529bd3e76bed1511517c7}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_a8272aadd5ef0b8bfaaead91f28e9bed6}{
+virtual void {\bfseries processNextStep} (Real \&t, Real $\ast$x)=0}
+\label{class_rigid2_d_1_1_ode_solver_a8272aadd5ef0b8bfaaead91f28e9bed6}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_ab027f9ac8e7b3964ae6dde9d6cb31080}{
+virtual void {\bfseries setDimension} (unsigned int newDim)=0}
+\label{class_rigid2_d_1_1_ode_solver_ab027f9ac8e7b3964ae6dde9d6cb31080}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_adf2340b12b0e953b0f7d493a62082544}{
+Real {\bfseries getStepSize} () const }
+\label{class_rigid2_d_1_1_ode_solver_adf2340b12b0e953b0f7d493a62082544}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_a7276816b38e0c24a6cd325f21347d957}{
+void {\bfseries setStepSize} (Real stepSize)}
+\label{class_rigid2_d_1_1_ode_solver_a7276816b38e0c24a6cd325f21347d957}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_acd5eb1eb95fc0bbbee089cbe5f8ece93}{
+{\bfseries OdeSolver} (unsigned int dimension, Real step, DerivFunction dxdt, void $\ast$optionalData=0)}
+\label{class_rigid2_d_1_1_ode_solver_acd5eb1eb95fc0bbbee089cbe5f8ece93}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_a1be4eb3c7b6ef72d949a966682769a33}{
+unsigned int {\bfseries dimension\_\-}}
+\label{class_rigid2_d_1_1_ode_solver_a1be4eb3c7b6ef72d949a966682769a33}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_aec56edf2d94e81d00d42cd3dcc2a6812}{
+Real {\bfseries stepSize\_\-}}
+\label{class_rigid2_d_1_1_ode_solver_aec56edf2d94e81d00d42cd3dcc2a6812}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_a1a7dbd8494db7278e83e91675d721c2f}{
+DerivFunction {\bfseries f\_\-}}
+\label{class_rigid2_d_1_1_ode_solver_a1a7dbd8494db7278e83e91675d721c2f}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_ode_solver_af444f0609f63f97d508de0856e5632c2}{
+void $\ast$ {\bfseries optionalData\_\-}}
+\label{class_rigid2_d_1_1_ode_solver_af444f0609f63f97d508de0856e5632c2}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+/home/nqe/rigid2D/include/Common/OdeSolver.h\end{DoxyCompactItemize}
