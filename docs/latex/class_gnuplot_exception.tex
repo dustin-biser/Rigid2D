@@ -1,0 +1,33 @@
+\hypertarget{class_gnuplot_exception}{
+\section{GnuplotException Class Reference}
+\label{class_gnuplot_exception}\index{GnuplotException@{GnuplotException}}
+}
+
+
+A C++ interface to gnuplot.  
+
+
+
+
+{\ttfamily \#include $<$gnuplot\_\-i.hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_gnuplot_exception_a8b324a9ef4d3f75079d41ecd61c62d44}{
+{\bfseries GnuplotException} (const std::string \&msg)}
+\label{class_gnuplot_exception_a8b324a9ef4d3f75079d41ecd61c62d44}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A C++ interface to gnuplot. The interface uses pipes and so won't run on a system that doesn't have POSIX pipe support Tested on Windows (MinGW and Visual C++) and Linux (GCC)
+
+Version history: 0. C interface by N. Devillard (27/01/03) 1. C++ interface: direct translation from the C interface by Rajarshi Guha (07/03/03) 2. corrections for Win32 compatibility by V. Chyzhdzenka (20/05/03) 3. some member functions added, corrections for Win32 and Linux compatibility by M. Burgis (10/03/08)
+
+Requirements: gnuplot has to be installed (\href{http://www.gnuplot.info/download.html}{\tt http://www.gnuplot.info/download.html}) for Windows: set Path-\/Variable for \hyperlink{class_gnuplot}{Gnuplot} path (e.g. C:/program files/gnuplot/bin) or set \hyperlink{class_gnuplot}{Gnuplot} path with: \hyperlink{class_gnuplot_a67cae885c26ced821e335d98986f1967}{Gnuplot::set\_\-GNUPlotPath(const std::string \&path)}; 
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+\item 
+/home/nqe/rigid2D/include/Common/Tests/Plots/gnuplot\_\-i.hpp\end{DoxyCompactItemize}

@@ -26,44 +26,49 @@ namespace Rigid2D{
       void updateRigidBodies();
 
       /**
-       * Iterates through each pointer of rigidBodyArray checking that it is
-       * not currently stored within the RigidBodySystem, and adds it to the
-       * system if not found.
+       * Tells RigidBodySystem to keep track of a RigidBody. If the body (pointer) 
+       * was previously added, it does not get added a second time.
        *
-       * @param rigidBodyArray memory location to beginning of array of
-       *  RigidBody objects.
-       * @param numBodies number of RigidBodies pointed to by rigidBodyArray.
-       *
-       * @return true if all pointers are added to the RigidBodySystem, or false
-       *  otherwise.
+       * @param rigidBody pointer to a RigidBody object.
+       * @see addRigidBodies()
+       * @see removeRigidBody()
+       * @see removeRigidBodies()
        */
-      bool addRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies);
+      void addRigidBody(RigidBody * rigidBody);
 
       /**
-       * Iterates through each pointer of rigidBodyArray and removes it from
-       * the current RigidBodySystem.
+       * Same as addRigidBody() but for multiple bodies.
        *
-       * @param rigidBodyArray memory location to beginning of array of
-       *  RigidBody objects.
-       * @param numBodies number of RigidBodies pointed to by rigidBodyArray.
-       *
-       * @return true if all RigidBodies were found and removed from the current
-       * RigidBodySystem, or false otherwise.
+       * @param rigidBodyArray array of RigidBody's.
+       * @param numBodies length of rigidBodyArray.
+       * @see addRigidBody()
+       * @see removeRigidBody()
+       * @see removeRigidBodies()
        */
-      bool removeRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies);
+      void addRigidBodies(RigidBody * rigidBodyArray, unsigned int numBodies);
 
+      /** Tells RigidBodySystem to not keep track of a RigidBody. If the body
+       * (pointer) was not previously added, it does nothing.
+       *
+       * @param rigidBody pointer to a RigidBody object.
+       * @see addRigidBody()
+       * @see addRigidBodies()
+       * @see removeRigidBodies()
+       */
+      void removeRigidBody(RigidBody * rigidBody);
+      
       /**
-       * Iterates through current list of RigidBody pointers and adds rigidBody
-       * to the list if it is unique.
+       * Same as removeRigidBody() but for multiple bodies.
        *
-       * @param rigidBody memory location for a RigidBody object.
-       *
-       * @return true if pointer was added to the RigidBodySystem, or false
-       *  otherwise.
+       * @param rigidBodyArray array of RigidBody's.
+       * @param numBodies length of rigidBodyArray.
+       * @see addRigidBody()
+       * @see addRigidBodies()
+       * @see removeRigidBody()
        */
-      bool addRigidBody(RigidBody * rigidBody);
+      void removeRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies);
 
-      bool removeRigidBody(RigidBody * rigidBody);
+
 
       /**
        * Iterates through each pointer of forceArray checking that it is
@@ -84,15 +89,15 @@ namespace Rigid2D{
       unsigned int getDimension();
 
     private:
-      RigidBody * rigidBodies_;   // Collection of all rigid bodies
-      unsigned long numBodies_;   // Number of rigid bodies within the system
-      Force * forces_;            // Collection of all forces
-      unsigned long numForces_;   // Number of forces within the system
-      Real * S_                   // state array S, representing collection of
-                                  // all RigidBody states
+      unordered_set<RigidBody*> rigidBodies_;   // Collection of all tracked rigid bodies
+      unsigned long numBodies_;                 // Number of rigid bodies within the system
+      unordered_set<Force*> forces_;            // Collection of all forces
+      unsigned long numForces_;                 // Number of forces within the system
+      Real * S_                                 // state array S, representing collection of
+                                                // all RigidBody states
 
-      PreciseReal time_;          // Simulation clock
-      OdeSolver solver_;          // Used to solve the system dS/dt = G(t,S)
+      PreciseReal time_;                        // Simulation clock
+      OdeSolver solver_;                        // Used to solve the system dS/dt = G(t,S)
 
 } // end namespace Rigid2D
 
