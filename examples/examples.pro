@@ -15,8 +15,10 @@ HEADERS = SampleDemo.h \
 SOURCES = examples.cpp \
   SampleDemo.cpp \
   ../include/Objects/RigidBody.cpp \
+  ../include/Objects/RigidBodySystem.cpp \
   ../include/Objects/Force.cpp \
 	../include/Common/MathUtils.cpp \
 	../include/Common/feq.cpp
 
 QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_CLEAN += examples *.o

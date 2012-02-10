@@ -12,6 +12,7 @@
 #include "Common/Vector3.h"
 
 #include "Objects/RigidBody.h"
+#include "Objects/RigidBodySystem.h"
 #include "Objects/Force.h"
 
 #endif

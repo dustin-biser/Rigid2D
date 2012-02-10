@@ -18,13 +18,24 @@ SampleDemo::SampleDemo(QWidget *parent)
   fpsTimer->start();
   frameCount = 0;
 
+	// Init RigidBodySystem
+	rigidBodySystem = new RigidBodySystem();
+
+	// Init sample rigid body;
   Real vertex_array[8] = {-5, 5, 5, 5,
                           5, -5, -5, -5};
   body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 4, Vector2(0, 0));
+
+	// Add body to rigidBodySystem
+	rigidBodySystem->addRigidBody(body);
 }
 
-SampleDemo::~SampleDemo() 
+SampleDemo::~SampleDemo()
 {
+	delete animationTimer;
+	delete fpsTimer;
+	delete rigidBodySystem;
+	delete body;
 }
 
 void SampleDemo::initializeGL()

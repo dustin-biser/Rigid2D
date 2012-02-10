@@ -6,16 +6,10 @@
 #include "RigidBody.h"
 #include "Force.h"
 
-namespace Rigid2D{
-  class RigidBodySystem{
-    private:
-      // Computes the derivative dS/dt given inputs t and S
-      void computeStateDeriv(Real t, const Real* S, Real* dSdt);
-
-      // Iterates through each RigidBody collecting state information and appending
-			// it to S_
-      void buildSystemStateArray();
-
+namespace Rigid2D
+{
+  class RigidBodySystem
+	{
     public:
       RigidBodySystem();
       ~RigidBodySystem();
@@ -68,8 +62,6 @@ namespace Rigid2D{
        */
       void removeRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies);
 
-
-
       /**
        * Iterates through each pointer of forceArray checking that it is
        * not currently stored within the RigidBodySystem, and adds it to the
@@ -89,16 +81,24 @@ namespace Rigid2D{
       unsigned int getDimension();
 
     private:
+      // Computes the derivative dS/dt given inputs t and S
+      void computeStateDeriv(Real t, const Real* S, Real* dSdt);
+
+      // Iterates through each RigidBody collecting state information and appending
+			// it to S_
+      void buildSystemStateArray();
+
+    private:
       unordered_set<RigidBody*> rigidBodies_;   // Collection of all tracked rigid bodies
       unsigned long numBodies_;                 // Number of rigid bodies within the system
       unordered_set<Force*> forces_;            // Collection of all forces
       unsigned long numForces_;                 // Number of forces within the system
-      Real * S_                                 // state array S, representing collection of
+      Real * S_;                                // state array S, representing collection of
                                                 // all RigidBody states
 
       PreciseReal time_;                        // Simulation clock
-      OdeSolver solver_;                        // Used to solve the system dS/dt = G(t,S)
-
+      OdeSolver *solver_;                        // Used to solve the system dS/dt = G(t,S)
+	};
 } // end namespace Rigid2D
 
 #endif
