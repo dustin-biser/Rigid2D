@@ -27,6 +27,7 @@ class SampleDemo : public QGLWidget
     QTime *fpsTimer;
     int frameCount;
     int fps;
+		Rigid2D::RigidBodySystem *rigidBodySystem;
     Rigid2D::RigidBody *body;
 
   protected:
