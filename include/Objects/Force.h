@@ -34,7 +34,7 @@ namespace Rigid2D {
                                void * userData);               // User specific data which can be
                                                                // used in computing forces.
 
-      Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray, unsigned int numBodies, void * userData = 0);
+      Force(ForceFunctionPtr forceFunction, RigidBody **rigidBodyArray, unsigned int numBodies, void * userData = 0);
 
       //TODO Force(ForceFunctionPtr forceFunction, void * userData = 0);
       //TODO Force();
@@ -51,7 +51,7 @@ namespace Rigid2D {
       // all pointers in rigidBodyArray are added to the array rigidBodies_,
       // then addRigidBody returns True.  Returns false otherwise.??
       void addRigidBody(RigidBody *rigidBody);
-      void addRigidBodies(RigidBody * rigidBodyArray, unsigned count);
+      void addRigidBodies(RigidBody **rigidBodyArray, unsigned count);
 
       // ??Iterates through each pointer of rigidBodyArray and compares it to the
       // pointers found in rigidBodies_.  If the pointer is found, it is removed
@@ -59,7 +59,7 @@ namespace Rigid2D {
       // removed from rigidBodies_ in this way, then removeRigidBodies returns
       // true.  Returns false otherwise.??
       void removeRigidBody(RigidBody *rigidBody);
-      void removeRigidBodies(RigidBody * rigidBodyArray, unsigned count);
+      void removeRigidBodies(RigidBody **rigidBodyArray, unsigned count);
       void clearRigidBodies();
 
       // Set funct as the new ForceFunctionPtr

@@ -33,13 +33,13 @@ namespace Rigid2D
       /**
        * Same as addRigidBody() but for multiple bodies.
        *
-       * @param rigidBodyArray array of RigidBody's.
+       * @param rigidBodyArray array of RigidBody object pointers.
        * @param numBodies length of rigidBodyArray.
        * @see addRigidBody()
        * @see removeRigidBody()
        * @see removeRigidBodies()
        */
-      void addRigidBodies(RigidBody * rigidBodyArray, unsigned int numBodies);
+      void addRigidBodies(RigidBody ** rigidBodyArray, unsigned int numBodies);
 
       /** Tells RigidBodySystem to not keep track of a RigidBody. If the body
        * (pointer) was not previously added, it does nothing.
@@ -50,34 +50,61 @@ namespace Rigid2D
        * @see removeRigidBodies()
        */
       void removeRigidBody(RigidBody * rigidBody);
-      
+
       /**
        * Same as removeRigidBody() but for multiple bodies.
        *
-       * @param rigidBodyArray array of RigidBody's.
+       * @param rigidBodyArray array of RigidBody object pointers.
        * @param numBodies length of rigidBodyArray.
        * @see addRigidBody()
        * @see addRigidBodies()
        * @see removeRigidBody()
        */
-      void removeRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies);
+      void removeRigidBodies (RigidBody **rigidBodyArray, unsigned int numBodies);
 
-      /**
-       * Iterates through each pointer of forceArray checking that it is
-       * not currently stored within the RigidBodySystem, and adds it to the
-       * system if not found.
+      /** Tells RigidBodySystem to apply the given force from here on out.
+			 * If the force was already previously given, it does not apply it a
+			 * second time.
        *
-       * @param forceArray memory location to beginning of array of Force objects.
-       * @param numForces number of Force objects pointed to by forceArray.
-       *
-       * @return true if all pointers are added to the RigidBodySystem, or false
-       *  otherwise.
+       * @param force pointer to a Force object.
+       * @see addForces()
+       * @see removeForce()
+       * @see removeForces()
        */
-      bool addForces (Force * forceArray, unsigned int numForces);
-      bool removeForces (Force * forces, unsigned int numForces);
-      bool addForce(Force * force);
-      bool removeForce(Force * force);
+      void addForce(Force *force);
+      
+      /** Same as addForce() but for multiple forces.
+			 *
+       * @param forces array of Force object pointers.
+			 * @param numForces length of forces.
+       * @see addForce()
+       * @see removeForce()
+       * @see removeForces()
+       */
+			void addForces(Force **forces, unsigned int numForces);
+      
+      /** Tells RigidBodySystem to remove the force from the list of forces
+			 * being applied. If the force was not being applied, it does nothing.
+       *
+       * @param force pointer to a Force object.
+       * @see addForces()
+       * @see addForces()
+       * @see removeForces()
+       */
+			void removeForce(Force *force);
+      
+      /** Same as removeForce() but for multiple forces.
+			 *
+       * @param forces array of Force object pointers.
+			 * @param numForces length of forces.
+       * @see addForce()
+       * @see addForces()
+       * @see removeForce()
+       */
+			void removeForces (Force **forces, unsigned int numForces);
 
+			/** TODO: add documentation
+			 */
       unsigned int getDimension();
 
     private:
@@ -90,14 +117,12 @@ namespace Rigid2D
 
     private:
       unordered_set<RigidBody*> rigidBodies_;   // Collection of all tracked rigid bodies
-      unsigned long numBodies_;                 // Number of rigid bodies within the system
       unordered_set<Force*> forces_;            // Collection of all forces
-      unsigned long numForces_;                 // Number of forces within the system
       Real * S_;                                // state array S, representing collection of
                                                 // all RigidBody states
 
       PreciseReal time_;                        // Simulation clock
-      OdeSolver *solver_;                        // Used to solve the system dS/dt = G(t,S)
+      OdeSolver *solver_;                       // Used to solve the system dS/dt = G(t,S)
 	};
 } // end namespace Rigid2D
 
