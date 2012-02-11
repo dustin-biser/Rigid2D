@@ -4,7 +4,7 @@ using namespace std;
 
 namespace Rigid2D {
 
-  Force::Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray,
+  Force::Force(ForceFunctionPtr forceFunction, RigidBody **rigidBodyArray,
       unsigned int numBodies, void * userData)
     : numBodies_(numBodies),
       userData_(userData),
@@ -31,10 +31,10 @@ namespace Rigid2D {
     rigidBodies_.insert(rigidBody);
   }
 
-  void Force::addRigidBodies(RigidBody * rigidBodyArray, unsigned count)
+  void Force::addRigidBodies(RigidBody **rigidBodyArray, unsigned count)
   {
-    for (unsigned int i = 0; i < count; i++) {
-      rigidBodies_.insert(&rigidBodyArray[i]);
+    for (unsigned i = 0; i < count; i++) {
+      rigidBodies_.insert(rigidBodyArray[i]);
     }
   }
 
@@ -43,10 +43,10 @@ namespace Rigid2D {
     rigidBodies_.erase(rigidBody);
   }
 
-  void Force::removeRigidBodies(RigidBody * rigidBodyArray, unsigned count)
+  void Force::removeRigidBodies(RigidBody **rigidBodyArray, unsigned count)
   {
     for (unsigned int i = 0; i < count; i++) {
-      rigidBodies_.erase(&rigidBodyArray[i]);
+      rigidBodies_.erase(rigidBodyArray[i]);
     }
   }
 

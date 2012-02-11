@@ -11,11 +11,11 @@ namespace Rigid2D
     time_ = 0.0;
 
     try {
-      // solver_ = new RungeKutta4RigidBodySolver(0,                 // dimension of system
-      //     StartingStepSize,  // stepSize
-      //     0,                 // null pointer to DerivFunc
+       //solver_ = new RungeKutta4RigidBodySolver(0,                 // dimension of system
+       //    StartingStepSize,  // stepSize
+       //    0,                 // null pointer to DerivFunc
 
-      //     this); // pass self to optionalData
+       //    this); // pass self to optionalData
       // pointer so that OdeSolver
       // can access RigidBodySystem
       // state information
@@ -40,35 +40,66 @@ namespace Rigid2D
 
   void RigidBodySystem::addRigidBody(RigidBody *rigidBody)
   {
-
+    rigidBodies_.insert(rigidBody);
   }
 
-  void RigidBodySystem::addRigidBodies(RigidBody * rigidBodyArray, unsigned int numBodies)
+  void RigidBodySystem::addRigidBodies(RigidBody **rigidBodyArray, unsigned int numBodies)
   {
-
+    for (unsigned int i = 0; i < numBodies; ++i)
+    {
+      rigidBodies_.insert(rigidBodyArray[i]);
+    }
   }
 
   void RigidBodySystem::removeRigidBody(RigidBody *rigidBody)
   {
-
+    rigidBodies_.erase(rigidBody);
   }
 
-  void RigidBodySystem::removeRigidBodies(RigidBody * rigidBodyArray, unsigned int numBodies)
+  void RigidBodySystem::removeRigidBodies(RigidBody **rigidBodyArray, unsigned int numBodies)
   {
-
+    for (unsigned int i = 0; i < numBodies; ++i)
+    {
+      rigidBodies_.erase(rigidBodyArray[i]);
+    }
   }
 
+  void RigidBodySystem::addForce(Force *force)
+  {
+    forces_.insert(force);
+  }
 
-
-  void RigidBodySystem::buildSystemStateArray(){
-    // Iterate through the unordered_set rigidBodies_
-    unordered_set<RigidBody*>::iterator it;
-
-    for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it){
-      (*it)->getPosition();
+  void RigidBodySystem::addForces(Force **forces, unsigned int numForces)
+  {
+    for (unsigned i = 0; i < numForces; ++i)
+    {
+      forces_.insert(forces[i]);
     }
+  }
 
-    // Reset pointer position to front of array
-    //S_ -= i;
+  void RigidBodySystem::removeForce(Force *force)
+  {
+    forces_.erase(force);
+  }
+
+  void RigidBodySystem::removeForces(Force **forces, unsigned int numForces)
+  {
+    for (unsigned int i = 0; i < numForces; ++i)
+    {
+      forces_.erase(forces[i]);
+    }
+  }
+
+  void RigidBodySystem::buildSystemStateArray()
+  {
+    // TODO: Make more robust w/out magic numbers
+    Real *S_temp = S_;
+
+    unordered_set<RigidBody*>::iterator it;
+    for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it)
+    {
+      (*it)->copyState(S_temp);
+      S_temp += 4; // 4 is the number of elements copies each time
+    }
   }
 }

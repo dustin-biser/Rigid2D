@@ -33,13 +33,13 @@ namespace Rigid2D
       /**
        * Same as addRigidBody() but for multiple bodies.
        *
-       * @param rigidBodyArray array of RigidBody's.
+       * @param rigidBodyArray array of RigidBody object pointers.
        * @param numBodies length of rigidBodyArray.
        * @see addRigidBody()
        * @see removeRigidBody()
        * @see removeRigidBodies()
        */
-      void addRigidBodies(RigidBody * rigidBodyArray, unsigned int numBodies);
+      void addRigidBodies(RigidBody ** rigidBodyArray, unsigned int numBodies);
 
       /** Tells RigidBodySystem to not keep track of a RigidBody. If the body
        * (pointer) was not previously added, it does nothing.
@@ -54,13 +54,13 @@ namespace Rigid2D
       /**
        * Same as removeRigidBody() but for multiple bodies.
        *
-       * @param rigidBodyArray array of RigidBody's.
+       * @param rigidBodyArray array of RigidBody object pointers.
        * @param numBodies length of rigidBodyArray.
        * @see addRigidBody()
        * @see addRigidBodies()
        * @see removeRigidBody()
        */
-      void removeRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies);
+      void removeRigidBodies (RigidBody **rigidBodyArray, unsigned int numBodies);
 
       /** Tells RigidBodySystem to apply the given force from here on out.
 			 * If the force was already previously given, it does not apply it a
@@ -71,17 +71,17 @@ namespace Rigid2D
        * @see removeForce()
        * @see removeForces()
        */
-      void addForce(Force * force);
+      void addForce(Force *force);
       
       /** Same as addForce() but for multiple forces.
 			 *
-       * @param forces array of Force objects.
+       * @param forces array of Force object pointers.
 			 * @param numForces length of forces.
        * @see addForce()
        * @see removeForce()
        * @see removeForces()
        */
-			void addForces (Force * forceArray, unsigned int numForces);
+			void addForces(Force **forces, unsigned int numForces);
       
       /** Tells RigidBodySystem to remove the force from the list of forces
 			 * being applied. If the force was not being applied, it does nothing.
@@ -91,17 +91,17 @@ namespace Rigid2D
        * @see addForces()
        * @see removeForces()
        */
-			void removeForce(Force * force);
+			void removeForce(Force *force);
       
       /** Same as removeForce() but for multiple forces.
 			 *
-       * @param forces array of Force objects.
+       * @param forces array of Force object pointers.
 			 * @param numForces length of forces.
        * @see addForce()
        * @see addForces()
        * @see removeForce()
        */
-			void removeForces (Force * forces, unsigned int numForces);
+			void removeForces (Force **forces, unsigned int numForces);
 
 			/** TODO: add documentation
 			 */
