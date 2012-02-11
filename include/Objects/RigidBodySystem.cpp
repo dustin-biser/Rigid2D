@@ -21,15 +21,15 @@ namespace Rigid2D
       // state information
     }
     catch (std::bad_alloc error){
-      //throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
-      //  "Memory Allocation Failure");
+      throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
+        "Memory Allocation Failure");
     }
 
   }
 
   RigidBodySystem::~RigidBodySystem()
   {
-    //delete solver_;
+    delete solver_;
   }
 
   void RigidBodySystem::updateRigidBodies()
@@ -92,7 +92,7 @@ namespace Rigid2D
 
   void RigidBodySystem::buildSystemStateArray()
   {
-    // TODO: Make more robust w/out magic numbers
+    // TODO: Make more robust (don't use 4 as vec dimension)
     Real *S_temp = S_;
 
     unordered_set<RigidBody*>::iterator it;
