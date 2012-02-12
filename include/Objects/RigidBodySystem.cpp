@@ -12,12 +12,13 @@ namespace Rigid2D
 
     try {
        solver_ = new RungeKutta4RigidBodySolver(
-           4,                 // dimension of system
+           0,                 // dimension of system
            this);             // pointer to this system
+       solver_->setDimension(4);
     }
     catch (std::bad_alloc error){
-      //throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
-      //  "Memory Allocation Failure");
+      throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
+        "Memory Allocation Failure");
     }
 
   }
