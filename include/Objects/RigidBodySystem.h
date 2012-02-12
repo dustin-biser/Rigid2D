@@ -107,9 +107,9 @@ namespace Rigid2D
 			 */
       unsigned int getDimension();
 
-    private:
+    //private:     TODO: fix scope
       // Computes the derivative dS/dt given inputs t and S
-      void computeStateDeriv(Real t, const Real* S, Real* dSdt);
+      void computeStateDeriv(Real t, const Real *S, Real *dSdt);
 
       // Iterates through each RigidBody collecting state information and appending
 			// it to S_

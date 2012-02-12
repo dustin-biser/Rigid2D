@@ -20,7 +20,8 @@ namespace Rigid2D{
       virtual void processNextStep (Real& t, Real* x);
 
       virtual void setDimension (unsigned int newDim);
-    private:
+
+    protected:
       Real oneHalfStep_;
       Real oneSixthStep_;
       Real * kn1_;

@@ -11,18 +11,13 @@ namespace Rigid2D
     time_ = 0.0;
 
     try {
-       //solver_ = new RungeKutta4RigidBodySolver(0,                 // dimension of system
-       //    StartingStepSize,  // stepSize
-       //    0,                 // null pointer to DerivFunc
-
-       //    this); // pass self to optionalData
-      // pointer so that OdeSolver
-      // can access RigidBodySystem
-      // state information
+       solver_ = new RungeKutta4RigidBodySolver(
+           4,                 // dimension of system
+           this);             // pointer to this system
     }
     catch (std::bad_alloc error){
-      throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
-        "Memory Allocation Failure");
+      //throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
+      //  "Memory Allocation Failure");
     }
 
   }
@@ -88,6 +83,10 @@ namespace Rigid2D
     {
       forces_.erase(forces[i]);
     }
+  }
+
+  void RigidBodySystem::computeStateDeriv(Real t, const Real *S, Real *dSdt)
+  {
   }
 
   void RigidBodySystem::buildSystemStateArray()
