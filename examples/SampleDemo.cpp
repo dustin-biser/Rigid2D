@@ -28,6 +28,10 @@ SampleDemo::SampleDemo(QWidget *parent)
 
 	// Add body to rigidBodySystem
 	rigidBodySystem->addRigidBody(body);
+
+	// remove later
+	test_rot = 0.0;
+	paused = false;
 }
 
 SampleDemo::~SampleDemo()
@@ -61,6 +65,11 @@ void SampleDemo::resizeGL(int w, int h)
   glLoadIdentity();
 }
 
+void SampleDemo::togglePause()
+{
+	paused = !paused;
+}
+
 void SampleDemo::paintGL()
 {
   calculateFps();
@@ -70,7 +79,9 @@ void SampleDemo::paintGL()
   glLoadIdentity();
 
   glTranslatef(0, 0, -90);
-
+	glRotatef(test_rot, 0, 0, 1);
+	if (!paused)
+		test_rot += 0.1;
   glColor3f (1, 1, 1);
   glVertexPointer(2, GL_FLOAT, 0, body->getVertexArray());
   glDrawArrays(GL_POLYGON, 0, body->getVertexCount());
