@@ -20,7 +20,7 @@ namespace Rigid2D
       void updateRigidBodies();
 
       /**
-       * Tells RigidBodySystem to keep track of a RigidBody. If the body (pointer) 
+       * Tells RigidBodySystem to keep track of a RigidBody. If the body (pointer)
        * was previously added, it does not get added a second time.
        *
        * @param rigidBody pointer to a RigidBody object.
@@ -72,7 +72,7 @@ namespace Rigid2D
        * @see removeForces()
        */
       void addForce(Force *force);
-      
+
       /** Same as addForce() but for multiple forces.
 			 *
        * @param forces array of Force object pointers.
@@ -82,7 +82,7 @@ namespace Rigid2D
        * @see removeForces()
        */
 			void addForces(Force **forces, unsigned int numForces);
-      
+
       /** Tells RigidBodySystem to remove the force from the list of forces
 			 * being applied. If the force was not being applied, it does nothing.
        *
@@ -92,7 +92,7 @@ namespace Rigid2D
        * @see removeForces()
        */
 			void removeForce(Force *force);
-      
+
       /** Same as removeForce() but for multiple forces.
 			 *
        * @param forces array of Force object pointers.
@@ -118,12 +118,13 @@ namespace Rigid2D
     private:
       unordered_set<RigidBody*> rigidBodies_;   // Collection of all tracked rigid bodies
       unordered_set<Force*> forces_;            // Collection of all forces
-      Real * S_;                                // state array S, representing collection of
-                                                // all RigidBody states
+      Real * S_;                                // state array S, representing a collection of
+                                                // all RigidBody state information
 
       PreciseReal time_;                        // Simulation clock
       OdeSolver *solver_;                       // Used to solve the system dS/dt = G(t,S)
 	};
+
 } // end namespace Rigid2D
 
 #endif

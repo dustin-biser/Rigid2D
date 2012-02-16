@@ -1,6 +1,6 @@
 #include "RigidBodySystem.h"
-#include "../Common/RungeKutta4RigidBodySolver.h"
-#include "../Common/RigidException.h"
+#include "Rigid2D/Common/RungeKutta4RigidBodySolver.h"
+#include "Rigid2D/Common/RigidException.h"
 #include <new>
 
 using namespace std;
@@ -12,9 +12,8 @@ namespace Rigid2D {
 
     try {
        solver_ = new RungeKutta4RigidBodySolver(
-           0,                 // dimension of system
-           this);             // pointer to this system
-       //solver_->setDimension(4); //for first demo
+           0,                 // Dimension of system. Start with zero and then increment using add/remove methods.
+           this);             // Pointer to this RigidBodySystem
     }
     catch (std::bad_alloc error){
       throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
@@ -28,14 +27,16 @@ namespace Rigid2D {
   }
 
   void RigidBodySystem::updateRigidBodies() {
-    // Build state array S_ and zero the forceAccumulator for each RigidBody
+    // Build state array S_ and zero the forceAccumulator for each RigidBody in same iteration
 
   }
 
+  //TODO update dimension of OdeSolver and S_
   void RigidBodySystem::addRigidBody(RigidBody *rigidBody) {
     rigidBodies_.insert(rigidBody);
   }
 
+  //TODO update dimension of OdeSolver and S_
   void RigidBodySystem::addRigidBodies(RigidBody **rigidBodyArray, unsigned int numBodies) {
     for (unsigned int i = 0; i < numBodies; ++i)
     {
@@ -43,10 +44,12 @@ namespace Rigid2D {
     }
   }
 
+  //TODO update dimension of OdeSolver and S_
   void RigidBodySystem::removeRigidBody(RigidBody *rigidBody) {
     rigidBodies_.erase(rigidBody);
   }
 
+  //TODO update dimension of OdeSolver and S_
   void RigidBodySystem::removeRigidBodies(RigidBody **rigidBodyArray, unsigned int numBodies) {
     for (unsigned int i = 0; i < numBodies; ++i) {
       rigidBodies_.erase(rigidBodyArray[i]);
