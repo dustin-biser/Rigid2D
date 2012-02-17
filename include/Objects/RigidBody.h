@@ -41,15 +41,17 @@ namespace Rigid2D
 
       void addToForceAccum(const Vector2 &);
 
+      void zeroForceAccum();
+
       /* Given a point in graphics coordinate space, this function returns true if
        * the point lies within the convex polygon defined by vertex_array_.*/
       bool pointIsInterior(Real x, Real y);
 
     protected:
-      Vector2 position_;  // position of center of mass
-      Vector2 velocity_;  // velocity of center of mass
-      Vector2 forceAccumulator_;
-      Real mass_;
+      Vector2 position_;          // Position of center of mass
+      Vector2 velocity_;          // Velocity of center of mass
+      Vector2 forceAccumulator_;  // Sum of forces acting on the center of mass of RigidBody
+      Real mass_;                 // Total mass
       int vertex_count_;
       Real *vertex_array_;
 

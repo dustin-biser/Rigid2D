@@ -85,10 +85,17 @@ namespace Rigid2D {
   {
     mass_ = mass;
   }
-   
+
   void RigidBody::addToForceAccum(const Vector2 &force)
   {
     forceAccumulator_ += force;
+  }
+
+  void RigidBody::zeroForceAccum()
+  {
+    forceAccumulator_.x = 0;
+    forceAccumulator_.y = 0;
+
   }
 
   bool RigidBody::pointIsInterior(Real x, Real y)
