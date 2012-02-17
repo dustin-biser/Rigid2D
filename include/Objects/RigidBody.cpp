@@ -76,9 +76,21 @@ namespace Rigid2D {
     position_ = position;
   }
 
+  void RigidBody::setPosition (Real xPos, Real yPos)
+  {
+    position_.x = xPos;
+    position_.y = yPos;
+  }
+
   void RigidBody::setVelocity(const Vector2 & velocity)
   {
     velocity_ = velocity;
+  }
+
+  void RigidBody::setVelocity (Real xComp, Real yComp)
+  {
+    velocity_.x = xComp;
+    velocity_.y = yComp;
   }
 
   void RigidBody::setMass(const Real &mass)

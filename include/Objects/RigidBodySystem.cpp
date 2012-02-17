@@ -1,6 +1,6 @@
 #include "RigidBodySystem.h"
-#include "Rigid2D/Common/RungeKutta4RigidBodySolver.h"
-#include "Rigid2D/Common/RigidException.h"
+#include "Common/RungeKutta4RigidBodySolver.h"
+#include "Common/RigidException.h"
 #include <new>
 
 using namespace std;
@@ -9,11 +9,13 @@ namespace Rigid2D {
 
   RigidBodySystem::RigidBodySystem( ) {
     time_ = 0.0;
+    S_ = NULL;
+    dimension_ = 0;   // Initially, the system has no RigidBodies, so set dimention to zero.
 
     try {
-       solver_ = new RungeKutta4RigidBodySolver(
-           0,                 // Dimension of system. Start with zero and then increment using add/remove methods.
-           this);             // Pointer to this RigidBodySystem
+       solver_ = new RungeKutta4RigidBodySolver( dimension_,
+
+                                                 this);  // Pointer to this RigidBodySystem
     }
     catch (std::bad_alloc error){
       throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
@@ -26,9 +28,19 @@ namespace Rigid2D {
     delete solver_;
   }
 
-  void RigidBodySystem::updateRigidBodies() {
-    // Build state array S_ and zero the forceAccumulator for each RigidBody in same iteration
+  void RigidBodySystem::update() {
+    // If S_ is NULL, construct it from the state information of each RigidBody
+    if (S_ == NULL)
+      buildSystemStateArray();
 
+    // Clear the forceAccumulator field for each RigidBody in the system.
+    clearForceAccumulators();
+
+    // Update the system clock t, and system state array S_
+    solver_->processNextStep(time_, S_);
+
+    // Disperse state information within S_ to all RigidBodies
+    updateRigidBodies();
   }
 
   //TODO update dimension of OdeSolver and S_
@@ -76,7 +88,8 @@ namespace Rigid2D {
     }
   }
 
-  void RigidBodySystem::computeStateDeriv(Real t, const Real *S, Real *dSdt) {
+  // TODO implement
+  void RigidBodySystem::computeStateDeriv(Real /*t*/, const Real /**S*/, Real * /*dSdt*/) {
 
   }
 
@@ -86,8 +99,28 @@ namespace Rigid2D {
 
     unordered_set<RigidBody*>::iterator it;
     for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
+      // Store the current RigidBody's position, momentum, orientation, and
+      // angular momentum information in the next 4 elemnts of S_
       (*it)->copyState(S_temp);
       S_temp += 4; // 4 is the number of elements copies each time
+    }
+  }
+
+  void RigidBodySystem::clearForceAccumulators() {
+    unordered_set<RigidBody*>::iterator it;
+    for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
+      (*it)->zeroForceAccum();
+    }
+  }
+
+  void RigidBodySystem::updateRigidBodies() {
+    Real * S_temp = S_;
+
+    // Update the x and y components of position and momentum for each RigidBody.
+    unordered_set<RigidBody*>::iterator it;
+    for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
+      (*it)->setPosition(*S_temp++, *S_temp++);
+      (*it)->setMomentum(*S_temp++, *S_temp++);
     }
   }
 

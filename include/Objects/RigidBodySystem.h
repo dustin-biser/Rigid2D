@@ -17,7 +17,7 @@ namespace Rigid2D
       /** Uses OdeSolver to update state information for each RigidBody associated
        * with the current RigidBodySystem.
        */
-      void updateRigidBodies();
+      void update();
 
       /**
        * Tells RigidBodySystem to keep track of a RigidBody. If the body (pointer)
@@ -107,15 +107,21 @@ namespace Rigid2D
 			 */
       unsigned int getDimension();
 
-    //private:     TODO: fix scope
+    private:
       // Computes the derivative dS/dt given inputs t and S
-      void computeStateDeriv(Real t, const Real *S, Real *dSdt);
+      void computeStateDeriv(Real t, const Real * S, Real * dSdt);
 
       // Iterates through each RigidBody collecting state information and appending
 			// it to S_
       void buildSystemStateArray();
 
-    private:
+      // Set the forceAccumulator field for each RigidBody in the system to zero.
+      void clearForceAccumulators();
+
+      // Update each RigidBody in this system with the state information contained in
+      // the system state array S_.
+      void updateRigidBodies();
+
       unordered_set<RigidBody*> rigidBodies_;   // Collection of all tracked rigid bodies
       unordered_set<Force*> forces_;            // Collection of all forces
       Real * S_;                                // state array S, representing a collection of
@@ -123,6 +129,11 @@ namespace Rigid2D
 
       PreciseReal time_;                        // Simulation clock
       OdeSolver *solver_;                       // Used to solve the system dS/dt = G(t,S)
+
+      int dimension_;                           // Dimension of the system.  This is the
+                                                // number of RigidBodies*4, where each RigidBody
+                                                // has 4 states: position, momentum, orientation,
+                                                // and angular momemtum.
 	};
 
 } // end namespace Rigid2D

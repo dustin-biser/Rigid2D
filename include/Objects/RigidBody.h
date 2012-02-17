@@ -35,8 +35,16 @@ namespace Rigid2D
       //TODO Add comments
       void copyStateDeriv(Real *sub_dsdt) const;
 
-      void setPosition(const Vector2 & position);
-      void setVelocity(const Vector2 & velocity);
+      void setPosition (const Vector2 & position);
+
+      void setPosition (Real xPos, Real yPos);
+
+      void setVelocity (const Vector2 & velocity);
+
+      // xComp: x component of new velocity.
+      // yComp: y component of new velocity.
+      void setVelocity (Real xComp, Real yComp);
+
       void setMass(const Real &);
 
       void addToForceAccum(const Vector2 &);
