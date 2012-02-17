@@ -18,13 +18,28 @@ SampleDemo::SampleDemo(QWidget *parent)
   fpsTimer->start();
   frameCount = 0;
 
+	// Init RigidBodySystem
+	rigidBodySystem = new RigidBodySystem();
+
+	// Init sample rigid body;
   Real vertex_array[8] = {-5, 5, 5, 5,
                           5, -5, -5, -5};
   body = new RigidBody(Vector2(0, 0), 10.0, vertex_array, 4, Vector2(0, 0));
+
+	// Add body to rigidBodySystem
+	rigidBodySystem->addRigidBody(body);
+
+	// remove later
+	test_rot = 0.0;
+	paused = false;
 }
 
-SampleDemo::~SampleDemo() 
+SampleDemo::~SampleDemo()
 {
+	delete animationTimer;
+	delete fpsTimer;
+	delete rigidBodySystem;
+	delete body;
 }
 
 void SampleDemo::initializeGL()
@@ -50,6 +65,11 @@ void SampleDemo::resizeGL(int w, int h)
   glLoadIdentity();
 }
 
+void SampleDemo::togglePause()
+{
+	paused = !paused;
+}
+
 void SampleDemo::paintGL()
 {
   calculateFps();
@@ -59,7 +79,9 @@ void SampleDemo::paintGL()
   glLoadIdentity();
 
   glTranslatef(0, 0, -90);
-
+	glRotatef(test_rot, 0, 0, 1);
+	if (!paused)
+		test_rot += 0.1;
   glColor3f (1, 1, 1);
   glVertexPointer(2, GL_FLOAT, 0, body->getVertexArray());
   glDrawArrays(GL_POLYGON, 0, body->getVertexCount());

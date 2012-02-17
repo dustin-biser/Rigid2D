@@ -3,8 +3,8 @@
 using namespace Rigid2D;
 
 RungeKutta4RigidBodySolver::RungeKutta4RigidBodySolver(unsigned int dimension,
-          RigidBodySystem * rigidBodySystem, Real stepSize = 0.01)
-    : OdeSolver(dimension, step, NULL),                   // Set pointer to DerivFunction to NULL
+          RigidBodySystem * rigidBodySystem, Real stepSize)
+    : OdeRungeKutta4(dimension, stepSize, NULL),                   // Set pointer to DerivFunction to NULL
       rigidBodySystem_(rigidBodySystem) {
 
 }

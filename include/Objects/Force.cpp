@@ -4,7 +4,7 @@ using namespace std;
 
 namespace Rigid2D {
 
-  Force::Force(ForceFunctionPtr forceFunction, RigidBody * rigidBodyArray,
+  Force::Force(ForceFunctionPtr forceFunction, RigidBody **rigidBodyArray,
       unsigned int numBodies, void * userData)
     : numBodies_(numBodies),
       userData_(userData),
@@ -18,18 +18,11 @@ namespace Rigid2D {
   }
 
   void Force::applyForce(){
-    // Iterate through the set of RigidBodies.  Force each RigidBody call
-    //
-    // forceFunction(currentRigidBody, forceVector_, userData_).
-    //
-    // This will update forceVector_ with the computed force using any userData_
-    // that was given.  Then add forceVector_ to the currentRigidBody's
-    // forceAccumulator field.
     unordered_set<RigidBody*>::iterator it;
-
-    for (it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it){
-      forceFunction(*it, forceVector_, userData_);
-      *it.addToForceAccum(forceVector_);
+    for (it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) 
+    {
+      forceFunction_(*it, &forceVector_, userData_);
+      (*it)->addToForceAccum(forceVector_);
     }
   }
 
@@ -38,9 +31,9 @@ namespace Rigid2D {
     rigidBodies_.insert(rigidBody);
   }
 
-  void Force::addRigidBodies(RigidBody * rigidBodyArray, unsigned count)
+  void Force::addRigidBodies(RigidBody **rigidBodyArray, unsigned count)
   {
-    for (int i = 0; i < count; i++) {
+    for (unsigned i = 0; i < count; i++) {
       rigidBodies_.insert(rigidBodyArray[i]);
     }
   }
@@ -50,9 +43,9 @@ namespace Rigid2D {
     rigidBodies_.erase(rigidBody);
   }
 
-  void Force::removeRigidBodies(RigidBody * rigidBodyArray, unsigned count)
+  void Force::removeRigidBodies(RigidBody **rigidBodyArray, unsigned count)
   {
-    for (int i = 0; i < count; i++) {
+    for (unsigned int i = 0; i < count; i++) {
       rigidBodies_.erase(rigidBodyArray[i]);
     }
   }

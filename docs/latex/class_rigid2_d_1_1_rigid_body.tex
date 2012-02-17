@@ -1,0 +1,116 @@
+\hypertarget{class_rigid2_d_1_1_rigid_body}{
+\section{Rigid2D::RigidBody Class Reference}
+\label{class_rigid2_d_1_1_rigid_body}\index{Rigid2D::RigidBody@{Rigid2D::RigidBody}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a428c179e3a042b8f77f196361c91852e}{
+{\bfseries RigidBody} (\hyperlink{class_rigid2_d_1_1_vector2}{Vector2} position, Real mass, Real $\ast$vertex\_\-array, int vertex\_\-count, \hyperlink{class_rigid2_d_1_1_vector2}{Vector2} velocity)}
+\label{class_rigid2_d_1_1_rigid_body_a428c179e3a042b8f77f196361c91852e}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a3c3aa6b7cddf1ed8e685be52ed03113d}{
+\hyperlink{class_rigid2_d_1_1_vector2}{Vector2} {\bfseries getPosition} () const }
+\label{class_rigid2_d_1_1_rigid_body_a3c3aa6b7cddf1ed8e685be52ed03113d}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a0b061241be1661516279f8bfe7e1c6b6}{
+\hyperlink{class_rigid2_d_1_1_vector2}{Vector2} {\bfseries getVelocity} () const }
+\label{class_rigid2_d_1_1_rigid_body_a0b061241be1661516279f8bfe7e1c6b6}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a42a3f4309e6711246f4b5e24f41badf2}{
+\hyperlink{class_rigid2_d_1_1_vector2}{Vector2} {\bfseries getMomentum} () const }
+\label{class_rigid2_d_1_1_rigid_body_a42a3f4309e6711246f4b5e24f41badf2}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_ab3007e2109f5233eae241da5dd964236}{
+Real {\bfseries getMass} () const }
+\label{class_rigid2_d_1_1_rigid_body_ab3007e2109f5233eae241da5dd964236}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a780cc46e69c633df90a17f17e1dec615}{
+int {\bfseries getVertexCount} () const }
+\label{class_rigid2_d_1_1_rigid_body_a780cc46e69c633df90a17f17e1dec615}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a59a05c679e888be76aed9a349cf1e58f}{
+Real $\ast$ {\bfseries getVertexArray} () const }
+\label{class_rigid2_d_1_1_rigid_body_a59a05c679e888be76aed9a349cf1e58f}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_aa739c622ce7d7f11722427be74ae4d8e}{
+void {\bfseries copyState} (Real $\ast$sub\_\-S) const }
+\label{class_rigid2_d_1_1_rigid_body_aa739c622ce7d7f11722427be74ae4d8e}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a673a34e458686fcb8a5d22b3333d1b35}{
+void {\bfseries copyStateDeriv} (Real $\ast$sub\_\-dsdt) const }
+\label{class_rigid2_d_1_1_rigid_body_a673a34e458686fcb8a5d22b3333d1b35}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_aa91510e0ed057dc50da1e4cca8a3c313}{
+void {\bfseries setPosition} (const \hyperlink{class_rigid2_d_1_1_vector2}{Vector2} \&position)}
+\label{class_rigid2_d_1_1_rigid_body_aa91510e0ed057dc50da1e4cca8a3c313}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a0c811a2645db0e37ab15b2bcb6674dea}{
+void {\bfseries setVelocity} (const \hyperlink{class_rigid2_d_1_1_vector2}{Vector2} \&velocity)}
+\label{class_rigid2_d_1_1_rigid_body_a0c811a2645db0e37ab15b2bcb6674dea}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a863e9471673570cafc6d6fd1acd02737}{
+void {\bfseries setMass} (const Real \&)}
+\label{class_rigid2_d_1_1_rigid_body_a863e9471673570cafc6d6fd1acd02737}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a28bcacfb338f3c89da83b31cdcd7204e}{
+void {\bfseries addToForceAccum} (const \hyperlink{class_rigid2_d_1_1_vector2}{Vector2} \&)}
+\label{class_rigid2_d_1_1_rigid_body_a28bcacfb338f3c89da83b31cdcd7204e}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_abbc4c1852ed796be4ae186ef5c9095c2}{
+bool {\bfseries pointIsInterior} (Real x, Real y)}
+\label{class_rigid2_d_1_1_rigid_body_abbc4c1852ed796be4ae186ef5c9095c2}
+
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_ab2e789b05cc467d7f78ea112bdcca5a5}{
+\hyperlink{class_rigid2_d_1_1_vector2}{Vector2} {\bfseries position\_\-}}
+\label{class_rigid2_d_1_1_rigid_body_ab2e789b05cc467d7f78ea112bdcca5a5}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_abbb64d1419fb056b338b7c5c112ea077}{
+\hyperlink{class_rigid2_d_1_1_vector2}{Vector2} {\bfseries velocity\_\-}}
+\label{class_rigid2_d_1_1_rigid_body_abbb64d1419fb056b338b7c5c112ea077}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_ad293bd44d6f25bd84f1993d2b8d4de63}{
+\hyperlink{class_rigid2_d_1_1_vector2}{Vector2} {\bfseries forceAccumulator\_\-}}
+\label{class_rigid2_d_1_1_rigid_body_ad293bd44d6f25bd84f1993d2b8d4de63}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a78aef9f27b258742e35bce6d0517dade}{
+Real {\bfseries mass\_\-}}
+\label{class_rigid2_d_1_1_rigid_body_a78aef9f27b258742e35bce6d0517dade}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_abe37fff167092f6d25f02fbafbbbce70}{
+int {\bfseries vertex\_\-count\_\-}}
+\label{class_rigid2_d_1_1_rigid_body_abe37fff167092f6d25f02fbafbbbce70}
+
+\item 
+\hypertarget{class_rigid2_d_1_1_rigid_body_a3922a58ff583458c88fe56b3af514330}{
+Real $\ast$ {\bfseries vertex\_\-array\_\-}}
+\label{class_rigid2_d_1_1_rigid_body_a3922a58ff583458c88fe56b3af514330}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files:\begin{DoxyCompactItemize}
+\item 
+/home/nqe/rigid2D/include/Objects/RigidBody.h\item 
+/home/nqe/rigid2D/include/Objects/RigidBody.cpp\end{DoxyCompactItemize}

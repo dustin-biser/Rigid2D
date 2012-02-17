@@ -115,4 +115,8 @@ Force-UnitTest.o : $(SRC_DIR)Force.h $(SRC_DIR)Force.cpp $(GTEST_HEADERS)
 Force-UnitTest : Force.o Force-UnitTest.o RigidBody.o MathUtils.o feq.o gtest_main.a
 	$(LINK)
 
+RigidBodySystem.o : $(SRC_DIR)RigidBodySystem.h $(SRC_DIR)RigidBodySystem.cpp  \
+										$(COMMON_DIR)OdeSolver.h $(SRC_DIR)RigidBody.h $(SRC_DIR)Force.h \
+										$(COMMON_DIR)RungeKutta4RigidBodySolver.h $(COMMON_DIR)RigidException.h
+	$(COMPILE) RigidBodySystem.cpp
 

@@ -6,16 +6,10 @@
 #include "RigidBody.h"
 #include "Force.h"
 
-namespace Rigid2D{
-  class RigidBodySystem{
-    private:
-      // Computes the derivative dS/dt given inputs t and S
-      void computeStateDeriv(Real t, const Real* S, Real* dSdt);
-
-      // Iterates through each RigidBody collecting state information and appending
-			// it to S_
-      void buildSystemStateArray();
-
+namespace Rigid2D
+{
+  class RigidBodySystem
+	{
     public:
       RigidBodySystem();
       ~RigidBodySystem();
@@ -26,73 +20,110 @@ namespace Rigid2D{
       void updateRigidBodies();
 
       /**
-       * Iterates through each pointer of rigidBodyArray checking that it is
-       * not currently stored within the RigidBodySystem, and adds it to the
-       * system if not found.
+       * Tells RigidBodySystem to keep track of a RigidBody. If the body (pointer)
+       * was previously added, it does not get added a second time.
        *
-       * @param rigidBodyArray memory location to beginning of array of
-       *  RigidBody objects.
-       * @param numBodies number of RigidBodies pointed to by rigidBodyArray.
-       *
-       * @return true if all pointers are added to the RigidBodySystem, or false
-       *  otherwise.
+       * @param rigidBody pointer to a RigidBody object.
+       * @see addRigidBodies()
+       * @see removeRigidBody()
+       * @see removeRigidBodies()
        */
-      bool addRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies);
+      void addRigidBody(RigidBody * rigidBody);
 
       /**
-       * Iterates through each pointer of rigidBodyArray and removes it from
-       * the current RigidBodySystem.
+       * Same as addRigidBody() but for multiple bodies.
        *
-       * @param rigidBodyArray memory location to beginning of array of
-       *  RigidBody objects.
-       * @param numBodies number of RigidBodies pointed to by rigidBodyArray.
-       *
-       * @return true if all RigidBodies were found and removed from the current
-       * RigidBodySystem, or false otherwise.
+       * @param rigidBodyArray array of RigidBody object pointers.
+       * @param numBodies length of rigidBodyArray.
+       * @see addRigidBody()
+       * @see removeRigidBody()
+       * @see removeRigidBodies()
        */
-      bool removeRigidBodies (RigidBody * rigidBodyArray, unsigned int numBodies);
+      void addRigidBodies(RigidBody ** rigidBodyArray, unsigned int numBodies);
+
+      /** Tells RigidBodySystem to not keep track of a RigidBody. If the body
+       * (pointer) was not previously added, it does nothing.
+       *
+       * @param rigidBody pointer to a RigidBody object.
+       * @see addRigidBody()
+       * @see addRigidBodies()
+       * @see removeRigidBodies()
+       */
+      void removeRigidBody(RigidBody * rigidBody);
 
       /**
-       * Iterates through current list of RigidBody pointers and adds rigidBody
-       * to the list if it is unique.
+       * Same as removeRigidBody() but for multiple bodies.
        *
-       * @param rigidBody memory location for a RigidBody object.
-       *
-       * @return true if pointer was added to the RigidBodySystem, or false
-       *  otherwise.
+       * @param rigidBodyArray array of RigidBody object pointers.
+       * @param numBodies length of rigidBodyArray.
+       * @see addRigidBody()
+       * @see addRigidBodies()
+       * @see removeRigidBody()
        */
-      bool addRigidBody(RigidBody * rigidBody);
+      void removeRigidBodies (RigidBody **rigidBodyArray, unsigned int numBodies);
 
-      bool removeRigidBody(RigidBody * rigidBody);
-
-      /**
-       * Iterates through each pointer of forceArray checking that it is
-       * not currently stored within the RigidBodySystem, and adds it to the
-       * system if not found.
+      /** Tells RigidBodySystem to apply the given force from here on out.
+			 * If the force was already previously given, it does not apply it a
+			 * second time.
        *
-       * @param forceArray memory location to beginning of array of Force objects.
-       * @param numForces number of Force objects pointed to by forceArray.
-       *
-       * @return true if all pointers are added to the RigidBodySystem, or false
-       *  otherwise.
+       * @param force pointer to a Force object.
+       * @see addForces()
+       * @see removeForce()
+       * @see removeForces()
        */
-      bool addForces (Force * forceArray, unsigned int numForces);
-      bool removeForces (Force * forces, unsigned int numForces);
-      bool addForce(Force * force);
-      bool removeForce(Force * force);
+      void addForce(Force *force);
 
+      /** Same as addForce() but for multiple forces.
+			 *
+       * @param forces array of Force object pointers.
+			 * @param numForces length of forces.
+       * @see addForce()
+       * @see removeForce()
+       * @see removeForces()
+       */
+			void addForces(Force **forces, unsigned int numForces);
+
+      /** Tells RigidBodySystem to remove the force from the list of forces
+			 * being applied. If the force was not being applied, it does nothing.
+       *
+       * @param force pointer to a Force object.
+       * @see addForces()
+       * @see addForces()
+       * @see removeForces()
+       */
+			void removeForce(Force *force);
+
+      /** Same as removeForce() but for multiple forces.
+			 *
+       * @param forces array of Force object pointers.
+			 * @param numForces length of forces.
+       * @see addForce()
+       * @see addForces()
+       * @see removeForce()
+       */
+			void removeForces (Force **forces, unsigned int numForces);
+
+			/** TODO: add documentation
+			 */
       unsigned int getDimension();
 
-    private:
-      RigidBody * rigidBodies_;   // Collection of all rigid bodies
-      unsigned long numBodies_;   // Number of rigid bodies within the system
-      Force * forces_;            // Collection of all forces
-      unsigned long numForces_;   // Number of forces within the system
-      Real * S_                   // state array S, representing collection of
-                                  // all RigidBody states
+    //private:     TODO: fix scope
+      // Computes the derivative dS/dt given inputs t and S
+      void computeStateDeriv(Real t, const Real *S, Real *dSdt);
 
-      PreciseReal time_;          // Simulation clock
-      OdeSolver solver_;          // Used to solve the system dS/dt = G(t,S)
+      // Iterates through each RigidBody collecting state information and appending
+			// it to S_
+      void buildSystemStateArray();
+
+    private:
+      unordered_set<RigidBody*> rigidBodies_;   // Collection of all tracked rigid bodies
+      unordered_set<Force*> forces_;            // Collection of all forces
+      Real * S_;                                // state array S, representing a collection of
+                                                // all RigidBody state information
+
+      PreciseReal time_;                        // Simulation clock
+      OdeSolver *solver_;                       // Used to solve the system dS/dt = G(t,S)
+	};
 
 } // end namespace Rigid2D
 
