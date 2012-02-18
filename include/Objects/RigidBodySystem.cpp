@@ -9,6 +9,8 @@ namespace Rigid2D {
 
   RigidBodySystem::RigidBodySystem( ) {
     time_ = 0.0;
+
+    // TODO Allocate some set amount of memory for S_
     S_ = NULL;
 
     // Initially, the system has no RigidBodies, so set dimention to zero.
@@ -35,9 +37,11 @@ namespace Rigid2D {
   }
 
   void RigidBodySystem::update() {
+    // TODO Redesign.  Only need to append state information to end of S_ each
+    // time we add/remove rigid body.
     // If S_ is NULL, construct it from the state information of each RigidBody
-    if (S_ == NULL)
-      buildSystemStateArray();
+    //if (S_ == NULL)
+      //buildSystemStateArray();
 
     // Update the system time_, and system state array S_
     solver_->processNextStep(time_, S_);
@@ -47,12 +51,13 @@ namespace Rigid2D {
   }
 
   //TODO update dimension of OdeSolver and S_.  Set force accumulator to zero
+  // After insert check if rigidBodies_.length()*statesPerRigidBody_ != systemDimension_
+  // Append state information to end of S_ and re-allocate memory if needed.
   void RigidBodySystem::addRigidBody(RigidBody *rigidBody) {
     rigidBodies_.insert(rigidBody);
   }
 
   //TODO update dimension of OdeSolver and S_.  Set force accumulator to zero
-  void RigidBodySystem::addRigidBody(RigidBody *rigidBody) {
   void RigidBodySystem::addRigidBodies(RigidBody **rigidBodyArray, unsigned int numBodies) {
     for (unsigned int i = 0; i < numBodies; ++i)
     {
@@ -105,8 +110,10 @@ namespace Rigid2D {
     // Loop through each RigidBody and build the state derivative array
     // dSdt = (p_1\m_1, F_1,..., p_n\m_n, F_n)
 
+
   }
 
+  // Use when we call removeRigidBodies()
   void RigidBodySystem::buildSystemStateArray() {
     Real *S_temp = S_;
 
