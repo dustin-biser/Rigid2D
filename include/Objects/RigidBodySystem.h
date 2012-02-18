@@ -108,7 +108,9 @@ namespace Rigid2D
       unsigned int getDimension();
 
     private:
-      // Computes the derivative dS/dt given inputs t and S
+      // Computes the derivative dS/dt, from the given inputs:
+      // t - simulation time
+      // S - system state array
       void computeStateDeriv(Real t, const Real * S, Real * dSdt);
 
       // Iterates through each RigidBody collecting state information and appending
@@ -130,10 +132,12 @@ namespace Rigid2D
       PreciseReal time_;                        // Simulation clock
       OdeSolver *solver_;                       // Used to solve the system dS/dt = G(t,S)
 
-      int dimension_;                           // Dimension of the system.  This is the
+      int systemDimension_;                     // Dimension of the system.  This is the
                                                 // number of RigidBodies*4, where each RigidBody
                                                 // has 4 states: position, momentum, orientation,
                                                 // and angular momemtum.
+
+      int statesPerRigidBody_;                  // Number of states we store per Rigid Body.
 	};
 
 } // end namespace Rigid2D

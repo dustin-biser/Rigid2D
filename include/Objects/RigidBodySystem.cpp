@@ -10,7 +10,13 @@ namespace Rigid2D {
   RigidBodySystem::RigidBodySystem( ) {
     time_ = 0.0;
     S_ = NULL;
-    dimension_ = 0;   // Initially, the system has no RigidBodies, so set dimention to zero.
+
+    // Initially, the system has no RigidBodies, so set dimention to zero.
+    dimension_ = 0;
+
+    // TODO: Set to 2 for now.  Once we handle RigidBody orientation and angular momentum,
+    // change this to 4.
+    statesPerRigidBody_ = 2;
 
     try {
        solver_ = new RungeKutta4RigidBodySolver( dimension_,
@@ -33,22 +39,20 @@ namespace Rigid2D {
     if (S_ == NULL)
       buildSystemStateArray();
 
-    // Clear the forceAccumulator field for each RigidBody in the system.
-    clearForceAccumulators();
-
-    // Update the system clock t, and system state array S_
+    // Update the system time_, and system state array S_
     solver_->processNextStep(time_, S_);
 
     // Disperse state information within S_ to all RigidBodies
     updateRigidBodies();
   }
 
-  //TODO update dimension of OdeSolver and S_
+  //TODO update dimension of OdeSolver and S_.  Set force accumulator to zero
   void RigidBodySystem::addRigidBody(RigidBody *rigidBody) {
     rigidBodies_.insert(rigidBody);
   }
 
-  //TODO update dimension of OdeSolver and S_
+  //TODO update dimension of OdeSolver and S_.  Set force accumulator to zero
+  void RigidBodySystem::addRigidBody(RigidBody *rigidBody) {
   void RigidBodySystem::addRigidBodies(RigidBody **rigidBodyArray, unsigned int numBodies) {
     for (unsigned int i = 0; i < numBodies; ++i)
     {
@@ -88,27 +92,37 @@ namespace Rigid2D {
     }
   }
 
-  // TODO implement
-  void RigidBodySystem::computeStateDeriv(Real /*t*/, const Real /**S*/, Real * /*dSdt*/) {
+  // Computes the derivative dS/dt, from the given inputs:
+  // t - simulation time
+  // S - system state array
+  void RigidBodySystem::computeStateDeriv(Real t, const Real * S, Real * dSdt) {
+    // Check if input S is the same as the system state array S_
+    // If not, then
+    //    1) Disperse state array S_ to all RigidBodies.
+    //    2) Clear force accumulators for each RigidBody.
+    //    3) Loop through each Force object calling their applyForce() function.
+
+    // Loop through each RigidBody and build the state derivative array
+    // dSdt = (p_1\m_1, F_1,..., p_n\m_n, F_n)
 
   }
 
   void RigidBodySystem::buildSystemStateArray() {
-    // TODO: Make more robust (don't use 4 as vec dimension)
     Real *S_temp = S_;
 
     unordered_set<RigidBody*>::iterator it;
     for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
       // Store the current RigidBody's position, momentum, orientation, and
-      // angular momentum information in the next 4 elemnts of S_
+      // angular momentum information in the next 4 elements of S_.
       (*it)->copyState(S_temp);
-      S_temp += 4; // 4 is the number of elements copies each time
+      S_temp += statesPerRigidBody_;
     }
   }
 
   void RigidBodySystem::clearForceAccumulators() {
     unordered_set<RigidBody*>::iterator it;
     for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
+      // Zero the forceAccumulator field for current RigidBody
       (*it)->zeroForceAccum();
     }
   }
