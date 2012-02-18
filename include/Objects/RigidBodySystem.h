@@ -6,6 +6,29 @@
 #include "RigidBody.h"
 #include "Force.h"
 
+/*
+ *  The system state array S_ is a collection of states for all Rigid Bodies known
+ *  to the system.  S_ = (x_1, p_1, q_1, F_1,...,x_n, p_n, q_n, F_n), where for the
+ *  i-th Rigid Body
+ *  x_i, position of center of mass
+ *  p_i, momentum
+ *  q_i, orientation
+ *  F_i, sum of forces acting on center of mass
+ *
+ *  After calling the RigidBodySystem constructor, a specific amount of memory will
+ *  be allocated for S_.  It will always be the case that SLength_ >= systemDimension_,
+ *  where SLength_ is the maximum number of entries that can be stored in S_, and
+ *  systemDimension_ is equal to the number of RigidBodies times statesPerRigdiBody_,
+ *  the number of states stored per RigidBody.  Currently, there are four states stored
+ *  per RigidBody, specifically position x, momentum p, orientation q, and sum of forces F.
+ *
+ *  Whenever a user calls RigidBodySystem::addRigidBodies, systemDimension_ will be
+ *  incremented by the number of RigidBodies times statesPerRigidBody_.  The OdeSolver
+ *  will also be notified of the system dimension change, and will automatically take
+ *  necassary actions to adjust for the new dimension size.  If adding RigidBodies to
+ *  the system causes systemDimension to be greater than SLength_, then the size of S_
+ *  will be realloced.
+ */
 namespace Rigid2D
 {
   class RigidBodySystem
@@ -126,18 +149,18 @@ namespace Rigid2D
 
       unordered_set<RigidBody*> rigidBodies_;   // Collection of all tracked rigid bodies
       unordered_set<Force*> forces_;            // Collection of all forces
-      Real * S_;                                // state array S, representing a collection of
-                                                // all RigidBody state information
+      Real * S_;                                // State array representing a collection of
+                                                // all RigidBody state information.
+      unsigned int SLength_;
 
       PreciseReal time_;                        // Simulation clock
       OdeSolver *solver_;                       // Used to solve the system dS/dt = G(t,S)
 
-      int systemDimension_;                     // Dimension of the system.  This is the
-                                                // number of RigidBodies*4, where each RigidBody
-                                                // has 4 states: position, momentum, orientation,
-                                                // and angular momemtum.
+      unsigned int systemDimension_;            // Dimension of the system.  This is the
+                                                // number of RigidBodies times the number of
+                                                // states per RigidBody.
 
-      int statesPerRigidBody_;                  // Number of states we store per Rigid Body.
+      unsigned int statesPerRigidBody_;         // Number of states we store per Rigid Body.
 	};
 
 } // end namespace Rigid2D

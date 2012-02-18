@@ -10,18 +10,24 @@ namespace Rigid2D {
   RigidBodySystem::RigidBodySystem( ) {
     time_ = 0.0;
 
-    // TODO Allocate some set amount of memory for S_
-    S_ = NULL;
-
     // Initially, the system has no RigidBodies, so set dimention to zero.
-    dimension_ = 0;
+    systemDimension_ = 0;
 
     // TODO: Set to 2 for now.  Once we handle RigidBody orientation and angular momentum,
     // change this to 4.
     statesPerRigidBody_ = 2;
 
     try {
-       solver_ = new RungeKutta4RigidBodySolver( dimension_,
+      // Allocate enough memory to store state information for 10 RigidBodies.
+      S_ = new Real [10*statesPerRigidBody_];
+    }
+    catch (std::bad_alloc error){
+      throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
+        "Memory Allocation Failure");
+    }
+
+    try {
+       solver_ = new RungeKutta4RigidBodySolver( systemDimension_,
 
                                                  this);  // Pointer to this RigidBodySystem
     }
@@ -34,15 +40,10 @@ namespace Rigid2D {
 
   RigidBodySystem::~RigidBodySystem() {
     delete solver_;
+    delete [] S_;
   }
 
   void RigidBodySystem::update() {
-    // TODO Redesign.  Only need to append state information to end of S_ each
-    // time we add/remove rigid body.
-    // If S_ is NULL, construct it from the state information of each RigidBody
-    //if (S_ == NULL)
-      //buildSystemStateArray();
-
     // Update the system time_, and system state array S_
     solver_->processNextStep(time_, S_);
 
@@ -50,11 +51,22 @@ namespace Rigid2D {
     updateRigidBodies();
   }
 
-  //TODO update dimension of OdeSolver and S_.  Set force accumulator to zero
+  //TODO update dimension of OdeSolver and S_.
   // After insert check if rigidBodies_.length()*statesPerRigidBody_ != systemDimension_
   // Append state information to end of S_ and re-allocate memory if needed.
   void RigidBodySystem::addRigidBody(RigidBody *rigidBody) {
-    rigidBodies_.insert(rigidBody);
+    assert(rigidBody != NULL);
+
+    // Insertion was successful if second field is true
+    if (rigidBodies_.insert(rigidBody).second){
+      // Update systemDimension_, and OdeSolver dimension
+
+      // If systemDimension_ > SLength_
+      //   - Reallocate memory for S_ and call buildSystemStateArray
+
+      // Starting from index systemDimension-1, append the RigidBody's state
+      // information to S_.
+    }
   }
 
   //TODO update dimension of OdeSolver and S_.  Set force accumulator to zero
