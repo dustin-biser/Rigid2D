@@ -8,6 +8,7 @@ namespace Rigid2D {
       int vertex_count, Vector2 velocity)
     : position_(position),
       velocity_(velocity),
+      momentum_(velocity*mass),
       mass_(mass),
       vertex_count_(vertex_count)
   {
@@ -33,7 +34,7 @@ namespace Rigid2D {
 
   Vector2 RigidBody::getMomentum() const
   {
-    return mass_ * velocity_;
+    return momentum_;
   }
 
   Real RigidBody::getMass() const
@@ -99,12 +100,15 @@ namespace Rigid2D {
   void RigidBody::setMomentum(const Vector2 & momentum)
   {
     momentum_ = momentum;
+    velocity_ = momentum_ / mass_;
   }
 
   void RigidBody::setMomentum(Real xComponent, Real yComponent)
   {
     momentum_.x = xComponent;
     momentum_.y = yComponent;
+
+    velocity_ = momentum_ / mass_;
   }
 
   void RigidBody::setMass(const Real &mass)
