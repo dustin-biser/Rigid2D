@@ -10,40 +10,33 @@ namespace Rigid2D {
   RigidBodySystem::RigidBodySystem( ) {
     time_ = 0.0;
 
-    // Initially, the system has no RigidBodies, so set dimention to zero.
+    // Initially, the system has no RigidBodies, so set dimension to zero.
     systemDimension_ = 0;
 
     // TODO: Set to 2 for now.  Once we handle RigidBody orientation and angular momentum,
     // change this to 4.
     statesPerRigidBody_ = 2;
 
-    try {
-      // Allocate enough memory to store state information for 10 RigidBodies.
-      S_ = new Real [10*statesPerRigidBody_];
-    }
-    catch (std::bad_alloc error){
-      throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
-        "Memory Allocation Failure");
-    }
+    // NULL solver_ and S_ so that delete is not called during
+    // intializeSandSolver().
+    solver_ = NULL;
+    S_ = NULL;
 
-    try {
-       solver_ = new RungeKutta4RigidBodySolver( systemDimension_,
-
-                                                 this);  // Pointer to this RigidBodySystem
-    }
-    catch (std::bad_alloc error){
-      throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
-        "Memory Allocation Failure");
-    }
-
+    // Initialize system state array S_, SLength_, and OdeSolver solver_.
+    initializeSAndSolver();
   }
 
   RigidBodySystem::~RigidBodySystem() {
-    delete solver_;
-    delete [] S_;
+    if (solver_ != NULL)
+      delete solver_;
+
+    if (S_ != NULL)
+      delete [] S_;
   }
 
   void RigidBodySystem::update() {
+    if (systemDimension_ == 0) return;
+
     // Update the system time_, and system state array S_
     solver_->processNextStep(time_, S_);
 
@@ -51,21 +44,19 @@ namespace Rigid2D {
     updateRigidBodies();
   }
 
-  //TODO update dimension of OdeSolver and S_.
-  // After insert check if rigidBodies_.length()*statesPerRigidBody_ != systemDimension_
   // Append state information to end of S_ and re-allocate memory if needed.
   void RigidBodySystem::addRigidBody(RigidBody *rigidBody) {
     assert(rigidBody != NULL);
 
     // Insertion was successful if second field is true
     if (rigidBodies_.insert(rigidBody).second){
-      // Update systemDimension_, and OdeSolver dimension
+      // Update systemDimension_
+      systemDimension_ += statesPerRigidBody_;
 
-      // If systemDimension_ > SLength_
-      //   - Reallocate memory for S_ and call buildSystemStateArray
-
-      // Starting from index systemDimension-1, append the RigidBody's state
-      // information to S_.
+      if (systemDimension_ > SLength_) {
+        // Double the size of S_, SLength_, and dimension of OdeSolver.
+        initializeSAndSolver();
+      }
     }
   }
 
@@ -112,20 +103,34 @@ namespace Rigid2D {
   // Computes the derivative dS/dt, from the given inputs:
   // t - simulation time
   // S - system state array
-  void RigidBodySystem::computeStateDeriv(Real t, const Real * S, Real * dSdt) {
-    // Check if input S is the same as the system state array S_
-    // If not, then
-    //    1) Disperse state array S_ to all RigidBodies.
-    //    2) Clear force accumulators for each RigidBody.
-    //    3) Loop through each Force object calling their applyForce() function.
+  void RigidBodySystem::computeStateDeriv(Real, const Real * S, Real * dSdt) {
+    // Check if input S is the same as the system state array S_.  This will be
+    // true for the first step of RungeKutta4 Method, allowing us to skip one
+    // process cycle.
+    if (S != S_){
+      // Need to update all RigidBody state information using state array S, then
+      // recalculate all force accumulator fields for the RigidBodies.
+      if (S_ != NULL)
+        delete [] S_;
+
+      copyToSystemStateArray(S);
+
+      // Disperse state array S to all RigidBodies.
+      updateRigidBodies();
+
+      // Set each RigidBody's force accumulator field to zero.
+      clearForceAccumulators();
+
+      // Loop through each Force object calling their applyForce() function.
+      // This will update the RigidBody forceAccumulator fields needed for dSdt.
+      applyAllForces();
+    }
 
     // Loop through each RigidBody and build the state derivative array
     // dSdt = (p_1\m_1, F_1,..., p_n\m_n, F_n)
-
-
+    buildDerivStateArray(dSdt);
   }
 
-  // Use when we call removeRigidBodies()
   void RigidBodySystem::buildSystemStateArray() {
     Real *S_temp = S_;
 
@@ -136,6 +141,21 @@ namespace Rigid2D {
       (*it)->copyState(S_temp);
       S_temp += statesPerRigidBody_;
     }
+  }
+
+  void RigidBodySystem::buildDerivStateArray(Real * dSdt){
+    assert(dSdt != NULL);
+
+    Real *dSdt_temp = dSdt;
+
+    unordered_set<RigidBody*>::iterator it;
+    for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
+      // Store the current RigidBody's position, momentum, orientation, and
+      // angular momentum information in the next 4 elements of S_.
+      (*it)->copyStateDeriv(dSdt_temp);
+      dSdt_temp += statesPerRigidBody_;
+    }
+
   }
 
   void RigidBodySystem::clearForceAccumulators() {
@@ -155,6 +175,54 @@ namespace Rigid2D {
       (*it)->setPosition(*S_temp++, *S_temp++);
       (*it)->setMomentum(*S_temp++, *S_temp++);
     }
+  }
+
+  // To be called only from within initializeSndSolver().  This is to make sure
+  // that the dimension of OdeSolver is always equal to SLength_.
+  void RigidBodySystem::initializeSolver(){
+    if (solver_ != NULL)
+      delete solver_;
+
+    try {
+       solver_ = new RungeKutta4RigidBodySolver(SLength_, this);
+    }
+    catch (std::bad_alloc error){
+      throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
+        "Memory Allocation Failure");
+    }
+  }
+
+  void RigidBodySystem::initializeSAndSolver(){
+    static unsigned int allocationSize = 10 * statesPerRigidBody_;
+
+    if (S_ != NULL)
+      delete S_;
+
+    try {
+      S_ = new Real [allocationSize];
+    }
+    catch (std::bad_alloc error){
+      throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
+        "Memory Allocation Failure");
+    }
+
+    SLength_ = allocationSize;
+
+    // Initialize all non-used elements of S_ to zero
+    for(unsigned int i = systemDimension_; i < SLength_; ++i){
+      S_[i] = 0.0;
+    }
+
+    // Copy all RigidBody state information into S_.
+    buildSystemStateArray();
+
+    // Delete current OdeSolver, and reallocate a new one with dimension
+    // equal to SLength_.
+    initializeSolver();
+
+    // Next time initalizeSAndSolver() is called we will double the size of S_
+    // and the dimension of solver_.
+    allocationSize *= 2;
   }
 
 } // namespace Rigid2D

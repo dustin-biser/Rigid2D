@@ -140,6 +140,12 @@ namespace Rigid2D
 			// it to S_
       void buildSystemStateArray();
 
+
+      // TODO after demo1, change this to 4 states per RigidBody.
+      // Loop through each RigidBody and build the state derivative array
+      // dSdt = (p_1\m_1, F_1,..., p_n\m_n, F_n)
+      void buildDerivStateArray(Real * dSdt);
+
       // Set the forceAccumulator field for each RigidBody in the system to zero.
       void clearForceAccumulators();
 
@@ -147,13 +153,37 @@ namespace Rigid2D
       // the system state array S_.
       void updateRigidBodies();
 
+      // Copy size number of elements from other into the system state array S_, starting
+      // from index zero of other.
+      void copyToSystemStateArray(const Real * other, unsigned int size);
+
+      // Loop through all Force objects within forces_, calling their applyForce()
+      // method.  This updates each RigidBody's forceAccumulator field
+      // by the Force objects that are currently acting on those bodies.
+      void applyAllForces();
+
+      // To be called only from within initializeSAndSolver().  This is to make sure
+      // SLength_ and the dimension of OdeSolver stay the same.
+      //
+      // Delete current OdeSolver if one has already been alocated, then allocate a
+      // new OdeSolver and set its dimension to SLength_.
+      void initializeSolver();
+
+      // Allocates memory for the system state array S_, and OdeSolver solver_. Copies
+      // all RigidBody state information into S_.  Makes call to initializeSolver() and
+      // sets the dimension of OdeSolver to SLength_.  Each time initializeSAndSolver()
+      // is called, the size of S_, the size of SLength_, and dimension of solver_ are
+      // doubled.
+      void initializeSAndSolver();
+
       unordered_set<RigidBody*> rigidBodies_;   // Collection of all tracked rigid bodies
       unordered_set<Force*> forces_;            // Collection of all forces
       Real * S_;                                // State array representing a collection of
                                                 // all RigidBody state information.
-      unsigned int SLength_;
 
-      PreciseReal time_;                        // Simulation clock
+      unsigned int SLength_;                    // Length of S_.
+
+      Real time_;                               // Simulation clock
       OdeSolver *solver_;                       // Used to solve the system dS/dt = G(t,S)
 
       unsigned int systemDimension_;            // Dimension of the system.  This is the
