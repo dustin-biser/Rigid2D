@@ -126,15 +126,13 @@ namespace Rigid2D
        */
 			void removeForces (Force **forces, unsigned int numForces);
 
-			/** TODO: add documentation
-			 */
       unsigned int getDimension();
 
-    private:
       // Computes the derivative dS/dt, from the given inputs:
       // t - simulation time
       // S - system state array
       void computeStateDeriv(Real t, const Real * S, Real * dSdt);
+    private:
 
       // Iterates through each RigidBody collecting state information and appending
 			// it to S_
