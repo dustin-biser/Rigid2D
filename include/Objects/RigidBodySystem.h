@@ -153,10 +153,6 @@ namespace Rigid2D
       // the system state array S_.
       void updateRigidBodies();
 
-      // Copy size number of elements from other into the system state array S_, starting
-      // from index zero of other.
-      void copyToSystemStateArray(const Real * other, unsigned int size);
-
       // Loop through all Force objects within forces_, calling their applyForce()
       // method.  This updates each RigidBody's forceAccumulator field
       // by the Force objects that are currently acting on those bodies.
@@ -191,6 +187,10 @@ namespace Rigid2D
                                                 // states per RigidBody.
 
       unsigned int statesPerRigidBody_;         // Number of states we store per Rigid Body.
+
+      unsigned int allocationSize_;             // Keep track of how much memory to allocate when resizing S_.
+                                                // Each time initializeSAndSolver() is called, allocationSize_
+                                                // will be doubled.
 	};
 
 } // end namespace Rigid2D

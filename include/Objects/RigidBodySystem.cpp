@@ -2,6 +2,7 @@
 #include "Common/RungeKutta4RigidBodySolver.h"
 #include "Common/RigidException.h"
 #include <new>
+#include <cstring> // for memcpy()
 
 using namespace std;
 
@@ -16,6 +17,9 @@ namespace Rigid2D {
     // TODO: Set to 2 for now.  Once we handle RigidBody orientation and angular momentum,
     // change this to 4.
     statesPerRigidBody_ = 2;
+
+    // Set the starting allocation size for S_.
+    allocationSize_ = 10 * statesPerRigidBody_;
 
     // NULL solver_ and S_ so that delete is not called during
     // intializeSandSolver().
@@ -110,10 +114,9 @@ namespace Rigid2D {
     if (S != S_){
       // Need to update all RigidBody state information using state array S, then
       // recalculate all force accumulator fields for the RigidBodies.
-      if (S_ != NULL)
-        delete [] S_;
 
-      copyToSystemStateArray(S);
+      // Copy elements of S into S_.
+      memcpy(S_, S, systemDimension_*sizeof(Real));
 
       // Disperse state array S to all RigidBodies.
       updateRigidBodies();
@@ -131,6 +134,13 @@ namespace Rigid2D {
     buildDerivStateArray(dSdt);
   }
 
+  void RigidBodySystem::applyAllForces(){
+    unordered_set<Force *>::iterator it;
+    for(it = forces_.begin(); it != forces_.end(); ++it) {
+      (*it)->applyForce();
+    }
+  }
+
   void RigidBodySystem::buildSystemStateArray() {
     Real *S_temp = S_;
 
@@ -138,7 +148,7 @@ namespace Rigid2D {
     for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
       // Store the current RigidBody's position, momentum, orientation, and
       // angular momentum information in the next 4 elements of S_.
-      (*it)->copyState(S_temp);
+      (*it)->getState(S_temp);
       S_temp += statesPerRigidBody_;
     }
   }
@@ -152,10 +162,9 @@ namespace Rigid2D {
     for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
       // Store the current RigidBody's position, momentum, orientation, and
       // angular momentum information in the next 4 elements of S_.
-      (*it)->copyStateDeriv(dSdt_temp);
+      (*it)->getStateDeriv(dSdt_temp);
       dSdt_temp += statesPerRigidBody_;
     }
-
   }
 
   void RigidBodySystem::clearForceAccumulators() {
@@ -172,8 +181,10 @@ namespace Rigid2D {
     // Update the x and y components of position and momentum for each RigidBody.
     unordered_set<RigidBody*>::iterator it;
     for(it = rigidBodies_.begin(); it != rigidBodies_.end(); ++it) {
-      (*it)->setPosition(*S_temp++, *S_temp++);
-      (*it)->setMomentum(*S_temp++, *S_temp++);
+      // Copy state information from S_ into the current RigidBody, thus
+      // updating its position, momentum, orientation, and angular momentum.
+      (*it)->setState(S_temp);
+      S_temp += statesPerRigidBody_;
     }
   }
 
@@ -193,20 +204,19 @@ namespace Rigid2D {
   }
 
   void RigidBodySystem::initializeSAndSolver(){
-    static unsigned int allocationSize = 10 * statesPerRigidBody_;
-
     if (S_ != NULL)
       delete S_;
 
     try {
-      S_ = new Real [allocationSize];
+      S_ = new Real [allocationSize_];
     }
     catch (std::bad_alloc error){
       throw InternalErrorException(__LINE__, __FUNCTION__, __FILE__,
         "Memory Allocation Failure");
     }
 
-    SLength_ = allocationSize;
+    // Update the length of S_.
+    SLength_ = allocationSize_;
 
     // Initialize all non-used elements of S_ to zero
     for(unsigned int i = systemDimension_; i < SLength_; ++i){
@@ -222,7 +232,7 @@ namespace Rigid2D {
 
     // Next time initalizeSAndSolver() is called we will double the size of S_
     // and the dimension of solver_.
-    allocationSize *= 2;
+    allocationSize_ *= 2;
   }
 
 } // namespace Rigid2D
