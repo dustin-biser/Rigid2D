@@ -41,9 +41,11 @@ namespace Rigid2D
 
       void setVelocity (const Vector2 & velocity);
 
-      // xComp: x component of new velocity.
-      // yComp: y component of new velocity.
-      void setVelocity (Real xComp, Real yComp);
+      void setVelocity (Real xComponent, Real yComponent);
+
+      void setMomentum (const Vector2 & momentum);
+
+      void setMomentum (Real xComponent, Real yComponent);
 
       void setMass(const Real &);
 
@@ -58,6 +60,7 @@ namespace Rigid2D
     protected:
       Vector2 position_;          // Position of center of mass
       Vector2 velocity_;          // Velocity of center of mass
+      Vector2 momentum_;          // Total momentum of RigidBody
       Vector2 forceAccumulator_;  // Sum of forces acting on the center of mass of RigidBody
       Real mass_;                 // Total mass
       int vertex_count_;

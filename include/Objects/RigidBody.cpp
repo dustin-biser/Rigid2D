@@ -85,17 +85,32 @@ namespace Rigid2D {
   void RigidBody::setVelocity(const Vector2 & velocity)
   {
     velocity_ = velocity;
+    momentum_ = velocity_ * mass_;
   }
 
-  void RigidBody::setVelocity (Real xComp, Real yComp)
+  void RigidBody::setVelocity (Real xComponent, Real yComponent)
   {
-    velocity_.x = xComp;
-    velocity_.y = yComp;
+    velocity_.x = xComponent;
+    velocity_.y = yComponent;
+
+    momentum_ = velocity_ * mass_;
+  }
+
+  void RigidBody::setMomentum(const Vector2 & momentum)
+  {
+    momentum_ = momentum;
+  }
+
+  void RigidBody::setMomentum(Real xComponent, Real yComponent)
+  {
+    momentum_.x = xComponent;
+    momentum_.y = yComponent;
   }
 
   void RigidBody::setMass(const Real &mass)
   {
     mass_ = mass;
+    momentum_ = mass_ * velocity_;
   }
 
   void RigidBody::addToForceAccum(const Vector2 &force)
