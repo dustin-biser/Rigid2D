@@ -29,11 +29,18 @@ namespace Rigid2D
 
       Real* getVertexArray() const;
 
-      //TODO Add comments
-      void copyState(Real *sub_S) const;
+			// Copies RigidBody state information, such as position, momentum,
+			// orientation, and force accumulator, to the destination array dst.
+      void getState(Real *dst) const;
 
-      //TODO Add comments
-      void copyStateDeriv(Real *sub_dsdt) const;
+			// Copies state information from source array, such as position, momentum,
+			// orientation, and force accumulator, and stores within respective fields
+			// for the current RigidBody.
+			void setState(Real *source);
+
+			// Builds the state derivative array dSdt from current RigidBody state
+			// information and stores entries in destination array dst.
+      void getStateDeriv(Real *dst) const;
 
       void setPosition (const Vector2 & position);
 
@@ -43,9 +50,9 @@ namespace Rigid2D
 
       void setVelocity (Real xComponent, Real yComponent);
 
-      void setMomentum (const Vector2 & momentum);
+      //void setMomentum (const Vector2 & momentum);
 
-      void setMomentum (Real xComponent, Real yComponent);
+      //void setMomentum (Real xComponent, Real yComponent);
 
       void setMass(const Real &);
 
