@@ -95,8 +95,9 @@ feq.o : $(COMMON_DIR)feq.cpp $(COMMON_DIR)feq.h
 MathUtils.o : $(COMMON_DIR)MathUtils.cpp $(COMMON_DIR)MathUtils.h
 	$(COMPILE) $(COMMON_DIR)MathUtils.cpp
 
-RigidBody.o : $(SRC_DIR)RigidBody.h $(COMMON_DIR)RigidSettings.h  \
-					    $(COMMON_DIR)MathUtils.h $(COMMON_DIR)Vector2.h
+RigidBody.o : $(SRC_DIR)RigidBody.h $(SRC_DIR)RigidBody.cpp \
+							$(COMMON_DIR)RigidSettings.h $(COMMON_DIR)MathUtils.h \
+							$(COMMON_DIR)Vector2.h
 	$(COMPILE) $(SRC_DIR)RigidBody.cpp
 
 RigidBody-UnitTest.o : $(SRC_DIR)RigidBody.h RigidBody-UnitTest.cpp $(GTEST_HEADERS)
@@ -115,4 +116,8 @@ Force-UnitTest.o : $(SRC_DIR)Force.h $(SRC_DIR)Force.cpp $(GTEST_HEADERS)
 Force-UnitTest : Force.o Force-UnitTest.o RigidBody.o MathUtils.o feq.o gtest_main.a
 	$(LINK)
 
+RigidBodySystem.o : $(SRC_DIR)RigidBodySystem.h $(SRC_DIR)RigidBodySystem.cpp  \
+										$(COMMON_DIR)OdeSolver.h $(SRC_DIR)RigidBody.h $(SRC_DIR)Force.h \
+										$(COMMON_DIR)RungeKutta4RigidBodySolver.h $(COMMON_DIR)RigidException.h
+	$(COMPILE) $(SRC_DIR)RigidBodySystem.cpp
 

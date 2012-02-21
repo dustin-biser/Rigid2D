@@ -29,27 +29,47 @@ namespace Rigid2D
 
       Real* getVertexArray() const;
 
-      //TODO Add comments
-      void copyState(Real *sub_S) const;
+			// Copies RigidBody state information, such as position, momentum,
+			// orientation, and force accumulator, to the destination array dst.
+      void getState(Real *dst) const;
 
-      //TODO Add comments
-      void copyStateDeriv(Real *sub_dsdt) const;
+			// Copies state information from source array, such as position, momentum,
+			// orientation, and force accumulator, and stores within respective fields
+			// for the current RigidBody.
+			void setState(Real *source);
 
-      void setPosition(const Vector2 & position);
-      void setVelocity(const Vector2 & velocity);
+			// Builds the state derivative array dSdt from current RigidBody state
+			// information and stores entries in destination array dst.
+      void getStateDeriv(Real *dst) const;
+
+      void setPosition (const Vector2 & position);
+
+      void setPosition (Real xPos, Real yPos);
+
+      void setVelocity (const Vector2 & velocity);
+
+      void setVelocity (Real xComponent, Real yComponent);
+
+      //void setMomentum (const Vector2 & momentum);
+
+      //void setMomentum (Real xComponent, Real yComponent);
+
       void setMass(const Real &);
 
       void addToForceAccum(const Vector2 &);
+
+      void zeroForceAccum();
 
       /* Given a point in graphics coordinate space, this function returns true if
        * the point lies within the convex polygon defined by vertex_array_.*/
       bool pointIsInterior(Real x, Real y);
 
     protected:
-      Vector2 position_;  // position of center of mass
-      Vector2 velocity_;  // velocity of center of mass
-      Vector2 forceAccumulator_;
-      Real mass_;
+      Vector2 position_;          // Position of center of mass
+      Vector2 velocity_;          // Velocity of center of mass
+      Vector2 momentum_;          // Total momentum of RigidBody
+      Vector2 forceAccumulator_;  // Sum of forces acting on the center of mass of RigidBody
+      Real mass_;                 // Total mass
       int vertex_count_;
       Real *vertex_array_;
 
